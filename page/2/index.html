@@ -1,0 +1,541 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>路双宁的博客</title><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta property="og:type" content="website">
+<meta property="og:title" content="路双宁的博客">
+<meta property="og:url" content="https://lushuangning.github.io/page/2/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lushuangning.github.io/img/avatar.jpeg">
+<meta property="article:author" content="路双宁">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lushuangning.github.io/img/avatar.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/page/2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: {"appId":"5O4JS9VAVD","apiKey":"f5820cc78689a7d5b68872f36a671b47","indexName":"LushuangningBlog","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2020-12-06 16:55:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">40</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">35</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://lushuangning.oss-cn-beijing.aliyuncs.com/blogImg/DSCF0596.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">路双宁的博客</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/lushuangning" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sdyglsn@126.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/19352681" rel="external nofollow noreferrer" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/89a4f3d8/" title="现代自然语言处理最佳、最新进展">现代自然语言处理最佳、最新进展</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-05-23T14:56:28.000Z" title="发表于 2019-05-23 22:56:28">2019-05-23</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.015Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/NLP/">NLP</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E5%8D%9A%E5%AE%A2/">博客</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></span></div><div class="content"> 博客原文：The Best and Most Current of Modern Natural Language Processing
+ 作者：Victor Sanh
+
+
+Photo by Radu Marcusu on Unsplash
+
+过去的两年，NLP社区目睹了各种任务和应用的加速发展🚀。这一进展是由于我们传统地构建NLP系统的方式发生了转变：长久以来，我们使用预训练的词嵌入，像word2vec或GloVe来初始化神经网络的第一层，然后用单个数据集通过监督学习来训练具体任务的体系结构。
+最近，一些作品证明了我们可以在网络规模的数据集📖上学习分层上下文表示，利用无监督（或半监督）信号例如语言模型，把这些预训练任务的转换成下游任务（迁移学习）。令人鼓舞地是，这种转换导致了各种下游应用的重大进步，从问答，到自然语言推理，再到的句法分析。
+
+
+我该读哪些论文来了解现代NLP的最新趋势？
+
+几周前，我的一个朋友决定潜心研究NLP。他已经有机器学习和深度学习的背景，所以他真诚地问我：“我该读哪些论文来了解现代NLP的最新趋势？”。 👩‍🎓👨‍🎓
+这是一个好问题，尤其是当你考 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/5594da42/" title="性代数回顾及参考——矩阵积分">性代数回顾及参考——矩阵积分</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-13T12:54:23.000Z" title="发表于 2019-03-13 20:54:23">2019-03-13</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.012Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span></div><div class="content"> 前言
+之前没有接触过矩阵积分，在学习cs229的过程中遇到了，好在课程给了相关的参考文献。这篇Linear Algebra Review and Reference对复习线性代数的知识很有帮助，遂决定将其中第四部分矩阵积分的内容翻译过来。前三部分在大学本科阶段的线性代数都会涉及，在此不做翻译。
+
+ 4. 矩阵积分
+标准的线性代数课程都会包含前面章节的话题，但其中有一项看起来不会被经常提及（但我们接下来会经常用到），那就是对积分在向量方面的扩展。尽管我们实际用的积分相对比较琐碎，符号常常使事情看起来比实际困难得多。这部分我们给出一些关于矩阵积分基本的定义和例子。
+ 4.1 梯度
+设f:Rm×n→Rf:\mathbb{R}^{m \times n} \rightarrow \mathbb{R}f:Rm×n→R是一个函数，输入是一个m×nm \times nm×n的矩阵AAA，返回值是一个实数。则fff的梯度是对矩阵的每一个位置求偏导数，定义如下：
+∇Af(A)∈Rm×n=[∂f(A)∂A11∂f(A)∂A12⋯∂f(A)∂A1n∂f(A)∂A21∂f(A)∂A22⋯∂f(A)∂A2n⋮⋮ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/2a17195/" title="Tensorflow学习之路">Tensorflow学习之路</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-13T00:58:53.000Z" title="发表于 2019-03-13 08:58:53">2019-03-13</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.009Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/tensorflow/">tensorflow</a></span></div><div class="content"> 1.创建图
+1import tensorflow as tf
+12345m1 = tf.constant([[3,3]])m2 = tf.constant([[2],[3]])# 创建一个矩阵乘法product = tf.matmul(m1,m2)print(product)
+Tensor(&quot;MatMul_1:0&quot;, shape=(1, 1), dtype=int32)
+
+1234# 定义一个会话，启动默认图with tf.Session() as sess:    result = sess.run(product)    print(result)
+[[15]]
+
+
+ 2.变量
+1import tensorflow as tf
+12345678910111213x = tf.Variable([1,2])a = tf.constant([3,3])# 创建一个减法opsub = tf.subtract(x,a)# 创建一个加法opadd = tf.add(x,a)init = tf.global_variables_initializer()with tf.S ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/93cdf939/" title="各种工具设置代理汇总">各种工具设置代理汇总</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-07T15:33:12.000Z" title="发表于 2019-03-07 23:33:12">2019-03-07</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.011Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></span></div><div class="content"> 前言
+你有没有为了给Atom安装一个简单的插件而不得不苦等几小时最后却被告知网络错误的经历？有没有遇到过git一个比较大的仓库时网速只有1kb/s的情况？唯一在这里做了一个对这些工具&amp;软件设置代理的方法，方便以后使用时能更快的解决问题而不是在百度上浪费时间。唯一使用的是socks5代理，使用其他代理的小伙伴请酌情参考。
+
+ git设置代理
+
+设置代理
+
+12git config --global http.proxy &#x27;socks5://127.0.0.1:1080&#x27;git config --global https.proxy &#x27;socks5://127.0.0.1:1080&#x27;
+
+取消代理
+
+12git config --global --unset http.proxygit config --global --unset https.proxy
+ Atom设置代理
+
+设置代理
+
+来源：https://blog.csdn.net/xianghongai/article/details/53197510
+123456789apm co ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/cb848fca/" title="PAT乙级题目刷题">PAT乙级题目刷题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-02-24T04:22:42.000Z" title="发表于 2019-02-24 12:22:42">2019-02-24</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.009Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/PAT/">PAT</a></span></div><div class="content"> 1001：害死人不偿命的(3n+1)猜想 （15 分）
+123456789101112131415int main()&#123;    int a,c=0;    cin&gt;&gt;a;    while(a != 1)&#123;        if(a % 2 == 0)&#123;            a/=2;            c++;        &#125;else&#123;            a = 3*a +1;        &#125;    &#125;    cout&lt;&lt;c;    return 0;&#125;
+
+ 1002：写出这个数 （20 分）
+首先，输入样例给出的数不大于1010010^{100}10100，用long long和__int64都不能存储的下这么大的数，因此考虑用字符数组来存储。其次，各位数字之和用拼音输出，有一个key-value对应的关系，因此考虑使用map数据结构，但是C语言默认没有map，因此使用C++的map。
+1234567891011121314151617181920212223242 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/c407cade/" title="网易云——情话说给你听">网易云——情话说给你听</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-02-14T03:26:12.000Z" title="发表于 2019-02-14 11:26:12">2019-02-14</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.017Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%97%A5%E5%B8%B8/">日常</a></span></div><div class="content">听网易云的日常，喜欢从歌曲里挑选一些评论收藏。网易云，情话说给你听。
+
+有个卖婚纱的婆婆说： 卖了这么多年的婚纱 从未见到会有哪个男孩 在帘子拉开时发出“哇”的惊叹 后来她搞了这么多年 才明白 大概是他们都没能留住年少时的爱人吧 有什么用呢 试婚纱的女孩子或许也曾在试衣间里流过眼泪 她也没能嫁给十七岁的追风少年
+浪哥——《晚风》
+1993年，一个非洲小伙与母亲得到了一盘磁带，里面有一首中文歌成为他母亲生前的最爱。后来他母亲去世，他想找到这首歌，找了二十年没有结果。终于有一天遇到了一对台湾情侣，才知道那首歌是罗大佑的《恋曲1990》，当他再次听到这个旋律时眼泪止不住地流了下来
+罗大佑——《恋曲1990》
+愿你从今往后 就不再回头
+心之所向着向往自由
+不会被世俗牵绊
+不会为爱情变得丑陋
+
+我从来不相信，一个人一辈子只会爱一个人，但我肯定，总有那么一段岁月，你会碰见一个想用一辈子去爱的那个人
+前男友——《其实我想说的还有很多》
+熬夜不要超过两点 夜宵只吃水果 任何作业在截止期一半的时间就开始写 书不能只买不看 英语不能只说不看 目标不能只下不达 少说闲话少骂人 多吃水果多喝牛奶 不矫情不别扭 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/35d48d1b/" title="数据结构入门——排序">数据结构入门——排序</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-09-10T12:24:16.000Z" title="发表于 2018-09-10 20:24:16">2018-09-10</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.013Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="content"> 插入排序
+
+直接插入排序
+
+1234567891011void InsertSort(ElemType A[],int n)&#123;    int i,j;    for(i = 2;i &lt;= n;i++)&#123;        if(A[i].key &lt; A[i-1].key)&#123;            A[0] = A[i];    //复制为哨兵，A[0]不存放元素            for(j = i-1;A[0].key &lt; A[j].key;--j)&#123;                A[j+1] = A[j];            &#125;        &#125;    &#125;&#125;
+
+
+折半插入排序
+
+1234567891011121314151617181920void InsertSort(ElemType A[],int n)&#123;    int i,j,low,high,mid;    for(i = 2;i &lt;= n;i++)&#123;        A[0] = A[i];  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/7768dc44/" title="数据结构入门——图的相关算法（二）">数据结构入门——图的相关算法（二）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-09-07T05:35:05.000Z" title="发表于 2018-09-07 13:35:05">2018-09-07</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.013Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="content"> 综合问题
+ 1. 可达性问题。即判断从i到j是否存在一条路径。用BFS或DFS可解。
+1234567891011121314151617181920212223int vis[MaxSize] = &#123;0&#125;;bool Exist_Path_BFS(Graph G,int i,int j)&#123;    int k;    int queue[MaxSize];    int front=0,rear=0;    vis[i] = 1;    queue[rear++] = i;    while(front &lt; rear)&#123;        k = queue[front++];        for(w=FirstNeighbor(G,k);w&gt;=0;w=NextNeighbor(G,k,w))&#123;            if(vis[w] == 0)&#123;                if(w == j)                    return true;                vis[w] = 1;  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/477e309c/" title="数据结构入门——图的相关算法（一）">数据结构入门——图的相关算法（一）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-09-05T02:08:49.000Z" title="发表于 2018-09-05 10:08:49">2018-09-05</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.012Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="content"> 写在前面
+距离19年研究生考试越来越近了，专业课的算法设计题考数据结构中的图的部分。感觉这部分比较困难，我大学没参加过ACM，之前也从来没写过图的代码，照着王道的书花了一天撸了四百行代码，着实费劲。函数名、变量名甚至代码结构都和王道的相关代码相似。包括BFS和DFS, 分别用邻接矩阵和邻接表实现了，还有SPFA, Floyd, Dijkstra，这些算法都用题目验证过，保证正确性。在此附上完整代码，可以直接copy运行。由于王道书上已经写了不少注释了，故这些代码的注释写得很少，看不懂的地方请在下方评论，我尽可能回复。
+spfa算法是受博主 xunalove 转发的这篇文章 最快最好用的——spfa算法 的启发写出来的。
+
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/1470fbc9/" title="数据结构入门——树的相关算法（二）">数据结构入门——树的相关算法（二）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-09-03T04:21:45.000Z" title="发表于 2018-09-03 12:21:45">2018-09-03</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.013Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="content"> LCA（最近公共祖先）问题
+
+顺序存储方式
+
+1234567891011ElemType LeastCommonAncestor(SqTree T,int i,int j)&#123;    if(T[i] != &quot;#&quot; &amp;&amp; T[j] != &quot;#&quot;)&#123;        while(i != j)&#123;            if(i &gt; j)   i = i/2;            else    j = j/2;        &#125;        return T[i];    &#125;    return NULL;&#125;
+
+
+二叉链表存储方式
+
+12345678910111213BiNode *LeastCommonAncestor(BiNode * T,BiNode * p,BiNode * q)&#123;    if(T == NULL || T == p || T == q)        return T;    BiNode * left = LeastCommonA ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/24661711/" title="数据结构入门——树的相关算法（一）">数据结构入门——树的相关算法（一）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-09-02T01:47:44.000Z" title="发表于 2018-09-02 09:47:44">2018-09-02</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.013Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="content"> 写在前面
+本系列是记录与总结性质的文章，原创的内容少，记录的内容与计算机考研有关。在考研的范畴里，与树相关的算法很多，在程序设计题中属于必考题。我准备用三篇博客来总结与树有关的算法。
+数据结构的定义和规范参考严书[1] 和王道[2]。前一本是很多高校的指定参考书，后一本是考研辅导书。
+最后，由于写博客的时间仓促，文中若有错误之处，恳请朋友们批评指正。
+
+
+ 工具
+在考试中，实现树的相关算法时很可能会用到栈或队列，可以直接把他们作为一个工具来解决问题。即，把栈或队列的声明和操作写得很简单，不必分函数写出。以顺序栈的操作为例：
+(1) 声明一个栈并初始化：
+123//下面两句连声明带初始化都有了ElemType stack[maxSize];int top = -1;
+(2)元素进栈
+1stack[++top] = x;		//仅一句话即实现进栈操作
+(3)元素x出栈
+1x = stack[top--];
+更简单的，可以直接使用栈和队列的基本操作的函数来实现操作。栈的基本操作有：
+123456789InitStack(S);	//初始化StackEmpty(S);	//判空Push(S, ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/4a7e0e09/" title="数据结构-复杂度分析">数据结构-复杂度分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-08-31T07:16:01.000Z" title="发表于 2018-08-31 15:16:01">2018-08-31</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.012Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="content">本系列是记录与总结性质的文章，原创的内容少，记录的内容大都与考研有关。写博客的时间仓促，文中若有错误之处，恳请指正。
+
+
+ 计算复杂度
+以下内容几乎全部摘自《模式分类》[^1]
+
+为了分析和描述某个问题或为解决为题而设计的某个特定算法的难度，我们转而讨论计算复杂度的概念。我们使用函数的阶这一概念，并且还使用渐进记号O\OmicronO(大欧)，Ω(omega)\Omega (omega)Ω(omega)和Θ(theta)\Theta (theta)Θ(theta)。
+渐进上界  O(g(x))={f(x)Ο(g(x)) = \{ f(x)O(g(x))={f(x)：存在正的常数ccc和x0x_0x0​，对于所有的x≥x0x \geq x_0x≥x0​，有0≤f(x)≤cg(x)}0 \leq f(x) \leq cg(x) \}0≤f(x)≤cg(x)}
+渐进下界  Ω(g(x))={f(x)\Omega (g(x)) = \{ f(x)Ω(g(x))={f(x)：存在正的常数ccc和x0x_0x0​，对于所有的x≥x0x \geq x_0x≥x0​，有0≤cg(x)≤f(x)}0 \ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/e5787948/" title="毕业季">毕业季</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-06-26T09:13:30.000Z" title="发表于 2018-06-26 17:13:30">2018-06-26</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.014Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%97%A5%E5%B8%B8/">日常</a></span></div><div class="content">####　顺利毕业！祝朋友们前程似锦，咱们江湖再见
+
+        
+            
+        
+        
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-mZqNWpxh"),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            music: {
+              title: "心の旋律",
+              author: "浜口史郎",
+              url: "https://lushuangning.oss-cn-beijing.aliyuncs.com/毕业季/%E5%BF%83%E3%81%AE%E6%97%8B%E5%BE%8B.mp3",
+              pic: "https://lushuangning.oss-cn-beijin ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/3b04db31/" title="2018年4月份小问题总结">2018年4月份小问题总结</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-04-30T12:25:20.000Z" title="发表于 2018-04-30 20:25:20">2018-04-30</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.007Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a></span></div><div class="content"> 1.连接MySQL时的一条警告
+在使用Hive的时候，由于metstore设置的数据库是服务器上的MySQL，这个MySQL版本是5.7.15，终端会弹下面的一条警告：
+123456WARN: Establishing SSL connection without server&#x27;s identity verification is not recommended.According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be establishedby default if explicit option isn&#x27;t set. For compliance with existing applications notusing SSL the verifyServerCertificate property is set to &#x27;false&#x27;.You need either to explicitly disable SSL by settin ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/104651d4/" title="使用Python的Pandas库实现基于用户的协同过滤推荐算法">使用Python的Pandas库实现基于用户的协同过滤推荐算法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-04-15T10:19:50.000Z" title="发表于 2018-04-15 18:19:50">2018-04-15</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.011Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Python/">Python</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/">推荐系统</a></span></div><div class="content"> 参考：
+ 【笔记3】用pandas实现矩阵数据格式的推荐算法 (基于用户的协同)
+
+
+
+环境
+版本
+
+
+
+
+Python
+3.5.5
+
+
+Pandas
+0.22.0
+
+
+
+123456789101112131415import pandas as pddf = Nonedef dataSet2Matrix(filename):    &quot;&quot;&quot;       导入训练数据       :param filename: 数据文件路径    &quot;&quot;&quot;    table_name = [&#x27;userId&#x27;, &#x27;movieId&#x27;, &#x27;rating&#x27;, &#x27;timestamp&#x27;]    # 按照&#x27;,&#x27;分割读取csv文件    ratings = pd.read_table(filename, sep=&#x27;,&#x27;, header=0, names=table_name)    global df    # 转换成User-Item矩阵 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/49d920a5/" title="Hadoop2.7.5伪分布式配置及遇到的问题总结">Hadoop2.7.5伪分布式配置及遇到的问题总结</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-03-04T04:30:51.000Z" title="发表于 2018-03-04 12:30:51">2018-03-04</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.008Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Hadoop/">Hadoop</a></span></div><div class="content">
+ 系统信息
+
+操作系统：Ubuntu 16.04.4 LTS 64bit
+Hadoop版本：Hadoop 2.7.5
+JDK版本：JDK 1.8.0_161 64bit
+
+ 参考资料
+
+hadoop2.x配置
+hadoop2.7.3伪分布式搭建之三------&gt;Hadoop2.7.3的安装
+NameNode进程未启动
+
+ 
+ 一、修改配置文件
+关于JDK的安装及其环境变量的配置，此处不作赘述。
+关于hosts和hostname的说明：
+由于是单机伪分布，此处我将hostname修改成localhost，修改/etc/hostname即可。/etc/hosts文件只保留127.0.0.1		localhost，修改完后记得重启电脑使之生效。
+在Apache Hadoop官网Release页面选择好某个版本的binary版，下载，解压至/usr/local/下
+这里，我的hadoop目录为/usr/local/hadoop-2.7.5
+进入hadoop目录，首先新建文件夹tmp和hdfs，接着，在hdfs里面新建data和name两个文件夹
+12mkdir tmp hdfsmkdi ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/c4d9e06e/" title="李宏毅机器学习笔记">李宏毅机器学习笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-02-05T04:50:25.000Z" title="发表于 2018-02-05 12:50:25">2018-02-05</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.014Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="content">课程地址：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML17_2.html
+ Lecture 0-1： Introduction of Machine Learning
+
+人工智能是目标，机器学习是手段，深度学习是机器学习的一种方法
+人工智能还是人工智障？
+
+图片来源：http://www.commitstrip.com/en/2017/06/07/ai-inside/
+
+
+ 什么是机器学习？
+
+ 机器学习的步骤
+
+
+1.define a set of function
+
+
+2.goodness of function
+
+
+3.pick the best function
+
+
+
+半监督学习：既包含有label的数据又包含无label的数据
+迁移学习：跟我们现在考虑的问题没什么特别联系
+无监督学习：完全无label
+Structured Learning
+增强学习：AlphGo里有用到。机器所拥有的只有一个分数，从评价中去学习。
+ Regression
+回归可以做什么？
+股票预测、无人驾驶、推荐等
+举例：预测宝可梦进化后的CP值
+每只宝可梦， ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/58d37224/" title="斯坦福CS229课程资料">斯坦福CS229课程资料</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-02-01T14:18:05.000Z" title="发表于 2018-02-01 22:18:05">2018-02-01</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.014Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="content">
+ 公开课地址：http://open.163.com/special/opencourse/machinelearning.html
+ 主讲人：Andrew·Wang（吴恩达）
+ 教学安排与大纲：http://cs229.stanford.edu/syllabus.html
+ 讲义翻译：https://kivy-cn.github.io/Stanford-CS-229-CN/#/
+
+ PDF版中文讲义：
+README.pdf
+cs229-notes1.pdf
+cs229-notes2.pdf
+cs229-notes3.pdf
+cs229-notes4.pdf
+cs229-notes5.pdf
+cs229-notes6.pdf
+cs229-notes7a.pdf
+cs229-notes7b.pdf
+cs229-notes8.pdf
+cs229-notes9.pdf
+cs229-notes10.pdf
+cs229-notes11.pdf
+cs229-notes12.pdf
+cs229-notes13.pdf
+cs229-notes-BP.pdf
+cs229-notes-deep_lear ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/97eeb240/" title="git命令总结">git命令总结</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-01-23T14:52:49.000Z" title="发表于 2018-01-23 22:52:49">2018-01-23</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.010Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/git/">git</a></span></div><div class="content"> 一、 基础知识
+工作区：写代码
+暂存区：临时存储
+本地库：历史版本
+123graph LR    A[工作区]--&gt;|git add|B[暂存区]    B--&gt;|git commit|C[本地库]
+
+Git和代码托管中心
+代码托管中心：维护远程库
+
+局域网环境下
+
+GitLab
+…
+
+
+外网环境下
+
+GitHub
+码云
+…
+
+
+
+
+本地库和远程库
+
+团队内部协作
+
+12345graph LR    A[本地库1]--&gt;|&quot;1.git push(项目管理者)&quot;|B[远程库]    B--&gt;|2.git clone|C[本地库2]    C--&gt;|&quot;3.git push(需加入团队)&quot;|B    B--&gt;|&quot;4.git pull&quot;|A
+
+跨团队协作
+
+12345graph LR    A[远程库1]--&gt;|&quot;1.fork&quot;|B[远程库2]    B--&gt;|&quot;2.git clone&quot;|C[本地库]    C--&gt;|&quot;3.git ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/aebbeb61/" title="相关链接">相关链接</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="1969-12-31T16:00:01.000Z" title="发表于 1970-01-01 00:00:01">1970-01-01</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T07:25:36.016Z" title="更新于 2020-12-06 15:25:36">2020-12-06</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E9%93%BE%E6%8E%A5/">链接</a></span></div><div class="content"> 顶会
+ICLR
+ 论坛
+王道论坛
+鸿鹄论坛
+红客联盟
+pdawiki
+ 友链
+阮一峰的网络日志
++7
+VOID001’S WOWO
+饭团表弟
+神奇的战士
+蓝色早晨
+龙哥盟
+ 我的关注
+李宏毅
+北语杨天麟老师
+
+ 技术栈
+ApacheCN
+Linux Kernel
+鸟哥的Linux私房菜
+Study-Area
+hexo
+github
+PAT
+LeetCode刷题
+Aminer
+ 云服务
+七牛云
+腾讯云
+阿里云
+AWS
+LeanCloud
+ 工具
+iconfont
+Google翻译
+唧唧
+pdf在线转换
+Smallpdf
+ilovepdf
+poro
+一枝红杏
+pygments
+超级简历
+MSDN
+ 图片&amp;配图
+Unsplash
+Pexels
+pixabay
+ 电影
+RARBG
+</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">路双宁</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length_num">40</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length_num">35</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lushuangning"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lushuangning" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sdyglsn@126.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/19352681" rel="external nofollow noreferrer" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a></div></div></div><div class="sticky_layout"><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/8a532fba/" title="计算机视觉（北邮鲁鹏）学习笔记（三）">计算机视觉（北邮鲁鹏）学习笔记（三）</a><time datetime="2020-11-06T08:20:04.000Z" title="发表于 2020-11-06 16:20:04">2020-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/c74d8ce8/" title="计算机视觉（北邮鲁鹏）学习笔记（二）">计算机视觉（北邮鲁鹏）学习笔记（二）</a><time datetime="2020-11-05T14:10:04.000Z" title="发表于 2020-11-05 22:10:04">2020-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/aeff6fa9/" title="计算机视觉（北邮鲁鹏）学习笔记（一）">计算机视觉（北邮鲁鹏）学习笔记（一）</a><time datetime="2020-11-05T12:52:44.000Z" title="发表于 2020-11-05 20:52:44">2020-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/da0ac819/" title="相机标定">相机标定</a><time datetime="2020-10-29T13:40:18.000Z" title="发表于 2020-10-29 21:40:18">2020-10-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/22aa21cc/" title="你一定用得到的LaTeX入门资料">你一定用得到的LaTeX入门资料</a><time datetime="2020-10-28T06:50:58.000Z" title="发表于 2020-10-28 14:50:58">2020-10-28</time></div></div></div></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/CV/" style="font-size: 1.1em; color: #999">CV</a> <a href="/tags/Hadoop/" style="font-size: 1.1em; color: #999">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 1.18em; color: #999ca1">Hexo</a> <a href="/tags/KaTex/" style="font-size: 1.1em; color: #999">KaTex</a> <a href="/tags/MathJax/" style="font-size: 1.1em; color: #999">MathJax</a> <a href="/tags/NLP/" style="font-size: 1.26em; color: #999fa8">NLP</a> <a href="/tags/PAT/" style="font-size: 1.1em; color: #999">PAT</a> <a href="/tags/Python/" style="font-size: 1.18em; color: #999ca1">Python</a> <a href="/tags/Spark/" style="font-size: 1.1em; color: #999">Spark</a> <a href="/tags/anaconda/" style="font-size: 1.1em; color: #999">anaconda</a> <a href="/tags/cv/" style="font-size: 1.34em; color: #99a3b0">cv</a> <a href="/tags/docker/" style="font-size: 1.1em; color: #999">docker</a> <a href="/tags/emacs/" style="font-size: 1.1em; color: #999">emacs</a> <a href="/tags/gcc/" style="font-size: 1.1em; color: #999">gcc</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/latex/" style="font-size: 1.1em; color: #999">latex</a> <a href="/tags/linux/" style="font-size: 1.1em; color: #999">linux</a> <a href="/tags/opencv/" style="font-size: 1.1em; color: #999">opencv</a> <a href="/tags/tensorflow/" style="font-size: 1.1em; color: #999">tensorflow</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 1.42em; color: #99a6b7">博客</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 1.18em; color: #999ca1">总结</a> <a href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">推荐系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">操作系统</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.5em; color: #99a9bf">数据结构</a> <a href="/tags/%E6%96%87%E7%8C%AE/" style="font-size: 1.1em; color: #999">文献</a> <a href="/tags/%E6%97%A5%E5%B8%B8/" style="font-size: 1.18em; color: #999ca1">日常</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 1.18em; color: #999ca1">机器学习</a> <a href="/tags/%E6%A6%82%E7%8E%87%E8%AE%BA/" style="font-size: 1.1em; color: #999">概率论</a> <a href="/tags/%E6%BB%A4%E6%B3%A2%E5%99%A8/" style="font-size: 1.1em; color: #999">滤波器</a> <a href="/tags/%E7%9B%B8%E6%9C%BA%E6%A0%87%E5%AE%9A/" style="font-size: 1.1em; color: #999">相机标定</a> <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">神经网络</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 1.42em; color: #99a6b7">笔记</a> <a href="/tags/%E7%BF%BB%E8%AF%91/" style="font-size: 1.42em; color: #99a6b7">翻译</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/" style="font-size: 1.5em; color: #99a9bf">软件工具</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 1.1em; color: #999">链接</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/11/"><span class="card-archive-list-date">十一月 2020</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/10/"><span class="card-archive-list-date">十月 2020</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/02/"><span class="card-archive-list-date">二月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/08/"><span class="card-archive-list-date">八月 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/07/"><span class="card-archive-list-date">七月 2019</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/06/"><span class="card-archive-list-date">六月 2019</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/05/"><span class="card-archive-list-date">五月 2019</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/03/"><span class="card-archive-list-date">三月 2019</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item more is-center"><a class="card-archive-list-link-more" href="/archives/">
+              <span>查看更多</span><i class="fas fa-angle-right"  ></i></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">40</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2019-01-31T16:00:00.000Z"></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2020-12-06T08:55:46.707Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><div class="js-pjax"><script>function subtitleType () {
+  if (false) { 
+    var typed = new Typed("#subtitle", {
+      strings: "鸿蒙初辟本无性，打破冥顽需悟空".split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: false,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '鸿蒙初辟本无性，打破冥顽需悟空'
+  }
+}
+
+if (false) {
+  if (typeof Typed === 'function') subtitleType()
+  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
+} else {
+  subtitleType()
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="27867449" data-server="netease" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body></html>
