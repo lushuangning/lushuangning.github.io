@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>汇编语言学习记录（四） | 路双宁的博客</title><meta name="keywords" content="汇编"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="本篇主要介绍 FAT32 文件系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="汇编语言学习记录（四）">
+<meta property="og:url" content="https://lushuangning.github.io/posts/fe209325/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="本篇主要介绍 FAT32 文件系统">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-09-18T08:23:51.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.184Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="汇编">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/fe209325/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">MBR 分区结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">FAT32 文件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%87"><span class="toc-number">2.1.</span> <span class="toc-text">簇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAT32-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">FAT32 文件系统格式：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.</span> <span class="toc-text">如何找到文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%93%8D%E6%89%BE%E5%88%B0%E6%96%87%E4%BB%B6%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">2.4.</span> <span class="toc-text">实操找到文件的过程</span></a></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">汇编语言学习记录（四）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-18T08:23:51.000Z" title="发表于 2021-09-18 16:23:51">2021-09-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.184Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h1>MBR 分区结构</h1>
+<p>访问内存时，字节是访问的最小单位。但是由于硬盘容量大，所以一般以512个字节为一组（一个块），以块为单位访问。</p>
+<p>逻辑块是硬盘的最小访问单位，通用的访问方式是 LBA28/48。</p>
+<p>常见的分区格式有古典的 MBR 以及流行的 GPT 两种。</p>
+<p>在经典BIOS下，对硬盘的要求只有一个：0号块的最后两个字节必须是 0x55、0xAA，其他并没有要求。但是在 UEFI 固件下就不一样了。UEFI 标准要求硬盘必须按照 GPT 格式分区，否则无法启动计算机。</p>
+<p>MBR 管理分区的秘密就藏在这64字节的标准 MBR 分区表规划里。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109131.png" alt=""></p>
+<p>如果我们对某个磁盘进行分区操作，选择 MBR 分区表的话，第0号块会被磁盘管理工具按照 MBR 格式填充相应的内容。MBR 分区表使用 16 个字节来描述一个分区的入口，最多可以分成4个区。这 16 个字节的含义如下：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109181.png" alt=""></p>
+<p>例如 <code>00 02 03 00 0c 8c 0a 82 80 00 00 00 00 00 20 00</code></p>
+<p>FAT32 对应的文件系统标志位即 0x0c。</p>
+<p>对于分区其实相对扇区号，例中给出的是 <code>0x80000000</code>，那么对应的小端字节为<code>0x00000080</code>。这个才是</p>
+<h1>FAT32 文件系统</h1>
+<h2 id="簇">簇</h2>
+<p>FAT32 记录的是磁盘分区的空间分配情况。簇是一个新单位，每个簇由若干个块组成。一般为 8 个块。</p>
+<p>FAT32 就是用 4 个字节，32 位来标记每一个簇的状态。一般情况下，一个簇 8 个块，一个块有 512 字节，即一簇 4096 字节；簇号最大是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup></mrow><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span></span></span></span> ，那么，在 FAT32 文件系统下，一个分区的最大空间是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup><mo>×</mo><mn>4096</mn><mo>=</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">2^{32} \times 4096 = 16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4096</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">16</span></span></span></span> TB。</p>
+<p>ps：在服务器领域，还有 ZFS 这种文件系统，使用 128 位来标记每一个簇。</p>
+<p>另外，文件系统还受制于分区格式。比如 MBR 分区格式，使用 4 个字节来记录每个分区的总大小，单位是块。那么， 每个分区的最大空间是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup><mo>÷</mo><mn>8</mn><mo>×</mo><mn>4096</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2^{32} \div 8 \times 4096 = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">÷</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4096</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span> TB。</p>
+<p>这也就是为什么 UEFI 固件出现之前能支持的最大硬盘是 2TB 的原因。</p>
+<h2 id="FAT32-文件系统格式：">FAT32 文件系统格式：</h2>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109182.png" alt=""></p>
+<p>FAT 头主要记录 FAT32 文件系统的整体信息，比如<code>文件系统总块数</code>，<code>每个簇的块数</code>，<code>每个块的字节数</code>，<code>FAT 保留块数</code>，<code>分区前已使用块数</code>，<code>FAT 表个数</code>，<code>根目录簇号</code>等等。它占据的空间就是 FAT 保留块数再乘以每个块的字节数。</p>
+<p>FAT 表记录的数据区的空间分配情况。使用 4 个字节，32 位来标记每一个簇。若是空闲，则 32 位全是0。FAT 分配表一般有 2 张，主要是用 FAT1，FAT2则作为备份。它占据的总大小是 FAT表个数 * FAT表大小，单位是块。</p>
+<p>一般来说分区除去 FAT 头和 FAT 表后剩余的空间都分配给数据区，数据区最顶层实际上是一个大文件夹，称之为根目录，其他的文件或者文件夹都是它的子项，根目录一般位于数据区的开头。</p>
+<h2 id="如何找到文件">如何找到文件</h2>
+<ol>
+<li>
+<p>将文件 Initial.bin 放到一个活动分区的根目录下，即分区表入口第一个字节为 0x80。BootLoader 找到其所在的活动分区后，就可以知道分区的起始块号。从这个块号开始，就是 FAT32 文件系统。</p>
+</li>
+<li>
+<p>Initial.bin 文件的实际位置，肯定是在 FAT 数据区。所以 BootLoader 第二步，就是要找到 FAT 数据区的起始块号。算法就是计算数据区前面那些数据所占的空间。<code>文件起始块号 = 分区前面已使用的块数 + FAT保留块数（FAT 头？） + FAT表个数*表大小</code>。所有数据都可以在 FAT 头里面找到。</p>
+</li>
+<li>
+<p>文件在 FAT 数据区的保存机制，是记录文件的文件名及起始簇号。<strong>注意，只有数据区是以簇为单位管理的</strong>。根据文件名获取簇号后，从起始簇号开始的块，就是文件的实际内容。每个文件条目会占据 32 个字节，包括文件名、后缀名、起始簇号等。只要 32 字节一组去匹配前 12 个字节就可以精确查找文件。</p>
+</li>
+<li>
+<p>根据文件起始簇号，计算文件起始块号。簇的相对起始位置是数据区开始位置，不是从硬盘 0 号块开始。<code>文件的块号 = 数据区起始块号 + （文件起始簇号-2） * 每簇块数</code>。减 2 的原因是，簇号从 2 开始。</p>
+</li>
+</ol>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109183.png" alt=""></p>
+<ol start="5">
+<li>把 Initial.bin 读取到内存然后运行。这里需要用到另外一个参数即文件长度，它的单位是字节。所以要先获取文件长度，然后除以 512 得到以块为单位的长度。</li>
+</ol>
+<h2 id="实操找到文件的过程">实操找到文件的过程</h2>
+<p>将虚拟磁盘分区如下所示：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109185.png" alt=""></p>
+<p>使用 WinHex 打开磁盘，可以看到其 MBR 分区表如下所示：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109184.png" alt=""></p>
+<p>红色方框中的16字节表示第一个分区（H盘），绿色方框中的16字节表示第二个分区（I盘）。</p>
+<p>对照硬盘分区结构信息表，第一个分区的起始扇区起始相对扇区号为 0x00000080。</p>
+<p>进入第一个分区，如所示：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109186.png" alt=""></p>
+<p>这90个字节包含了要计算的所有信息。</p>
+<p>分区前已使用的块数在偏移 0x1c - 0x1f 这四个字节，值为 0x00000080；FAT 保留块数在 0x0e - 0x0f 这两个字节，值为 0x184e；FAT 表个数在偏移 0x10 字节出，值为 0x0002；表大小在偏移 0x24 - 0x27 这4个字节，值为0x000003d9；每簇的块数，在0x0d字节处，值为0x04；每块的字节数，在0x0b - 0x0c 处，值为0x0200，也就是512字节。</p>
+<p>数据起始块号=0x80 + 0x184e + 0x02 * 0x3d9 = 0x2080 = 128 + 6222 + 2 * 985 = 8320</p>
+<p>在 WinHex 中按 Ctrl + G 跳转到 8320 块处，这里即是第一簇（2号簇），也是根目录所在地。</p>
+<p>计算 Initial.bin 的起始块号。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109188.png" alt=""></p>
+<p>起始簇号由 4 个字节，32位表示，但却并不是连续的。偏移 0x1a - 0x1b 是低 16 位，值为 0x0006，偏移 0x14 - 0x15 是高 16 位，值为 0x0000。</p>
+<p>即，起始簇号 = 0x06<br>
+相对起始块号 = (6-2) * 4 = 16<br>
+文件起始块号 = 8320 + 16 = 8336</p>
+<p>计算以块为单位的文件长度，最后 4 个字节 0x00000500 表示文件长度，单位为字节。 0x50 = 1280, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1280</mn><mo>÷</mo><mn>512</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1280 \div 512 = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1280</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">÷</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">512</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span> 余 256。因此文件占 3 个块。</p>
+<p>按住 Ctrl + G 跳转到 8336 块处</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109189.png" alt=""></p>
+<p>肉眼可见，该文件占了3个块。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/fe209325/">https://lushuangning.github.io/posts/fe209325/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/f4b01dbb/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">汇编语言学习记录（五）</div></div></a></div><div class="next-post pull-right"><a href="/posts/490d8a40/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">汇编语言学习记录（三）</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>$(function () {
+  $('span.katex-display').wrap('<div class="katex-wrap"></div>')
+})</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

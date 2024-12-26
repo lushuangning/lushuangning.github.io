@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Let’s Build A Simple Interpreter. Part 4. | 路双宁的博客</title><meta name="keywords" content="编译原理"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="出处：https:&#x2F;&#x2F;ruslanspivak.com&#x2F;lsbasi-part4&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Let’s Build A Simple Interpreter. Part 4.">
+<meta property="og:url" content="https://lushuangning.github.io/posts/7022636a/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="出处：https:&#x2F;&#x2F;ruslanspivak.com&#x2F;lsbasi-part4&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-07-27T02:31:17.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.167Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/7022636a/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Let%E2%80%99s-Build-A-Simple-Interpreter-%E7%B3%BB%E5%88%97%E5%85%A8%E9%83%A8%E5%87%BA%E8%87%AA-Ruslan%E2%80%99s-Blog%EF%BC%8C%E5%9B%A0%E5%85%B6%E4%B8%AD%E7%9A%84%E9%93%BE%E6%8E%A5%E5%92%8C%E5%9B%BE%E7%89%87%E6%9D%A5%E8%87%AA%E5%9B%BD%E5%A4%96%EF%BC%8C%E5%A6%82%E9%81%87%E5%8A%A0%E8%BD%BD%E8%BE%83%E6%85%A2%E6%88%96%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E7%9A%84%E6%83%85%E5%86%B5%E8%AF%B7%E6%8C%82%E4%BB%A3%E7%90%86%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">Let’s Build A Simple Interpreter 系列全部出自 Ruslan’s Blog，因其中的链接和图片来自国外，如遇加载较慢或无法访问的情况请挂代理。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">Let’s Build A Simple Interpreter. Part 4.</span></a></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">Let’s Build A Simple Interpreter. Part 4.</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-27T02:31:17.000Z" title="发表于 2021-07-27 10:31:17">2021-07-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.167Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h3 id="Let’s-Build-A-Simple-Interpreter-系列全部出自-Ruslan’s-Blog，因其中的链接和图片来自国外，如遇加载较慢或无法访问的情况请挂代理。"><em>Let’s Build A Simple Interpreter</em> 系列全部出自 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://ruslanspivak.com/">Ruslan’s Blog</a>，因其中的链接和图片来自国外，如遇加载较慢或无法访问的情况请挂代理。</h3>
+<h1><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ruslanspivak.com/lsbasi-part4/">Let’s Build A Simple Interpreter. Part 4.</a></h1>
+<p>Have you been passively learning the material in these articles or have you been actively practicing it? I hope you’ve been actively practicing it. I really do :)</p>
+<p>Remember what Confucius said?</p>
+<blockquote>
+<p>“I hear and I forget.”</p>
+</blockquote>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/LSBAWS_confucius_hear.png" alt=""></p>
+<blockquote>
+<p>“I see and I remember.”</p>
+</blockquote>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/LSBAWS_confucius_see.png" alt=""></p>
+<blockquote>
+<p>“I do and I understand.”</p>
+</blockquote>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/LSBAWS_confucius_do.png" alt=""></p>
+<p>In the previous article you learned how to parse (recognize) and interpret arithmetic expressions with any number of plus or minus operators in them, for example “7 - 3 + 2 - 1”. You also learned about syntax diagrams and how they can be used to specify the syntax of a programming language.</p>
+<p>Today you’re going to learn how to parse and interpret arithmetic expressions with any number of multiplication and division operators in them, for example “7 * 4 / 2 * 3”. The division in this article will be an integer division, so if the expression is “9 / 4”, then the answer will be an integer: 2.</p>
+<p>I will also talk quite a bit today about another widely used notation for specifying the syntax of a programming language. It’s called <em><strong>context-free grammars</strong></em> (<em><strong>grammars</strong></em>, for short) or <em><strong>BNF</strong></em> (Backus-Naur Form). For the purpose of this article I will not use pure <a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form">BNF</a> notation but more like a modified <a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form">EBNF</a> notation.</p>
+<p>Here are a couple of reasons to use grammars:</p>
+<ol>
+<li>A grammar specifies the syntax of a programming language in a concise manner. Unlike syntax diagrams, grammars are very compact. You will see me using grammars more and more in future articles.</li>
+<li>A grammar can serve as great documentation.</li>
+<li>A grammar is a good starting point even if you manually write your parser from scratch. Quite often you can just convert the grammar to code by following a set of simple rules.</li>
+<li>There is a set of tools, called <em>parser generators</em>, which accept a grammar as an input and automatically generate a parser for you based on that grammar. I will talk about those tools later on in the series.</li>
+</ol>
+<p>Now, let’s talk about the mechanical aspects of grammars, shall we?</p>
+<p>Here is a grammar that describes arithmetic expressions like “7 * 4 / 2 * 3” (it’s just one of the many expressions that can be generated by the grammar):</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_bnf1.png" alt=""></p>
+<p>A grammar consists of a sequence of <em>rules</em>, also known as <em>productions</em>. There are two rules in our grammar:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_bnf2.png" alt=""></p>
+<p>A rule consists of a <em>non-terminal</em>, called the <em><strong>head</strong></em> or <em><strong>left-hand side</strong></em> of the production, a colon, and a sequence of terminals and/or non-terminals, called the <em><strong>body</strong></em> or <em><strong>right-hand side</strong></em> of the production:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_bnf3.png" alt=""></p>
+<p>In the grammar I showed above, tokens like MUL, DIV, and INTEGER are called <em><strong>terminals</strong></em> and variables like <em>expr</em> and <em>factor</em> are called <em><strong>non-terminals</strong></em>. Non-terminals usually consist of a sequence of terminals and/or non-terminals:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_bnf4.png" alt=""></p>
+<p>The non-terminal symbol on the left side of the first rule is called the <em><strong>start symbol</strong></em>. In the case of our grammar, the start symbol is <em>expr</em>:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_bnf5.png" alt=""></p>
+<p>You can read the rule <em>expr</em> as “An <em>expr</em> can be a <em>factor</em> optionally followed by a <em>multiplication</em> or <em>division</em> operator followed by another <em>factor</em>, which in turn is optionally followed by a <em>multiplication</em> or <em>division</em> operator followed by another <em>factor</em> and so on and so forth.”</p>
+<p>What is a <em>factor</em>? For the purpose of this article a <em>factor</em> is just an integer.</p>
+<p>Let’s quickly go over the symbols used in the grammar and their meaning.</p>
+<ul>
+<li>| - Alternatives. A bar means “or”. So (MUL | DIV) means either MUL or DIV.</li>
+<li>( … ) - An open and closing parentheses mean grouping of terminals and/or non-terminals as in (MUL | DIV).</li>
+<li>( … )* - Match contents within the group zero or more times.</li>
+</ul>
+<p>If you worked with regular expressions in the past, then the symbols <strong>|, (), and (…)*</strong> should be pretty familiar to you.</p>
+<p>A grammar defines a <em>language</em> by explaining what sentences it can form. This is how you can <em>derive</em> an arithmetic expression using the grammar: first you begin with the start symbol <em>expr</em> and then repeatedly replace a non-terminal by the body of a rule for that non-terminal until you have generated a sentence consisting solely of terminals. Those sentences form a <em>language</em> defined by the grammar.</p>
+<p>If the grammar cannot derive a certain arithmetic expression, then it doesn’t support that expression and the parser will generate a syntax error when it tries to recognize the expression.</p>
+<p>I think a couple of examples are in order. This is how the grammar derives the expression <em>3</em>:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_derive1.png" alt=""></p>
+<p>This is how the grammar derives the expression <em>3 * 7</em>:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_derive2.png" alt=""></p>
+<p>And this is how the grammar derives the expression <em>3 * 7 / 2</em>:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_derive3.png" alt=""></p>
+<p>Whoa, quite a bit of theory right there!</p>
+<p>I think when I first read about grammars, the related terminology, and all that jazz, I felt something like this:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_bnf_hmm.png" alt=""></p>
+<p>I can assure you that I definitely was not like this:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_bnf_yes.png" alt=""></p>
+<p>It took me some time to get comfortable with the notation, how it works, and its relationship with parsers and lexers, but I have to tell you that it pays to learn it in the long run because it’s so widely used in practice and compiler literature that you’re bound to run into it at some point. So, why not sooner rather than later? :)</p>
+<p>Now, let’s map that grammar to code, okay?</p>
+<p>Here are the guidelines that we will use to convert the grammar to source code. By following them, you can literally translate the grammar to a working parser:</p>
+<ol>
+<li>Each rule, <strong>R</strong>, defined in the grammar, becomes a method with the same name, and references to that rule become a method call: <em><strong>R()</strong></em>. The body of the method follows the flow of the body of the rule using the very same guidelines.</li>
+<li>Alternatives <strong>(a1 | a2 | aN)</strong> become an <em><strong>if-elif-else</strong></em> statement<br>
+An optional grouping <strong>(…)*</strong> becomes a <em><strong>while</strong></em> statement that can loop over zero or more times</li>
+<li>Each token reference <strong>T</strong> becomes a call to the method <em><strong>eat</strong></em>: <em><strong>eat(T)</strong></em>. The way the <em>eat</em> method works is that it consumes the token <em>T</em> if it matches the current <em>lookahead</em> token, then it gets a new token from the lexer and assigns that token to the <em>current_token</em> internal variable.</li>
+</ol>
+<p>Visually the guidelines look like this:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_rules.png" alt=""></p>
+<p>Let’s get moving and convert our grammar to code following the above guidelines.</p>
+<p>There are two rules in our grammar: one <em>expr</em> rule and one <em>factor</em> rule. Let’s start with the <em>factor</em> rule (production). According to the guidelines, you need to create a method called <em>factor</em> (guideline 1) that has a single call to the <em>eat</em> method to consume the INTEGER token (guideline 4):</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">factor</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="variable language_">self</span>.eat(INTEGER)</span><br></pre></td></tr></table></figure>
+<p>That was easy, wasn’t it?</p>
+<p>Onward!</p>
+<p>The rule <em>expr</em> becomes the <em>expr</em> method (again according to the guideline 1). The body of the rule starts with a reference to <em>factor</em> that becomes a <em>factor()</em> method call. The optional grouping <em>(…)*</em> becomes a <em>while</em> loop and <em>(MUL | DIV)</em> alternatives become an <em>if-elif-else</em> statement. By combining those pieces together we get the following <em>expr</em> method:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">expr</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="variable language_">self</span>.factor()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="variable language_">self</span>.current_token.<span class="built_in">type</span> <span class="keyword">in</span> (MUL, DIV):</span><br><span class="line">        token = <span class="variable language_">self</span>.current_token</span><br><span class="line">        <span class="keyword">if</span> token.<span class="built_in">type</span> == MUL:</span><br><span class="line">            <span class="variable language_">self</span>.eat(MUL)</span><br><span class="line">            <span class="variable language_">self</span>.factor()</span><br><span class="line">        <span class="keyword">elif</span> token.<span class="built_in">type</span> == DIV:</span><br><span class="line">            <span class="variable language_">self</span>.eat(DIV)</span><br><span class="line">            <span class="variable language_">self</span>.factor()</span><br></pre></td></tr></table></figure>
+<p>Please spend some time and study how I mapped the grammar to the source code. Make sure you understand that part because it’ll come in handy later on.</p>
+<p>For your convenience I put the above code into the <em><a target="_blank" rel="noopener external nofollow noreferrer" href="http://parser.py">parser.py</a></em> file that contains a lexer and a parser without an interpreter. You can download the file directly from <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/rspivak/lsbasi/blob/master/part4/parser.py">GitHub</a> and play with it. It has an interactive prompt where you can enter expressions and see if they are valid: that is, if the parser built according to the grammar can recognize the expressions.</p>
+<p>Here is a sample session that I ran on my computer:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python parser.py</span></span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">3</span></span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">3 * 7</span></span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">3 * 7 / 2</span></span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">3 *</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;parser.py&quot;, line 155, in &lt;module&gt;</span><br><span class="line">    main()</span><br><span class="line">  File &quot;parser.py&quot;, line 151, in main</span><br><span class="line">    parser.parse()</span><br><span class="line">  File &quot;parser.py&quot;, line 136, in parse</span><br><span class="line">    self.expr()</span><br><span class="line">  File &quot;parser.py&quot;, line 130, in expr</span><br><span class="line">    self.factor()</span><br><span class="line">  File &quot;parser.py&quot;, line 114, in factor</span><br><span class="line">    self.eat(INTEGER)</span><br><span class="line">  File &quot;parser.py&quot;, line 107, in eat</span><br><span class="line">    self.error()</span><br><span class="line">  File &quot;parser.py&quot;, line 97, in error</span><br><span class="line">    raise Exception(&#x27;Invalid syntax&#x27;)</span><br><span class="line">Exception: Invalid syntax</span><br></pre></td></tr></table></figure>
+<p>Try it out!</p>
+<p>I couldn’t help but mention syntax diagrams again. This is how a syntax diagram for the same <em>expr</em> rule will look:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_sd.png" alt=""></p>
+<p>It’s about time we dug into the source code of our new arithmetic expression interpreter. Below is the code of a calculator that can handle valid arithmetic expressions containing integers and any number of multiplication and division (integer division) operators. You can also see that I refactored the lexical analyzer into a separate class <em>Lexer</em> and updated the <em>Interpreter</em> class to take the <em>Lexer</em> instance as a parameter:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Token types</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># EOF (end-of-file) token is used to indicate that</span></span><br><span class="line"><span class="comment"># there is no more input left for lexical analysis</span></span><br><span class="line">INTEGER, MUL, DIV, EOF = <span class="string">&#x27;INTEGER&#x27;</span>, <span class="string">&#x27;MUL&#x27;</span>, <span class="string">&#x27;DIV&#x27;</span>, <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Token</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">type</span>, value</span>):</span><br><span class="line">        <span class="comment"># token type: INTEGER, MUL, DIV, or EOF</span></span><br><span class="line">        <span class="variable language_">self</span>.<span class="built_in">type</span> = <span class="built_in">type</span></span><br><span class="line">        <span class="comment"># token value: non-negative integer value, &#x27;*&#x27;, &#x27;/&#x27;, or None</span></span><br><span class="line">        <span class="variable language_">self</span>.value = value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;String representation of the class instance.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Examples:</span></span><br><span class="line"><span class="string">            Token(INTEGER, 3)</span></span><br><span class="line"><span class="string">            Token(MUL, &#x27;*&#x27;)</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Token(&#123;type&#125;, &#123;value&#125;)&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">            <span class="built_in">type</span>=<span class="variable language_">self</span>.<span class="built_in">type</span>,</span><br><span class="line">            value=<span class="built_in">repr</span>(<span class="variable language_">self</span>.value)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.__str__()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Lexer</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, text</span>):</span><br><span class="line">        <span class="comment"># client string input, e.g. &quot;3 * 5&quot;, &quot;12 / 3 * 4&quot;, etc</span></span><br><span class="line">        <span class="variable language_">self</span>.text = text</span><br><span class="line">        <span class="comment"># self.pos is an index into self.text</span></span><br><span class="line">        <span class="variable language_">self</span>.pos = <span class="number">0</span></span><br><span class="line">        <span class="variable language_">self</span>.current_char = <span class="variable language_">self</span>.text[<span class="variable language_">self</span>.pos]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">error</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">&#x27;Invalid character&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">advance</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Advance the `pos` pointer and set the `current_char` variable.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.pos += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.pos &gt; <span class="built_in">len</span>(<span class="variable language_">self</span>.text) - <span class="number">1</span>:</span><br><span class="line">            <span class="variable language_">self</span>.current_char = <span class="literal">None</span>  <span class="comment"># Indicates end of input</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.current_char = <span class="variable language_">self</span>.text[<span class="variable language_">self</span>.pos]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">skip_whitespace</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">while</span> <span class="variable language_">self</span>.current_char <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> <span class="variable language_">self</span>.current_char.isspace():</span><br><span class="line">            <span class="variable language_">self</span>.advance()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">integer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a (multidigit) integer consumed from the input.&quot;&quot;&quot;</span></span><br><span class="line">        result = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">while</span> <span class="variable language_">self</span>.current_char <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> <span class="variable language_">self</span>.current_char.isdigit():</span><br><span class="line">            result += <span class="variable language_">self</span>.current_char</span><br><span class="line">            <span class="variable language_">self</span>.advance()</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(result)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_next_token</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Lexical analyzer (also known as scanner or tokenizer)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        This method is responsible for breaking a sentence</span></span><br><span class="line"><span class="string">        apart into tokens. One token at a time.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">while</span> <span class="variable language_">self</span>.current_char <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.current_char.isspace():</span><br><span class="line">                <span class="variable language_">self</span>.skip_whitespace()</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.current_char.isdigit():</span><br><span class="line">                <span class="keyword">return</span> Token(INTEGER, <span class="variable language_">self</span>.integer())</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.current_char == <span class="string">&#x27;*&#x27;</span>:</span><br><span class="line">                <span class="variable language_">self</span>.advance()</span><br><span class="line">                <span class="keyword">return</span> Token(MUL, <span class="string">&#x27;*&#x27;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.current_char == <span class="string">&#x27;/&#x27;</span>:</span><br><span class="line">                <span class="variable language_">self</span>.advance()</span><br><span class="line">                <span class="keyword">return</span> Token(DIV, <span class="string">&#x27;/&#x27;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="variable language_">self</span>.error()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Token(EOF, <span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Interpreter</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, lexer</span>):</span><br><span class="line">        <span class="variable language_">self</span>.lexer = lexer</span><br><span class="line">        <span class="comment"># set current token to the first token taken from the input</span></span><br><span class="line">        <span class="variable language_">self</span>.current_token = <span class="variable language_">self</span>.lexer.get_next_token()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">error</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">&#x27;Invalid syntax&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eat</span>(<span class="params">self, token_type</span>):</span><br><span class="line">        <span class="comment"># compare the current token type with the passed token</span></span><br><span class="line">        <span class="comment"># type and if they match then &quot;eat&quot; the current token</span></span><br><span class="line">        <span class="comment"># and assign the next token to the self.current_token,</span></span><br><span class="line">        <span class="comment"># otherwise raise an exception.</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.current_token.<span class="built_in">type</span> == token_type:</span><br><span class="line">            <span class="variable language_">self</span>.current_token = <span class="variable language_">self</span>.lexer.get_next_token()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.error()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">factor</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return an INTEGER token value.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        factor : INTEGER</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        token = <span class="variable language_">self</span>.current_token</span><br><span class="line">        <span class="variable language_">self</span>.eat(INTEGER)</span><br><span class="line">        <span class="keyword">return</span> token.value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">expr</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Arithmetic expression parser / interpreter.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        expr   : factor ((MUL | DIV) factor)*</span></span><br><span class="line"><span class="string">        factor : INTEGER</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        result = <span class="variable language_">self</span>.factor()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="variable language_">self</span>.current_token.<span class="built_in">type</span> <span class="keyword">in</span> (MUL, DIV):</span><br><span class="line">            token = <span class="variable language_">self</span>.current_token</span><br><span class="line">            <span class="keyword">if</span> token.<span class="built_in">type</span> == MUL:</span><br><span class="line">                <span class="variable language_">self</span>.eat(MUL)</span><br><span class="line">                result = result * <span class="variable language_">self</span>.factor()</span><br><span class="line">            <span class="keyword">elif</span> token.<span class="built_in">type</span> == DIV:</span><br><span class="line">                <span class="variable language_">self</span>.eat(DIV)</span><br><span class="line">                result = result / <span class="variable language_">self</span>.factor()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># To run under Python3 replace &#x27;raw_input&#x27; call</span></span><br><span class="line">            <span class="comment"># with &#x27;input&#x27;</span></span><br><span class="line">            text = raw_input(<span class="string">&#x27;calc&gt; &#x27;</span>)</span><br><span class="line">        <span class="keyword">except</span> EOFError:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> text:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        lexer = Lexer(text)</span><br><span class="line">        interpreter = Interpreter(lexer)</span><br><span class="line">        result = interpreter.expr()</span><br><span class="line">        <span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>Save the above code into the <em><a target="_blank" rel="noopener external nofollow noreferrer" href="http://calc4.py">calc4.py</a></em> file or download it directly from <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/rspivak/lsbasi/blob/master/part4/calc4.py">GitHub</a>. As usual, try it out and see for yourself that it works.</p>
+<p>This is a sample session that I ran on my laptop:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python calc4.py</span></span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">7 * 4 / 2</span></span><br><span class="line">14</span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">7 * 4 / 2 * 3</span></span><br><span class="line">42</span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">10 * 4  * 2 * 3 / 8</span></span><br><span class="line">30</span><br></pre></td></tr></table></figure>
+<p>I know you couldn’t wait for this part :) Here are new exercises for today:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_exercises.png" alt=""></p>
+<ul>
+<li>Write a grammar that describes arithmetic expressions containing any number of +, -, *, or / operators. With the grammar you should be able to derive expressions like “2 + 7 * 4”, “7 - 8 / 4”, “14 + 2 * 3 - 6 / 2”, and so on.</li>
+<li>Using the grammar, write an interpreter that can evaluate arithmetic expressions containing any number of +, -, *, or / operators. Your interpreter should be able to handle expressions like “2 + 7 * 4”, “7 - 8 / 4”, “14 + 2 * 3 - 6 / 2”, and so on.</li>
+<li>If you’ve finished the above exercises, relax and enjoy :)</li>
+</ul>
+<p><strong>Check your understanding.</strong></p>
+<p>Keeping in mind the grammar from today’s article, answer the following questions, referring to the picture below as needed:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part4/lsbasi_part4_bnf1.png" alt=""></p>
+<ol>
+<li>What is a context-free grammar (grammar)?</li>
+<li>How many rules / productions does the grammar have?</li>
+<li>What is a terminal? (Identify all terminals in the picture)</li>
+<li>What is a non-terminal? (Identify all non-terminals in the picture)</li>
+<li>What is a head of a rule? (Identify all heads / left-hand sides in the picture)</li>
+<li>What is a body of the rule? (Identify all bodies / right-hand sides in the picture)</li>
+<li>What is the start symbol of a grammar?</li>
+</ol>
+<p>Hey, you read all the way to the end! This post contained quite a bit of theory, so I’m really proud of you that you finished it.</p>
+<p>I’ll be back next time with a new article - stay tuned and don’t forget to do the exercises, they will do you good.</p>
+<p>Here is a list of books I recommend that will help you in your study of interpreters and compilers:</p>
+<ol>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/193435645X/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=193435645X&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=MP4DCXDV6DJMEJBL">Language Implementation Patterns: Create Your Own Domain-Specific and General Programming Languages (Pragmatic Programmers)</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/0470177071/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0470177071&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=UCLGQTPIYSWYKRRM">Writing Compilers and Interpreters: A Software Engineering Approach</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/052182060X/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=052182060X&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=ZSKKZMV7YWR22NMW">Modern Compiler Implementation in Java</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/1461446988/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1461446988&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=PAXWJP5WCPZ7RKRD">Modern Compiler Design</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/0321486811/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321486811&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=GOEGDQG4HIHU56FQ">Compilers: Principles, Techniques, and Tools (2nd Edition)</a></p>
+</li>
+</ol>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/7022636a/">https://lushuangning.github.io/posts/7022636a/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lushuangning.github.io" target="_blank">路双宁的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/6939522b/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Let’s Build A Simple Interpreter. Part 5.</div></div></a></div><div class="next-post pull-right"><a href="/posts/3f63f5ad/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Let’s Build A Simple Interpreter. Part 3.</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ubuntu下Anaconda使用手册 | 路双宁的博客</title><meta name="keywords" content="anaconda,软件工具"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="终端下   conda换源 清华大学镜像站Anaconda镜像使用帮助 1234567891011121314151617181920  编辑~&#x2F;.condarc文件将文件中的内容替换为下面的内容    channels:    - defaults  show_channel_urls: true  channel_alias: https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu下Anaconda使用手册">
+<meta property="og:url" content="https://lushuangning.github.io/posts/31eefdff/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="终端下   conda换源 清华大学镜像站Anaconda镜像使用帮助 1234567891011121314151617181920  编辑~&#x2F;.condarc文件将文件中的内容替换为下面的内容    channels:    - defaults  show_channel_urls: true  channel_alias: https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-07-10T15:38:25.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.170Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="anaconda">
+<meta property="article:tag" content="软件工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/31eefdff/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E4%B8%8B"><span class="toc-number">1.</span> <span class="toc-text">终端下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2%E4%B8%8B"><span class="toc-number">2.</span> <span class="toc-text">图形化界面下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-notebook-jupyter-lab%E7%9B%B8%E5%85%B3%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">Jupyter notebook &amp; jupyter lab相关设置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95"><span class="toc-number">3.0.1.</span> <span class="toc-text">工作目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Kernel%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.0.2.</span> <span class="toc-text">Kernel设置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jupyter-lab%E5%AE%89%E8%A3%85%E4%BB%A3%E7%A0%81%E8%A1%A5%E5%85%A8%E6%8F%92%E4%BB%B6Kite"><span class="toc-number">4.</span> <span class="toc-text">jupyter lab安装代码补全插件Kite</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E7%9A%84-Anaconda-%E7%9B%B8%E5%85%B3%E7%8E%AF%E5%A2%83%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">我的 Anaconda 相关环境核心配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Pytorch%E7%8E%AF%E5%A2%83"><span class="toc-number">5.0.1.</span> <span class="toc-text">Pytorch环境</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Keras%E7%8E%AF%E5%A2%83"><span class="toc-number">5.0.2.</span> <span class="toc-text">Keras环境</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#OpenCV%E7%8E%AF%E5%A2%83"><span class="toc-number">5.0.3.</span> <span class="toc-text">OpenCV环境</span></a></li></ol></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">Ubuntu下Anaconda使用手册</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-07-10T15:38:25.000Z" title="发表于 2019-07-10 23:38:25">2019-07-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.170Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h3 id="终端下">终端下</h3>
+<ul>
+<li>
+<p><code>conda</code>换源<br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">清华大学镜像站Anaconda镜像使用帮助</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">  编辑~/.condarc文件</span><br><span class="line">将文件中的内容替换为下面的内容</span><br><span class="line">  </span><br><span class="line">  channels:</span><br><span class="line">    - defaults</span><br><span class="line">  show_channel_urls: true</span><br><span class="line">  channel_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda</span><br><span class="line">  default_channels:</span><br><span class="line">    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span><br><span class="line">    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free</span><br><span class="line">    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span><br><span class="line">    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro</span><br><span class="line">    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span><br><span class="line">  custom_channels:</span><br><span class="line">    conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">    msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">    bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">    menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">    pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">    simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud  </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>运行 <code>conda clean -i</code> 清除索引缓存，保证用的是镜像站提供的索引。</p>
+<p><strong>PS：如果上述方法不管用，建议还是用<code>proxychains4</code>+代理 来节省生命。</strong></p>
+<ul>
+<li>
+<p>查看环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env list</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>创建新环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n env_name python=x.x(如3.6, 2.7等)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>环境切换</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate env_name</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>退出当前环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>删除环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda remove -n env_name --all</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>
+<p>重命名环境</p>
+<p><code>conda</code> 其实没有重命名指令，实现重命名是通过 <code>clone</code> 完成的，分两步：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n yolo --clone pytorch</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda remove -n pytorch --all</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>
+<p>安装新的包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install package_name</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查看已安装包的版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda list matplotlib</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>
+<p>卸载指定包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda uninstall package_name</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>
+<p>更新</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 更新anaconda：conda update anaconda</span><br><span class="line">2. 更新conda-build：conda update conda-build</span><br><span class="line">3. 更新全部：conda update --all</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>回滚</p>
+<p>查询之前更新的版本记录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda list -r</span><br></pre></td></tr></table></figure>
+<p>选择一个之前的版本进行回滚</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install --revision 数字</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>开发环境备份<br>
+Anaconda提供了备份的功能，可以将当前的环境备份成一个.yml文件，之后创建环境的时候可以直接依据这个文件创建</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env export -n my-environment -f my-environment.yml</span><br></pre></td></tr></table></figure>
+<p>注意将<code>my-environment</code>改成你自己的环境名哦</p>
+<p>新建环境的时候</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env create -f my-environment.yml</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="图形化界面下">图形化界面下</h3>
+<p><code>linux</code>下安装<code>anaconda</code>后，<code>anaconda-navigator</code>只能在终端里输入</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anaconda-navigator</span><br></pre></td></tr></table></figure>
+<p>为了像其他application一样可以单击图标启动，你需要这样做</p>
+<ol>
+<li>进入<code>/usr/share/applications/</code>文件夹</li>
+<li>新建<code>anaconda.desktop</code>文件</li>
+<li>将下面的内容复制到第二步建的文件中，保存</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Name=Anaconda</span><br><span class="line">Version=5.3.1</span><br><span class="line">Type=Application</span><br><span class="line">Exec=/home/username/anaconda3/bin/anaconda-navigator</span><br><span class="line">Icon=/home/username/anaconda3/pkgs/anaconda-navigator-1.9.7-py37_0/lib/python3.7/site-packages/anaconda_navigator/static/images/anaconda.png</span><br><span class="line">Terminal=false</span><br><span class="line">StartupNotify=true</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong> 将<code>Exec</code>和<code>Icon</code>中的<code>username</code>替换成你自己的用户名，<code>Icon</code>是anaconda图标的位置，可以根据 下面这条命令来查找具体路径：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find -name &#x27;ana*.png&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="Jupyter-notebook-jupyter-lab相关设置"><code>Jupyter notebook</code> &amp; <code>jupyter lab</code>相关设置</h3>
+<h5 id="工作目录">工作目录</h5>
+<p>生成配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+<p>打开生成的文件，修改下面的语句</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.notebook_dir = &#x27;/your/dir/&#x27;</span><br></pre></td></tr></table></figure>
+<h5 id="Kernel设置"><code>Kernel</code>设置</h5>
+<p>当你安装了多个环境之后，你不需要在每个环境里都安装一个<code>Jupyter Notebook</code>和<code>JupyterLab</code>，只需要在<code>base</code>环境中安装一个就可以。</p>
+<p>之后，你需要一个插件。</p>
+<p>请仔细阅读<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Anaconda-Platform/nb_conda_kernels">Anaconda-Platform/nb_conda_kernels</a>在GitHub上的<code>READEME</code>，里面写到，<strong>你需要在安装<code>Jupyter Notebook</code>或<code>JupyterLab</code>的环境中安装<code>nb_conda_kernels</code>，在你其他的环境中安装<code>ipykernel</code></strong></p>
+<p>于是我们切换到<code>base</code>环境中安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install nb_conda_kernels</span><br></pre></td></tr></table></figure>
+<p>之后，执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install ipykernel</span><br></pre></td></tr></table></figure>
+<p>切换到其他环境中安装<code>ipykernel</code>，例如</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate pytorch</span><br><span class="line">conda install ipykernel</span><br></pre></td></tr></table></figure>
+<p>即可切换不同的<code>kernel</code>。</p>
+<del>
+在 `jupyter` 里新建 Python 文件时只有个 Python3 的选项，而我有次新建了个 OpenCV 的环境，在终端里`import cv2`成功，在 `jupyter` 里一直报错找不到`module`，后面了解到是 kernel 的问题。
+<p>例如，我新建了个名为<code>pytorch</code>的环境，需要在 <code>jupyter</code> 上用到这个环境里的包，我需要把 <code>jupyter </code>的 kernel 切换到该环境下。先安装一下<code>ipykernel</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda install ipykernel</span><br><span class="line"></span><br><span class="line">python -m ipykernel install --user --name [env_name] --display-name &quot;env_name&quot;</span><br></pre></td></tr></table></figure>
+<p>例如</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m ipykernel install --user --name pytorch --display-name &quot;pytorch&quot;</span><br></pre></td></tr></table></figure>
+<p>查看 <code>jupyter</code> 目前的<code>kernel</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter kernelspec list</span><br></pre></td></tr></table></figure>
+<p>删除相关 <code>kernel</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter kernelspec remove kernel_name</span><br></pre></td></tr></table></figure>
+</del>
+<h3 id="jupyter-lab安装代码补全插件Kite"><code>jupyter lab</code>安装代码补全插件<code>Kite</code></h3>
+<p>参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/feffery/p/13199472.html">jupyter lab最强代码补全插件</a>，但应注意，使用<code>conda</code>安装<code>nodejs</code>的时候，默认会安装很低版本的<code>nodejs</code>，解决方法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda search nodejs # 搜索conda下的nodejs版本。</span><br><span class="line">conda install nodejs=14.7.0 -c conda-forge</span><br></pre></td></tr></table></figure>
+<p>另外，在安装<code>Kite Extension for JupyterLab</code>的时候，需注意<code>jupyter lab</code>的版本，参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/kiteco/jupyterlab-kite#installing-the-kite-extension-for-jupyterlab">Kite Autocomplete Extension for JupyterLab</a></p>
+<h3 id="我的-Anaconda-相关环境核心配置">我的 Anaconda 相关环境核心配置</h3>
+<p><strong>不同的深度学习框架请建立不同的环境来运行，因为不同框架依赖的各个<code>package</code>的版本不同，将两个框架放在一个环境下可能会产生冲突</strong></p>
+<p><code>proxychains4</code>是为了使该命令走代理而设，如果你没有代理需要去掉它，但网速可能慢的让你几个小时都安装不好。</p>
+<h5 id="Pytorch环境"><code>Pytorch</code>环境</h5>
+<p>根据<a target="_blank" rel="noopener external nofollow noreferrer" href="https://pytorch.org/get-started/locally/">pytorch官网</a>，结合自己电脑的硬件情况选择相应的安装命令。我的是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 conda install pytorch torchvision cudatoolkit=10.2 -c pytorch</span><br></pre></td></tr></table></figure>
+<h5 id="Keras环境"><code>Keras</code>环境</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 conda install tensorflow-gpu</span><br><span class="line">proxychains4 conda install keras-gpu</span><br></pre></td></tr></table></figure>
+<h5 id="OpenCV环境"><code>OpenCV</code>环境</h5>
+<p><code>opencv-contrib-python</code> 和<code>opencv-python</code>的区别可自行百度，目前用<code>conda</code>命令无法直接安装，提示找不到相关<code>package</code>，我这里用<code>pip</code>来安装。默认安装的版本是最新的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install opencv-contrib-python</span><br></pre></td></tr></table></figure></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/31eefdff/">https://lushuangning.github.io/posts/31eefdff/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/anaconda/">anaconda</a><a class="post-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/749ad7d8/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">docker常用命令</div></div></a></div><div class="next-post pull-right"><a href="/posts/63a6c376/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">自然语言处理：从基础到RNN和LSTM</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

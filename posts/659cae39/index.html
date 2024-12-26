@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GraspNet-1Billion: A Large-Scale Benchmark for General Object Grasping | 路双宁的博客</title><meta name="keywords" content="论文,翻译"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="摘要 物体抓取对于许多应用来说都是至关重要的，这也是一个具有挑战性的计算机视觉问题。然而，对于杂乱的场景，目前的研究存在着训练数据不足、缺乏评价基准的问题。本文中我们提供了一个具有统一评价系统的大规模抓取姿态检测数据集。我们的数据集包含97280张RGB-D图像，包含超过10亿个抓取姿势。同时，我们的评价系统通过解析计算直接反映抓取是否成功，可以对任何一种抓取姿态进行评价，而不需要完全标注grou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GraspNet-1Billion: A Large-Scale Benchmark for General Object Grasping">
+<meta property="og:url" content="https://lushuangning.github.io/posts/659cae39/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="摘要 物体抓取对于许多应用来说都是至关重要的，这也是一个具有挑战性的计算机视觉问题。然而，对于杂乱的场景，目前的研究存在着训练数据不足、缺乏评价基准的问题。本文中我们提供了一个具有统一评价系统的大规模抓取姿态检测数据集。我们的数据集包含97280张RGB-D图像，包含超过10亿个抓取姿势。同时，我们的评价系统通过解析计算直接反映抓取是否成功，可以对任何一种抓取姿态进行评价，而不需要完全标注grou">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-07-04T13:35:08.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.165Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="论文">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/659cae39/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">相关工作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%8A%93%E5%8F%96%E9%A2%84%E6%B5%8B%E7%AE%97%E6%B3%95"><span class="toc-number">3.1.</span> <span class="toc-text">基于深度学习的抓取预测算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%93%E5%8F%96%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">3.2.</span> <span class="toc-text">抓取数据集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%82%B9%E4%BA%91%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"><span class="toc-number">3.3.</span> <span class="toc-text">基于点云的深度学习</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">GraspNet-1Billion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">4.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86"><span class="toc-number">4.2.</span> <span class="toc-text">数据收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%87%E6%B3%A8"><span class="toc-number">4.3.</span> <span class="toc-text">数据标注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6D%E4%BD%8D%E5%A7%BF%E6%A0%87%E6%B3%A8"><span class="toc-number">4.3.1.</span> <span class="toc-text">6D位姿标注</span></a></li></ol></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">GraspNet-1Billion: A Large-Scale Benchmark for General Object Grasping</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-04T13:35:08.000Z" title="发表于 2021-07-04 21:35:08">2021-07-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.165Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h1>摘要</h1>
+<p>物体抓取对于许多应用来说都是至关重要的，这也是一个具有挑战性的计算机视觉问题。然而，对于杂乱的场景，目前的研究存在着训练数据不足、缺乏评价基准的问题。本文中我们提供了一个具有统一评价系统的大规模抓取姿态检测数据集。我们的数据集包含97280张RGB-D图像，包含超过10亿个抓取姿势。同时，我们的评价系统通过解析计算直接反映抓取是否成功，可以对任何一种抓取姿态进行评价，而不需要完全标注ground-truth。此外，我们提出了一个端到端的给定点云输入的抓取位姿预测网络，其中我们以解耦的方式学习接近方向和操作参数。设计了一种新的抓取，提高了抓取的鲁棒性。我们进行了大量的实验，表明我们的数据集和评估系统可以很好地与现实世界的实验匹配，我们提出的网络达到了最先进的性能。我们的数据集、源代码和模型已在www.graspnet.net开源。</p>
+<h1>简介</h1>
+<p>对象抓取是一个基本问题，在工业、农业和服务贸易中有着广泛的应用。抓取的关键是在给定的视觉输入(图像或点云)下检测抓取姿态，这已经引起了计算机视觉界的广泛关注。</p>
+<p>虽然对象抓取很重要，但目前有两大障碍阻碍了这一领域的发展。首先，抓取姿态有不同的表示形式，包括矩形表示和6D表示，并用不同的指标对其进行评价。评估指标的差异使得这些方法难以直接统一比较，而用真实机器人进行评估将大大增加评估成本。其次，难以获得大规模高质量的训练数据。以往的人工标注数据集规模较小，仅提供稀疏标注。虽然从仿真环境中获取训练数据可以生成大规模的数据集，但仿真与现实的差距不可避免地会降低算法在现实应用中的性能。</p>
+<p>为了为所构建的算法奠定坚实的基础，以下三件事是非常重要的：</p>
+<ol>
+<li>提供与真实世界传感器的视觉感知相一致的数据</li>
+<li>对大规模抓取位姿的ground-truth进行密集和准确的标注</li>
+<li>以统一的方式评价不同表现形式的抓取位姿</li>
+</ol>
+<p>这是很重要的，特别是当涉及到数据标注时。给定一个图像或场景，我们很难在连续的空间中手动标注无尽的抓取姿态。我们通过探索一个新的方向来规避这个问题，即从现实世界中收集数据，并在仿真中通过解析计算来标注它们，这充分利用了双方的优势。</p>
+<p>具体来说，受先前文献的启发，我们提出了一个两阶段的方式来生成场景的大量抓取姿态。归功于我们的自动标注过程，我们建立了第一个大规模的抓取姿态数据集，可以作为训练和评估抓取姿态检测算法的基础。我们的数据集包含97280张RGB-D图像，这些图像来自190多个杂乱场景的不同视角。对于我们数据集中的所有88个对象，我们提供了精确的3D网格模型。每个场景都密集标注了物体6D姿态和抓取姿态，获得超过10亿个抓取位姿，比以往的数据集大5个数量级。此外，我们的基准嵌入了在线评价系统，能够对当前主流的抓取检测算法进行统一评价。实验还表明，我们的基准可以很好地与现实世界的实验相一致。图1显示了构建数据集的方法。</p>
+<p>针对如此大规模的数据集，我们进一步提出一种新的抓取姿态学习方法。为了更好地进行几何推理和上下文编码，我们提出了一种基于端到端三维抓取姿态检测网络。我们的网络寻求一种更鲁棒的学习方式，在统一目标下明确学习逼近方向和操作参数，而不是直接预测抓取位姿矩阵。此外，为了提高抓取姿态的抗摄动性，我们提出了一种新的抓取亲和域表示，使我们的网络对干扰具有鲁棒性。实验证明了该方法的有效性和高效性。</p>
+<h1>相关工作</h1>
+<p>在本节中，我们首先回顾基于深度学习的抓取检测算法，然后是该领域的相关数据集。并对基于点云的深度学习方法进行了简要回顾。</p>
+<h2 id="基于深度学习的抓取预测算法">基于深度学习的抓取预测算法</h2>
+<p>对于基于深度学习的抓取检测算法，可以分为三大类。其中最常用的是基于RGB-D图像输入检测可抓取矩形。</p>
+<p>Lenz提出了一种级联方法，该方法首先剔除不太可能的抓取，然后用更大的网络评估剩余的抓取。Redmon提出了一种不同的网络结构，以单步方式直接回归出抓取姿态，更快更准确。Mahler提出了一种抓取质量CNN来预测抓取候选对象的鲁棒性得分。Zhang和Chu将其扩展到多目标场景。这些方法生成的抓取位姿是二维平面的，限制了抓取位姿的自由度。</p>
+<p>随着单目目标6D位姿估计的快速发展，一些研究者预测目标的6D位姿，并将预定的抓取位姿投影到场景中。这种方法没有抓取方向的限制，但需要物体形状的先验知识。最近，从[42]开始有了一条新的研究线，提出在部分观测点云上抓取候选点，然后使用3D CNN输出每个候选点的分类得分。这样的方法不需要关于对象的先验知识。目前，这些方法都是在自己的度量标准中评估的，很难与其他方法进行比较。</p>
+<h2 id="抓取数据集">抓取数据集</h2>
+<p>Cornell抓取数据集首次提出了用于图像抓取检测的矩形表示。单对象的RGB-D图像提供矩形抓取姿态。[7,50]使用相同的方式构建数据集，但扩展到了多个对象的场景。抓取姿势都是人工标注的。[30,22]通过真实的机器人实验收集标注。这些数据标注方法耗时且需要强大的硬件支持。为了避免这类问题，最近的一些工作[26,9,48,28,4]探索了利用模拟环境来标注抓取姿态。它们可以生成一个更大的规模的数据集，但视觉感知的领域差距总是一个障碍。除了基于矩形的标注外，GraspSeg[2]还提供了像素级的注释，用于抓取可见性分割和对象分割。对于6D姿态估计，[45]贡献了一个包含21个物体和92个场景的数据集。这些数据集主要集中在抓取姿态检测的一个子区域。在这项工作中，我们的目标是建立一个更大的规模和多样性的数据集，涵盖目标抓取检测的主要方面。</p>
+<h2 id="基于点云的深度学习">基于点云的深度学习</h2>
+<p>Qi等人首次提出PointNet[33]来直接从原始点云输入中学习特征。之后，提出了许多方法来进行点云分类和分割。除此之外，最近的一些工作将PointNet框架扩展到3D对象检测领域。与我们最相似的网络结构是[35]，它也是基于PointNet预测抓取姿态。在这项工作中，我们设计了一个端到端网络与一个新的表示抓取姿态，而不是直接回归。</p>
+<h1>GraspNet-1Billion</h1>
+<p>接下来我们将阐述数据集的特点以及它是如何构建的。</p>
+<h2 id="总览">总览</h2>
+<p>以前的抓取数据集要么集中在单个对象上，要么每个场景只标注一个抓取。很少有数据集考虑多对象多抓取的设置，而且由于标注的工作量大，规模都较小。此外，大部分数据集采用基于矩形的抓取姿态表示，限制了抓取器的放置空间。为了解决这些问题，我们提出了一个具有密集和丰富标注的杂乱场景下的大规模数据集，名为GraspNet-1Billion。我们的数据集包含88个高质量的三维网格模型日常对象。从190个杂乱的场景中收集图像，每一个都贡献了512张RGB-D图像，由两个不同的摄像机捕获，总共有97280张图像。对每幅图像，通过力闭包的解析计算，对六自由度抓取姿态进行密集标注。每个场景的抓取姿势从300万到900万不等，我们的数据集总共包含超过11亿的抓取姿势。此外，我们还提供了准确的对象6D姿态标注、基于矩形的抓取姿态、对象掩模和包围盒。每一帧也与相机姿态相关联，因此多视图点云可以很容易地融合。图2显示了我们数据集的关键组件。</p>
+<h2 id="数据收集">数据收集</h2>
+<p>我们从YCB数据集中选择了32个适合抓取的对象，从DexNet 2.0数据集中选择了13个对抗对象，并收集了43个我们自己的对象来构建我们的数据集。物体具有适合抓取的大小，形状、纹理、大小、材料等多种样式。我们认为，不同的局部几何形态可以为算法带来更好的泛化能力。为了收集杂乱场景的数据，我们将摄像头安装在机械臂上，因为它可以精确地重复轨迹，有助于自动化采集过程。采集数据前对摄像机进行标定，获得准确的摄像机姿态。考虑到不同的深度图像质量必然会影响算法，我们采用Intel RealSense 435和Kinect 4 Azure这两个流行的RGB-D摄像头，同时捕捉场景，提供丰富的数据。对于每个场景，我们从整个对象集中随机挑选大约10个对象，并将它们杂乱地放置在一起。然后，机器人手臂沿着固定的轨迹移动，轨迹覆盖四分之一球体上的256个不同视点。同步图像对从两个RGB-D相机以及他们的相机姿态将被保存。需要注意的是，在摄像机标定时，为了避免正运动学产生的误差，我们对摄像机进行了外部参数标定。具体来说，我们在256个数据采集点上拍摄了一个固定的ArUco标记。根据标定坐标系，确定了摄像机姿态。这些相机姿态是相当准确的，工作很好，为我们的数据集。我们的数据收集过程的详细设置将在补充材料中提供。</p>
+<h2 id="数据标注">数据标注</h2>
+<h3 id="6D位姿标注">6D位姿标注</h3>
+<p>总共有97280张图片，为每一帧标注6D位姿是很费力的。由于摄像机能记录位姿，我们只需要为每个场景的第一帧标注6D位姿。6D姿态将按照公式1传播到剩下的帧</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msubsup><mi>P</mi><mi>i</mi><mi>j</mi></msubsup><mo>=</mo><msubsup><mrow><mi>c</mi><mi>a</mi><mi>m</mi></mrow><mi>i</mi><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><msub><mrow><mi>c</mi><mi>a</mi><mi>m</mi></mrow><mn>0</mn></msub><msubsup><mi>P</mi><mn>0</mn><mi>j</mi></msubsup></mrow><annotation encoding="application/x-tex">P_i^j = {cam}_i^{-1} {cam}_0 P_0^j
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2194em;vertical-align:-0.2769em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9426em;"><span style="top:-2.4231em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.1809em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2769em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2096em;vertical-align:-0.267em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">c</span><span class="mord mathnormal">am</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-2.433em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.267em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord"><span class="mord mathnormal">c</span><span class="mord mathnormal">am</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9426em;"><span style="top:-2.4337em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span><span style="top:-3.1809em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2663em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<p>其中，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>P</mi><mi>i</mi><mi>j</mi></msubsup></mrow><annotation encoding="application/x-tex">P_i^j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2194em;vertical-align:-0.2769em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9426em;"><span style="top:-2.4231em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.1809em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2769em;"><span></span></span></span></span></span></span></span></span></span>是对象<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span>在第<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span>帧的位姿，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mrow><mi>c</mi><mi>a</mi><mi>m</mi></mrow><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">{cam}_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">c</span><span class="mord mathnormal">am</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>是相机在第<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span>帧下的位姿。所有6D姿态标注都经过多位标注者的仔细提炼和反复检查，确保了高质量。对象的mask和包围盒也通过使用6D姿态将对象投影到图像上获得。</p>
+<p>(未完待续)</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/659cae39/">https://lushuangning.github.io/posts/659cae39/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BA%E6%96%87/">论文</a><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/540ddb0e/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">红帽RHCE培训记录（一）</div></div></a></div><div class="next-post pull-right"><a href="/posts/470305e7/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">将emacs打造成编程神器</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

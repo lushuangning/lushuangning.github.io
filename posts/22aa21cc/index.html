@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>你一定用得到的LaTeX入门资料 | 路双宁的博客</title><meta name="keywords" content="Latex"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="学习使用LaTeX时遇到的问题及解决方案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你一定用得到的LaTeX入门资料">
+<meta property="og:url" content="https://lushuangning.github.io/posts/22aa21cc/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="学习使用LaTeX时遇到的问题及解决方案">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-10-28T06:50:58.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.175Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="Latex">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/22aa21cc/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">你一定用得到的LaTeX入门资料</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-28T06:50:58.000Z" title="发表于 2020-10-28 14:50:58">2020-10-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.175Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><p>如何安装<code>textlive</code>请自行百度，网络上面有很多教程。 <br/></p>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/38178015">使用VSCode编写LaTeX</a> <br/></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://liam.page/2014/09/08/latex-introduction/">一份其实很短的 LaTeX 入门文档</a><br>
+该文档包含作者，标题，日期，章节，段落，目录，插入数学公式、图片，表格，页眉页脚、页边距、间距的基本设置。 <br/></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/65441079">LaTeX 里「添加程序代码」的完美解决方案</a> <br/></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/yq_forever/article/details/84796994">Latex之页边距设置</a> <br/></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/SStegosaurus/article/details/105013643">设置Latex页眉页脚边距——fancyhdr的使用</a> <br/></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/miracle_fans/article/details/78255223">Latex-条目、编号、描述</a></p>
+</li>
+</ul>
+<p>以下代码将我之前的一篇博客<a href="https://lushuangning.github.io/posts/2c158e96/">用Python可视化钢琴演奏录音</a>用LaTeX编写编译，供各位参考其用法，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/Python%20Visualization%20of%20Piano%20Recordings.rar">点击此处直接下载</a>。</p>
+<hr>
+<p>12.6更新，最近在写英文论文，模板里用到了双页排版，涉及到处理数学公式的一些问题，在此总结下。</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/CCC2021Template.rar">模板文件点此下载</a></p>
+<p>由于我目前的博客使用的是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>KaTeX</mtext></mrow><annotation encoding="application/x-tex">\KaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8988em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">K</span><span class="mspace" style="margin-right:-0.17em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6833em;"><span style="top:-2.905em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord"><span class="mord textrm mtight sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.4678em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>引擎处理的数学公式，而<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8988em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6833em;"><span style="top:-2.905em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord"><span class="mord textrm mtight sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.4678em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>在使用的时候还是和他有区别的，特别是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8988em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6833em;"><span style="top:-2.905em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord"><span class="mord textrm mtight sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.4678em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>有而<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>KaTeX</mtext></mrow><annotation encoding="application/x-tex">\KaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8988em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">K</span><span class="mspace" style="margin-right:-0.17em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6833em;"><span style="top:-2.905em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord"><span class="mord textrm mtight sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.4678em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>没有的命令在这里就无法很好的展示。<strong>因此我将用图片展示效果，附上相应的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8988em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6833em;"><span style="top:-2.905em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord"><span class="mord textrm mtight sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.4678em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>代码</strong>。</p>
+<ol>
+<li>公式组的大括号。</li>
+</ol>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202012061.png" alt=""></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;equation&#125;</span><br><span class="line">  \label&#123;eq1&#125;</span><br><span class="line">  \left\&#123;</span><br><span class="line">  \begin&#123;aligned&#125;</span><br><span class="line">    x_c = \frac&#123;M_&#123;10&#125;&#125;&#123;M_&#123;00&#125;&#125;,y_c = \frac&#123;M_&#123;01&#125;&#125;&#123;M_&#123;00&#125;&#125; \\</span><br><span class="line">    M_&#123;00&#125; = \sum_x \sum_y I(x,y) \\</span><br><span class="line">    M_&#123;10&#125; = \sum_x \sum_y xI(x,y) \\</span><br><span class="line">    M_&#123;01&#125; = \sum_x \sum_y yI(x,y)</span><br><span class="line">  \end&#123;aligned&#125;</span><br><span class="line">  \right.</span><br><span class="line">\end&#123;equation&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><code>\left</code>和<code>\right</code>总是成对出现的</strong>，但是我们需要的只是左边的大括号，因此写成<code>\left\&#123;</code>和<code>\right.</code>即可。</p>
+<p>如果要达到下面这样的效果呢？要求每一个公式后面都需要有编号，如下图：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202012062.png" alt=""></p>
+<p>这样需要我们在导言区引入两个<code>package</code>，代码也和上面不同，直接使用<code>subequations</code>里面嵌套<code>numcases</code>即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">\usepackage&#123;subeqnarray&#125;</span><br><span class="line">\usepackage&#123;cases&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\begin&#123;subequations&#125;</span><br><span class="line">  \label&#123;eq3&#125;</span><br><span class="line">  \begin&#123;numcases&#125;&#123;&#125;</span><br><span class="line">    x_c = \frac&#123;M_&#123;10&#125;&#125;&#123;M_&#123;00&#125;&#125;,y_c = \frac&#123;M_&#123;01&#125;&#125;&#123;M_&#123;00&#125;&#125; \\</span><br><span class="line">    M_&#123;00&#125; = \sum_x \sum_y I(x,y) \\</span><br><span class="line">    M_&#123;10&#125; = \sum_x \sum_y xI(x,y) \\</span><br><span class="line">    M_&#123;01&#125; = \sum_x \sum_y yI(x,y)</span><br><span class="line">  \end&#123;numcases&#125;</span><br><span class="line">\end&#123;subequations&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>公式间距微调</li>
+</ol>
+<p>双栏排版，寸土寸金，万一公式太长，而又不想切换成单栏，就会出现下面的这种情况。可以看到，公式编号已经被挤到下一行去了，但是运算符之间的间距又比较大，可不可以将运算符之间的距离缩小呢？</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202012063.png" alt=""></p>
+<p>参考博客<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/qqxx6661/article/details/51783828">LATEX微调公式间距</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;equation&#125;</span><br><span class="line">  \label&#123;eq6&#125;</span><br><span class="line">  L_&#123;o_1 o_2&#125; \! = \! \sqrt&#123;(x_&#123;o_1&#125; \! - \! x_&#123;o_2&#125;)^2 \! + \! (y_&#123;o_1&#125; \! - \! y_&#123;o_2&#125;)^2 \! + \! (z_&#123;o_1&#125; \! - \! z_&#123;o_2&#125;)^2&#125;</span><br><span class="line">\end&#123;equation&#125;</span><br></pre></td></tr></table></figure>
+<p>在运算符之间输入<code>\!</code>即可。其实<code>\quad</code>,<code>\qquad</code>,<code>\,</code>,<code>\:</code>,<code>\;</code>,<code>\!</code>本来是添加空格的，只不过<code>\!</code>增加的是一个负的空格，就把间距缩小了。</p>
+<p>缩小后的间距如下：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202012064.png" alt=""></p>
+<ol start="3">
+<li>单双栏切换及公式下标大小调整</li>
+</ol>
+<p>有时候，公式实在太长，不可能在单栏里面排下，只能换成双栏去排版。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202012065.png" alt=""></p>
+<p>对于这个模板来说，单双栏切换很简单，只需要将代码包含在<code>\singlecolumn&#123;&#125;</code>的大括号之间就行，因为模板已经帮我们设置好了。稍后我们会介绍<strong>在没有模板的情况下的通用做法</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">\singlecolumn&#123;</span><br><span class="line">  \begin&#123;equation&#125;</span><br><span class="line">    \label&#123;eq5&#125;</span><br><span class="line">    L_&#123;NM&#125; = \frac&#123;</span><br><span class="line">      \begin&#123;Vmatrix&#125;</span><br><span class="line">          x_&#123;C&#125; - x_&#123;A&#125; &amp; y_&#123;C&#125; - y_&#123;A&#125; &amp; z_&#123;C&#125; - z_&#123;A&#125; \\</span><br><span class="line">          x_&#123;B&#125; - x_&#123;A&#125; &amp; y_&#123;B&#125; - y_&#123;A&#125; &amp; z_&#123;B&#125; - z_&#123;A&#125; \\</span><br><span class="line">          x_&#123;D&#125; - x_&#123;C&#125; &amp; y_&#123;D&#125; - y_&#123;C&#125; &amp; z_&#123;D&#125; - z_&#123;C&#125;</span><br><span class="line">      \end&#123;Vmatrix&#125;</span><br><span class="line">    &#125;&#123;</span><br><span class="line">      \sqrt&#123;</span><br><span class="line">        \begin&#123;vmatrix&#125;</span><br><span class="line">          y_&#123;B&#125; - y_&#123;A&#125; &amp; z_&#123;B&#125; - z_&#123;A&#125; \\</span><br><span class="line">          y_&#123;D&#125; - y_&#123;C&#125; &amp; z_&#123;D&#125; - z_&#123;C&#125;</span><br><span class="line">        \end&#123;vmatrix&#125;^2 + </span><br><span class="line">        \begin&#123;vmatrix&#125;</span><br><span class="line">          z_&#123;B&#125; - z_&#123;A&#125; &amp; x_&#123;B&#125; - x_&#123;A&#125; \\</span><br><span class="line">          z_&#123;D&#125; - z_&#123;C&#125; &amp; x_&#123;D&#125; - x_&#123;C&#125;</span><br><span class="line">        \end&#123;vmatrix&#125;^2 + </span><br><span class="line">        \begin&#123;vmatrix&#125;</span><br><span class="line">          x_&#123;B&#125; - x_&#123;A&#125; &amp; y_&#123;B&#125; - y_&#123;A&#125; \\</span><br><span class="line">          x_&#123;D&#125; - x_&#123;C&#125; &amp; y_&#123;D&#125; - y_&#123;C&#125;</span><br><span class="line">        \end&#123;vmatrix&#125;^2</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  \end&#123;equation&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是这样还有个小问题，如果你注意看我用红笔标出来的地方，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>B</mi></msub></mrow><annotation encoding="application/x-tex">y_B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>A</mi></msub></mrow><annotation encoding="application/x-tex">y_A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，这个下标会不会显得太大了？有点丑哦，如果<code>A</code>和<code>B</code>能再小一点就更好了。</p>
+<p>参考博客<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/xfijun/article/details/108424676">Latex中改变下标的字体尺寸</a></p>
+<p>采用最简洁的做法，我们在<strong>导言区添加一条<code>\let\sss= \scriptscriptstyle</code></strong>，然后在需要让下标变小的地方，如<code>y_B</code>，使用<code>y_&#123;\sss B&#125;</code>即可。完整代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">\let\sss= \scriptscriptstyle</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\singlecolumn&#123;</span><br><span class="line">  \begin&#123;equation&#125;</span><br><span class="line">    \label&#123;eq5&#125;</span><br><span class="line">    L_&#123;NM&#125; = \frac&#123;</span><br><span class="line">      \begin&#123;Vmatrix&#125;</span><br><span class="line">          x_&#123;\sss C&#125; - x_&#123;\sss A&#125; &amp; y_&#123;\sss C&#125; - y_&#123;\sss A&#125; &amp; z_&#123;\sss C&#125; - z_&#123;\sss A&#125; \\</span><br><span class="line">          x_&#123;\sss B&#125; - x_&#123;\sss A&#125; &amp; y_&#123;\sss B&#125; - y_&#123;\sss A&#125; &amp; z_&#123;\sss B&#125; - z_&#123;\sss A&#125; \\</span><br><span class="line">          x_&#123;\sss D&#125; - x_&#123;\sss C&#125; &amp; y_&#123;\sss D&#125; - y_&#123;\sss C&#125; &amp; z_&#123;\sss D&#125; - z_&#123;\sss C&#125;</span><br><span class="line">      \end&#123;Vmatrix&#125;</span><br><span class="line">    &#125;&#123;</span><br><span class="line">      \sqrt&#123;</span><br><span class="line">        \begin&#123;vmatrix&#125;</span><br><span class="line">          y_&#123;\sss B&#125; - y_&#123;\sss A&#125; &amp; z_&#123;\sss B&#125; - z_&#123;\sss A&#125; \\</span><br><span class="line">          y_&#123;\sss D&#125; - y_&#123;\sss C&#125; &amp; z_&#123;\sss D&#125; - z_&#123;\sss C&#125;</span><br><span class="line">        \end&#123;vmatrix&#125;^2 + </span><br><span class="line">        \begin&#123;vmatrix&#125;</span><br><span class="line">          z_&#123;\sss B&#125; - z_&#123;\sss A&#125; &amp; x_&#123;\sss B&#125; - x_&#123;\sss A&#125; \\</span><br><span class="line">          z_&#123;\sss D&#125; - z_&#123;\sss C&#125; &amp; x_&#123;\sss D&#125; - x_&#123;\sss C&#125;</span><br><span class="line">        \end&#123;vmatrix&#125;^2 + </span><br><span class="line">        \begin&#123;vmatrix&#125;</span><br><span class="line">          x_&#123;\sss B&#125; - x_&#123;\sss A&#125; &amp; y_&#123;\sss B&#125; - y_&#123;\sss A&#125; \\</span><br><span class="line">          x_&#123;\sss D&#125; - x_&#123;\sss C&#125; &amp; y_&#123;\sss D&#125; - y_&#123;\sss C&#125;</span><br><span class="line">        \end&#123;vmatrix&#125;^2</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  \end&#123;equation&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202012066.png" alt=""></p>
+<p>在没有模板的情况下， 我们切换单双栏采用<code>IEEE</code>的做法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">\newcounter&#123;mytempeqncnt&#125;</span><br><span class="line">\begin&#123;figure*&#125;[!t]</span><br><span class="line">  % ensure that we have normalsize text</span><br><span class="line">  \normalsize</span><br><span class="line">  % Store the current equation number.</span><br><span class="line">  \setcounter&#123;mytempeqncnt&#125;&#123;\value&#123;equation&#125;&#125;</span><br><span class="line">  % Set the equation number to one less than the one</span><br><span class="line">  % desired for the first equation here.</span><br><span class="line">  % The value here will have to changed if equations</span><br><span class="line">  % are added or removed prior to the place these</span><br><span class="line">  % equations are referenced in the main text.</span><br><span class="line">  \setcounter&#123;equation&#125;&#123;5&#125;</span><br><span class="line"></span><br><span class="line">  \begin&#123;equation&#125;</span><br><span class="line">  \label&#123;eqn_dbl_x&#125;</span><br><span class="line">    x = 5 + 7 + 9 + 11 + 13 + 15 + 17 + 19 + 21+ 23 + 25</span><br><span class="line">    + 27 + 29 + 31</span><br><span class="line">  \end&#123;equation&#125;</span><br><span class="line"></span><br><span class="line">  \begin&#123;equation&#125;</span><br><span class="line">  \label&#123;eqn_dbl_y&#125;</span><br><span class="line">    y = 4 + 6 + 8 + 10 + 12 + 14 + 16 + 18 + 20+ 22 + 24</span><br><span class="line">    + 26 + 28 + 30</span><br><span class="line">  \end&#123;equation&#125;</span><br><span class="line">  % Restore the current equation number.</span><br><span class="line">  \setcounter&#123;equation&#125;&#123;\value&#123;mytempeqncnt&#125;&#125;</span><br><span class="line">  % IEEE uses as a separator</span><br><span class="line">  % \hrulefill</span><br><span class="line">  % The spacer can be tweaked to stop underfull vboxes.</span><br><span class="line">  \vspace*&#123;4pt&#125;</span><br><span class="line">\end&#123;figure*&#125;</span><br></pre></td></tr></table></figure></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/22aa21cc/">https://lushuangning.github.io/posts/22aa21cc/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Latex/">Latex</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/da0ac819/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">相机标定</div></div></a></div><div class="next-post pull-right"><a href="/posts/594b3eec/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">学长论文中公式的推导</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>$(function () {
+  $('span.katex-display').wrap('<div class="katex-wrap"></div>')
+})</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

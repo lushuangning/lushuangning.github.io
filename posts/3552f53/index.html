@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux 图形界面的显示原理 | 路双宁的博客</title><meta name="keywords" content="X11,Linux"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="显示服务（Display Server） 参考Linux 图形界面的显示原理是什么？ - silaoA的回答 - 知乎，Linux 图形界面的显示原理是什么？ - 韩朴宇的回答 - 知乎 大名鼎鼎的X窗口系统（X Window System，也可以叫做 X11 或者 X）是1980s由MIT提出的以位图图像显示图形化界面的一套软件规范及协议，之所以叫“X11”是因为目前是该协议迭代的第11个版本。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 图形界面的显示原理">
+<meta property="og:url" content="https://lushuangning.github.io/posts/3552f53/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="显示服务（Display Server） 参考Linux 图形界面的显示原理是什么？ - silaoA的回答 - 知乎，Linux 图形界面的显示原理是什么？ - 韩朴宇的回答 - 知乎 大名鼎鼎的X窗口系统（X Window System，也可以叫做 X11 或者 X）是1980s由MIT提出的以位图图像显示图形化界面的一套软件规范及协议，之所以叫“X11”是因为目前是该协议迭代的第11个版本。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2023-11-27T15:08:35.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.167Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="X11">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/3552f53/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">显示服务（Display Server）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#xinit"><span class="toc-number">1.1.</span> <span class="toc-text">xinit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#X-Server%E7%9A%84%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">X Server的启动文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#X-Client-%E7%9A%84%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">X Client 的启动文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">关于X 和 Wayland</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%94%A8%E6%88%B7%E6%A8%A1%E5%BC%8F-muti-user-target"><span class="toc-number">3.1.</span> <span class="toc-text">多用户模式 muti-user.target</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tty-%E4%B8%8E-X-%E7%AB%AF%E5%8F%A3"><span class="toc-number">3.2.</span> <span class="toc-text">tty 与 X 端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#X-%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E6%B5%8B%E8%AF%95"><span class="toc-number">3.3.</span> <span class="toc-text">X 启动流程测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">桌面环境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88Window-Manger%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">窗口管理器（Window Manger）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88Display-Manger%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">显示管理器（Display Manger）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%EF%BC%88Desktop-Environment%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">桌面环境（Desktop Environment）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">操作系统如何把桌面环境加载起来？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-xinit"><span class="toc-number">5.1.</span> <span class="toc-text">通过 xinit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E6%98%BE%E7%A4%BA%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">5.2.</span> <span class="toc-text">通过显示管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E7%AE%A1%E7%90%86%E5%99%A8%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">5.2.1.</span> <span class="toc-text">显示管理器实现自动登录的功能</span></a></li></ol></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">Linux 图形界面的显示原理</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-11-27T15:08:35.000Z" title="发表于 2023-11-27 23:08:35">2023-11-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.167Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h1>显示服务（Display Server）</h1>
+<p>参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.zhihu.com/question/321725817/answer/2251568546">Linux 图形界面的显示原理是什么？ - silaoA的回答 - 知乎</a>，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.zhihu.com/question/321725817/answer/669568568">Linux 图形界面的显示原理是什么？ - 韩朴宇的回答 - 知乎</a></p>
+<p>大名鼎鼎的X窗口系统（X Window System，也可以叫做 X11 或者 X）是1980s由MIT提出的以位图图像显示图形化界面的一套软件规范及协议，之所以叫“X11”是因为目前是该协议迭代的第11个版本。可以在终端运行 <code>sudo X -version</code> 来查看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X.Org X Server 1.21.1.4</span><br><span class="line">X Protocol Version 11, Revision 0</span><br><span class="line">Current Operating System: Linux lsn-Y9000X 6.2.0-37-generic #38~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov  2 18:01:13 UTC 2 x86_64</span><br><span class="line">Kernel command line: BOOT_IMAGE=/@/boot/vmlinuz-6.2.0-37-generic root=UUID=adf7b9ab-203e-4441-8333-c7bb1a2ecfcc ro rootflags=subvol=@ quiet splash vt.handoff=7</span><br><span class="line">xorg-server 2:21.1.4-2ubuntu1.7~22.04.2 (For technical support please see http://www.ubuntu.com/support)</span><br><span class="line">Current version of pixman: 0.40.0</span><br><span class="line">	Before reporting problems, check http://wiki.x.org</span><br><span class="line">	to make sure that you have the latest version.</span><br></pre></td></tr></table></figure>
+<p>其架构如下图所示。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/X_client_server_example.svg/330px-X_client_server_example.svg.png" alt=""></p>
+<p>由于采用了C/S 架构，好处就是服务端和客户端不用在同一台电脑上，客户端可以基于网络通信。</p>
+<p>为了方便编写 GUI 程序，一些图形库如 GTK、QT等，作为 X Window System的客户端工作。客户端将绘图请求发送给服务端，服务端操纵显卡或视频终端把位图图像绘制出来，并处理键盘鼠标的事件，发送给客户端（注意，和人进行交互的是服务端，这里可能有点难以理解。举个例子就是，当我们将鼠标向右移动，X Server会检测到鼠标的移动，然后告知X Client，经过X Client的运算，原来是要将鼠标指针向右移动25个像素。将这个结果传回X Server，X Server就操作硬件去绘图了）。</p>
+<p>X Window System 毕竟只是一套协议，并不是程序实现。XFree86 是该协议的早期开源实现，而Xorg 则是这套协议使用最广的软件实现。</p>
+<p>如果想启动图形页面，系统必定要运行Xorg服务，而启动Xorg的方式有两种，一种是借助xinit这个工具从终端中启动，另一种是通过显示管理器来启动（下面讲桌面环境时会详述）。</p>
+<h2 id="xinit">xinit</h2>
+<p>使用 <code>startx</code> 来寻找运行 X的参数。</p>
+<ul>
+<li>
+<p>X Server 的参数方面：</p>
+<ul>
+<li>使用startx 后面带的参数</li>
+<li>若无参数，则寻找用户家目录的文件 <code>~/.xserverrc</code></li>
+<li>若无上述两者，则使用 <code>/etc/X11/xserverrc</code></li>
+<li>若无上述三者，则单纯运行 <code>/usr/bin/X</code>（即直接运行 X Server）</li>
+</ul>
+</li>
+<li>
+<p>X Client 的参数方面</p>
+<ul>
+<li>使用startx 后面带的参数</li>
+<li>若无参数，则寻找用户家目录的文件 <code>~/.xinitrc</code></li>
+<li>若无上述两者，则使用 <code>/etc/X11/xinit/xinitrc</code></li>
+<li>若无上述三者，则单纯运行GUI程序</li>
+</ul>
+</li>
+</ul>
+<p>根据上述流程找到启动 X 所需要的参数后，接下来 <code>startx</code> 会调用 <code>xinit</code> 来启动 Xorg。</p>
+<p>在没有参数的情况下，<code>xinit</code> 默认会寻找 <code>/etc/X11/xinit/xinitrc</code> 和 <code>/etc/X11/xinit/xserverrc</code> 这两个配置文件来初始化。</p>
+<p>总之，<code>xinit</code> 的任务是来启动 X Server和X Client，而启动的参数由 <code>startx</code> 来寻找。</p>
+<h2 id="X-Server的启动文件">X Server的启动文件</h2>
+<p>X server 启动的脚本与参数是通过 <code>/etc/X11/xinit/xserverrc</code> 文件来启动的。不过如果你的系统中没有该文件，并且家目录下也没有 <code>~/.serverrc</code> 的时候，系统默认会去运行 <code>/usr/bin/X</code> 这个指令。这也是 X server最原始的启动方式。</p>
+<p>运行 X Server时，较早版本的系统 Xorg会去读取 <code>/etc/X11/xorg.conf</code> 这个配置文件，从CentOS 6以后，X Server在每次启动的时候会自动检测系统上面的显卡芯片、屏幕类型等等，然后自行搭配最佳的驱动程序，因此，<code>/etc/X11/xorg.conf</code> 这个文件已经不再被需要了。当然，你可以自己新建这个文件，一旦X Server检测到有这个文件存在，将会优先按照这个文件的配置来执行。</p>
+<p>如果只是想要修改部分设置，并不是每个组件都要自行设置的话，可以在 <code>/etc/X11/xorg.conf.d</code> 目录下新建以 <code>.conf</code> 结尾的文件，将需要的额外项目加进去即可。</p>
+<p>如果想要知道X Server具体用的什么设置，可以通过查看 <code>/var/log/Xorg.0.log</code> 日志来获取。</p>
+<h2 id="X-Client-的启动文件">X Client 的启动文件</h2>
+<p>如果家目录下没有 <code>~/.xinitrc</code>，此时 X Client会默认把 <code>/etc/X11/xinit/xinitrc</code> 作为启动脚本。</p>
+<p>在我的 CentOS7.9上，<code>/etc/X11/xinit/xinitrc</code> 的内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Copyright (C) 1999 - 2005 Red Hat, Inc. All rights reserved. This</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">copyrighted material is made available to anyone wishing to use, modify,</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">copy, or redistribute it subject to the terms and conditions of the</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">GNU General Public License version 2.</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># You should have received a copy of the GNU General Public License</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">along with this program; <span class="keyword">if</span> not, write to the Free Software</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># Authors:</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">	Mike A. Harris &lt;mharris@redhat.com&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Mandatorily <span class="built_in">source</span> xinitrc-common, <span class="built_in">which</span> is common code shared between the</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Xsession and xinitrc scripts <span class="built_in">which</span> has been factored out to avoid duplication</span></span><br><span class="line">. /etc/X11/xinit/xinitrc-common</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">The user may have their own clients they want to run.  If they don<span class="string">&#x27;t,</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">fall back to system defaults.</span></span></span><br><span class="line">if [ -f $HOME/.Xclients ]; then</span><br><span class="line">    exec $CK_XINIT_SESSION $SSH_AGENT $HOME/.Xclients || \</span><br><span class="line">    exec $CK_XINIT_SESSION $SSH_AGENT $HOME/.Xclients</span><br><span class="line">elif [ -f /etc/X11/xinit/Xclients ]; then</span><br><span class="line">    exec $CK_XINIT_SESSION $SSH_AGENT /etc/X11/xinit/Xclients || \</span><br><span class="line">    exec $CK_XINIT_SESSION $SSH_AGENT /etc/X11/xinit/Xclients</span><br><span class="line">else</span><br><span class="line">    # Failsafe settings.  Although we should never get here</span><br><span class="line">    # (we provide fallbacks in Xclients as well) it can&#x27;t hurt.</span><br><span class="line">    [ -x /usr/bin/xsetroot ] &amp;&amp; /usr/bin/xsetroot -solid &#x27;#222E45&#x27;</span><br><span class="line">    [ -x /usr/bin/xclock ] &amp;&amp; /usr/bin/xclock -geometry 100x100-5+5 &amp;</span><br><span class="line">    [ -x /usr/bin/xterm ] &amp;&amp; xterm -geometry 80x50-50+150 &amp;</span><br><span class="line">    [ -x /usr/bin/twm ] &amp;&amp; /usr/bin/twm</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>这个文件会将很多其他的文件参数引进来，包括 <code>/etc/X11/xinit/xinitrc-common</code> 与 <code>/etc/X11/xinit/Xclients</code> 等。</p>
+<p>不过分析到最后，X client 最终是要去加载 GNOME 或者 KDE 等桌面环境而已。</p>
+<h1>关于X 和 Wayland</h1>
+<p>该部分有时间了再写</p>
+<h1>实验</h1>
+<h2 id="多用户模式-muti-user-target">多用户模式 muti-user.target</h2>
+<p>说了这么多理论，接下来我们通过几个实验来检测一下上面的理论。</p>
+<p>测试的环境是在 CentOS 7.9 上面进行的：<code>CentOS Linux release 7.9.2009 (Core)</code>。我这个环境安装的时候已经装起 GNOME 了，我们要在字符界面开始，因此首先要干掉 GNOME 或者开机的时候不启动它。</p>
+<p>配置字符界面的方式可通过 <code>cat /etc/inittab</code> 来查看。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># inittab is no longer used when using systemd.</span><br><span class="line">#</span><br><span class="line"># ADDING CONFIGURATION HERE WILL HAVE NO EFFECT ON YOUR SYSTEM.</span><br><span class="line">#</span><br><span class="line"># Ctrl-Alt-Delete is handled by /usr/lib/systemd/system/ctrl-alt-del.target</span><br><span class="line">#</span><br><span class="line"># systemd uses &#x27;targets&#x27; instead of runlevels. By default, there are two main targets:</span><br><span class="line">#</span><br><span class="line"># multi-user.target: analogous to runlevel 3</span><br><span class="line"># graphical.target: analogous to runlevel 5</span><br><span class="line">#</span><br><span class="line"># To view current default target, run:</span><br><span class="line"># systemctl get-default</span><br><span class="line">#</span><br><span class="line"># To set a default target, run:</span><br><span class="line"># systemctl set-default TARGET.target</span><br><span class="line">#</span><br></pre></td></tr></table></figure>
+<p>可以通过 <code>systemctl get-default</code> 来查看现在的 target。关于target,参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/m0_60511809/article/details/132775879">Systemd中的 target 是什么？有什么用？如何使用？</a> 这篇文章中也有关于 systemd 和 systemctl 的相关链接，不了解的来这里补补知识。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lsn@localhost sysconfig]$ systemctl get-default </span><br><span class="line">graphical.target</span><br></pre></td></tr></table></figure>
+<p>可以看到现在是图形用户界面模式，我们需要将其改为多用户模式，只需要 <code>systemctl set-default multi-user.target</code> 即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lsn@localhost sysconfig]$ systemctl set-default multi-user.target</span><br><span class="line">Removed symlink /etc/systemd/system/default.target.</span><br><span class="line">Created symlink from /etc/systemd/system/default.target to /usr/lib/systemd/system/multi-user.target.</span><br></pre></td></tr></table></figure>
+<p>当然如果你安装的时候选择的是最小化安装（Minimal Installation），就没有上述的步骤，但是该安装需要自己手动安装一下 X。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum group install &quot;X Window System&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">为了方便测试，还需要安装 xorg-x11-apps</span></span><br><span class="line">sudo yum install xorg-x11-apps</span><br></pre></td></tr></table></figure>
+<h2 id="tty-与-X-端口">tty 与 X 端口</h2>
+<p>本部分参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/44110240">如何在 Linux 中不使用功能键在 TTY 之间切换</a>。</p>
+<p>linux 默认有 7 个 tty，从 tty1～tty7。在字符界面下，要查看当前所在的 tty,只需要输入 <code>tty</code> 即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lsn@localhost ~]$ tty</span><br><span class="line">/dev/tty1</span><br></pre></td></tr></table></figure>
+<p>除了按快捷键 <code>CTRL+ALT+F2</code> 切换到 tty2 外，还可以用命令 <code>chvt 2</code> 切换。</p>
+<p>要查看活动的虚拟控制台总数，运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lsn@localhost ~]$ fgconsole</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<p>要移除未使用的虚拟终端，只需要输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lsn@localhost ~]$ deallocvt</span><br></pre></td></tr></table></figure>
+<p>想要开启 X Server，只需要在 tty 中输入 <code>X :0</code> 即可，这个 <code>:0</code> 参数用来指定启动的接口，其中，<code>X :0</code> 会在 tty2 中开启，<code>:0</code> 对应 tty2,<code>:1</code> 对应 tty3,以此类推。</p>
+<p>由于 X 是可以进行网络通信的，X Server默认会将 6000端口用作网络监听。<code>hostname:0</code> 对应 6000,<code>hostname:1</code>对应6001,以此类推。</p>
+<h2 id="X-启动流程测试">X 启动流程测试</h2>
+<p>当在 tty 中输入 <code>X :0 &amp;</code>后，X Server 会在 tty2 中启动，系统也会跳转到 tty2 中，但此时的 tty2 中是一片乌黑，因为此时虽然 X Server 启动了，但是并没有任何的 X Client 启动，一个 GUI 也没有。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202401222.png" alt=""></p>
+<p>我们需要通过按 <code>CTRL+ALT+F1</code> 切换到 tty1 中。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202401221.png" alt=""></p>
+<p>随后我们在 tty1 中输入 <code>xclock -display :0 &amp;</code>，然后再按 <code>CTRL+ALT+F2</code> 切换到 tty2 中，此时就会发现：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202401223.png" alt=""></p>
+<p>前面说过了，X Window System 是 C/S 架构的，X Client 和 X Server 可以通过网络通信。我们接下来做一个测试，再打开一个虚拟机，两个虚拟机的 ip 如下图所示：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202401224.png" alt=""></p>
+<p>那么此时有趣的事情来了，这里参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/weixin_41973774/article/details/132511452">快速理解 X server, DISPLAY 与 X11 Forwarding</a>，如何让 X Server 和 X Client 分别处于不同的机器上运行呢？</p>
+<p>这里，运行 X Server 的虚拟机的 ip 是 192.168.61.130，运行 X Client 的虚拟机的 ip 是 192.168.61.129。如果我在 192.168.61.129 上运行 <code>xeyes</code>，但是让它在 192.168.61.130 上显示，该怎么做呢？很简单，在 192.168.61.129 中引入一个环境变量 <code>export DISPLAY=192.168.61.130:0.0</code> 就可以了！</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202401225.png" alt=""></p>
+<p>那么这样做有什么用呢？<strong>或者说这样做的使用场景是什么呢？</strong> 想象一下，假如我现在需要训练一个神经网络模型，我的服务器性能非常强悍，是一个有着 20 块 A100 的集群。由于我用 PyCharm 用习惯了，但是服务器是又没有装桌面环境的，这个时候，我就可以在我的笔记本电脑中跑一个 X Server 服务，在服务器上跑 PyCharm，但是显示在我的笔记本电脑上。我直接像使用本地的 PyCharm 一样写代码、调试、运行，但是用的却是服务器上的 GPU 资源！</p>
+<p>那么问题又来了，怎样在 Windows 的电脑上显示远程机器的 GUI 呢？点开上面的参考连接吧，里面有个 X11 Forwarding 正是你需要的，除此之外，有个开源软件叫 MobaXterm，将 X11 Forwarding 集成了，更方便使用，参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/31012874">远程显示(操作) 服务器 GUI 程序(图形化界面) (基于 X11 Forwarding + Centos + MobaXterm)</a>。下图是一个我在做测试时的例子，good luck for you!</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202401226.png" alt=""></p>
+<h1>桌面环境</h1>
+<h2 id="窗口管理器（Window-Manger）">窗口管理器（Window Manger）</h2>
+<p>窗口管理器（Window Manger, WM）是为了实现一个屏幕上显示多个X程序，实现调整程序的大小，标题栏、最小化、最大化、关闭按钮等这些功能。如果没有 DM，那么一次只能运行一个 GUI 应用，而且分辨率是锁死的，显然不符合用户的使用习惯（当然一些特定的需求除外，后面还会提到）。</p>
+<h2 id="显示管理器（Display-Manger）">显示管理器（Display Manger）</h2>
+<p>显示管理器（Display Manger, DM）又叫登录管理器，用于开机后显示登录界面，并启动窗口管理器等X组件。没有显示管理器，Linux 开机后会直接显示命令行登录界面。</p>
+<h2 id="桌面环境（Desktop-Environment）">桌面环境（Desktop Environment）</h2>
+<p>把 WM、DM 以及文件管理器及其它应用，主题，图形库，通用的组件，进程间通信用的 Dbus 等等打包起来，就形成当今 Linux 下的桌面环境（Destop Environment）。</p>
+<p>下表列出了一些常见的DE及其自带的 DM和WM：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>桌面环境</strong></th>
+<th style="text-align:center"><strong>显示（登录）管理器</strong></th>
+<th style="text-align:center"><strong>窗口管理器</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">GNOME</td>
+<td style="text-align:center">GDM</td>
+<td style="text-align:center">gnome-wm</td>
+</tr>
+<tr>
+<td style="text-align:center">KDE</td>
+<td style="text-align:center">KDM,SDDM</td>
+<td style="text-align:center">Kwin</td>
+</tr>
+<tr>
+<td style="text-align:center">XFCE</td>
+<td style="text-align:center">——</td>
+<td style="text-align:center">XFWM</td>
+</tr>
+<tr>
+<td style="text-align:center">LXDE</td>
+<td style="text-align:center">LXDM</td>
+<td style="text-align:center">Openbox</td>
+</tr>
+</tbody>
+</table>
+<p>还有国内的 Deepin 操作系统的系统桌面环境叫 DDE。</p>
+<p>除了上面列出的，还有很多的 DM 和 WM。例如，常见的 DM 还有：LightDM，SDDM，XDM 等；常见的 WM 还有：DWM，i3WM，awesome，xmonad 等等。</p>
+<p>需要指出的是，不一定非要使用桌面环境自带的显示管理器来加载桌面环境，比如 GNOME，也可以使用 LightDM 来加载桌面环境。</p>
+<h1>操作系统如何把桌面环境加载起来？</h1>
+<h2 id="通过-xinit">通过 xinit</h2>
+<p>上文提到，xinit 可以启动 X Server 和 X Client，那么很自然的想法就是通过执行 <code>startx</code> 来调用 xinit 运行 X Server，然后通过 X Client 配置文件 <code>xinitrc</code>，在配置文件中启用窗口管理器。如果你用过 archlinux 的话， 一定对 DWM 等平铺式窗口管理器印象深刻吧哈哈哈。我当时配置 DWM 的时候还不懂为什么要用 <code>startx</code>，在 <code>.xinitrc</code> 里写 <code>exec dwm</code>，现在看来豁然开朗。</p>
+<p>既然 GNOME 也是一种 X Client，那肯定也可以通过 <code>.xinitrc</code> 来启动。（//TODO 空了再来做启动的实验好了）</p>
+<h2 id="通过显示管理器">通过显示管理器</h2>
+<p>通过上文，我们可以梳理出一个大致的脉络：计算机上电，boot 引导操作系统，加载操作系统内核，通过 <code>systemctl</code> 来启动显示管理器服务， 由显示管理器将前端（窗口管理器和桌面环境）加载起来。</p>
+<p>你可以使用命令 <code>cat /etc/X11/default-display-manager</code> 来查看当前系统使用的显示管理器，可以使用<code>sudo dpkg-reconfigure gdm3</code> 来切换系统的显示管理器。（//FIXME 如何知道系统现在有哪些显示管理器呢？）</p>
+<p>本文以 SDDM 和 LightDM 为例，展示显示管理器是如何加载桌面环境的。</p>
+<p>这部分内容参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/wsg1100/p/12913491.html">ubuntu下图形程序自启动的几种方法</a></p>
+<p>大多数显示管理器会从 <code>/usr/share/xsessions/</code>（对于 Wayland 来说该路径为 <code>/usr/share/wayland-sessions</code>） 下面读取可用的 <code>.desktop</code> 文件。在安装各种窗口管理器时会在该目录下生成对应的 <code>.desktop</code> 文件。比如安装 ubuntu （ubuntu 应该是从 18.04 版本开始将默认的桌面环境换成了 GNOME）时，在 <code>/usr/share/xsessions/</code> 下生成了 <code>ubuntu.desktop</code>，内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Name=Ubuntu</span><br><span class="line">Comment=This session logs you into Ubuntu</span><br><span class="line">Exec=env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-session --session=ubuntu</span><br><span class="line">TryExec=/usr/bin/gnome-shell</span><br><span class="line">Type=Application</span><br><span class="line">DesktopNames=ubuntu:GNOME</span><br><span class="line">X-GDM-SessionRegisters=true</span><br><span class="line">X-Ubuntu-Gettext-Domain=gnome-session-42</span><br></pre></td></tr></table></figure>
+<p>由于我的系统安装了两个桌面环境：GNOME 和 KDE，因此该路径下面还有 <code>gnome-classic.desktop</code>、<code>gnome-classic-xorg.desktop</code>、<code>plasma.desktop</code>。</p>
+<p>这些 <code>ubuntu.desktop</code> 与 linux 下其他的“快捷方式”并没有什么不同。</p>
+<h3 id="显示管理器实现自动登录的功能">显示管理器实现自动登录的功能</h3>
+<p>如果我们想开机后不输入密码直接进入桌面环境，即让显示管理器自动登录，可以这么做。</p>
+<p>对于 SSDM，需要新建 <code>/etc/sddm.conf.d</code> 路径并在该路径下新建 <code>autologin.conf</code> 文件，内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Autologin]</span><br><span class="line">User=lsn</span><br><span class="line">Session=plasma</span><br></pre></td></tr></table></figure>
+<p>其中的 <code>User</code> 即需要自动登录的用户名，<code>Session</code> 对应着 <code>/usr/share/xsessions/plasma.desktop</code>。</p>
+<p>SDDM 会通过加载该文件来覆盖本身的默认行为。</p>
+<p>对于 LightDM 来说类似，新建 <code>/etc/lightdm/lightdm.conf</code> ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Seat：*]</span><br><span class="line">autologin-user=lsn</span><br><span class="line">autologin-session=plasma</span><br></pre></td></tr></table></figure>
+<p><strong>因此，如果我们想实现窗口管理器登录后不去加载桌面环境，只是执行一个特定的GUI 应用，只需要将上面 <code>autologin.conf</code> 中的 <code>Session=plasma</code> 改成 <code>Session=your_gui</code> 即可（前提是在 <code>/usr/share/xsessions/</code> 下有 <code>your_gui.desktop</code> 文件）</strong>。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/3552f53">https://lushuangning.github.io/posts/3552f53</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/X11/">X11</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/533f028c/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Nginx实现授权访问</div></div></a></div><div class="next-post pull-right"><a href="/posts/99ce0d25/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">我的Arch Linux配置</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

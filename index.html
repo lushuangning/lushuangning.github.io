@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>路双宁的博客</title><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta property="og:type" content="website">
+<meta property="og:title" content="路双宁的博客">
+<meta property="og:url" content="https://lushuangning.github.io/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lushuangning.github.io/img/avatar.jpg">
+<meta property="article:author" content="路双宁">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lushuangning.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2024-12-26 13:19:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://lushuangning.oss-cn-beijing.aliyuncs.com/image/199604112.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">路双宁的博客</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/lushuangning" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sdyglsn@126.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/19352681" rel="external nofollow noreferrer" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/72db60bd/" title="Linux手动安装MySQL8.4.3LTS版本的注意事项">Linux手动安装MySQL8.4.3LTS版本的注意事项</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-26T05:17:00.000Z" title="发表于 2024-12-26 13:17:00">2024-12-26</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:18:38.824Z" title="更新于 2024-12-26 13:18:38">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/MySQL/">MySQL</a></span></div><div class="content">系统环境
+我的服务器系统信息如图：
+
+下载
+下载地址：https://dev.mysql.com/downloads/mysql/
+操作系统选择 Linux - Generic，系统架构根据自己的需求选择。
+
+解压，重命名，移动，新建目录
+12345678tar -xvf mysql-8.4.3-linux-glibc2.28-x86_64.tar.xzmv mysql-8.4.3-linux-glibc2.28-x86_64 mysql-8.4.3sudo mv mysql-8.4.3 /usr/localsudo mkdir -pv /usr/local/mysql-8.4.3/&#123;data,log&#125;sudo touch /usr/local/mysql-8.4.3/log/error.logsudo touch /usr/local/mysql-8.4.3/log/slow.logsudo touch /usr/local/mysql-8.4.3/log/general.logmkdir /tmp/mysql
+配置文件
+新建了一个配置文件 /etc/mysql. ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/34f0feb8/" title="ubuntu x86_64 配置 aarch64 交叉编译环境">ubuntu x86_64 配置 aarch64 交叉编译环境</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-07-08T07:44:26.000Z" title="发表于 2024-07-08 15:44:26">2024-07-08</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.173Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/Ubuntu/">Ubuntu</a></span></div><div class="content">概念
+交叉编译的简介可以交叉编译详解 一 概念篇 和 Introduction to cross-compiling for Linux
+简单理解为：
+
+在当前编译平台下，编译出来的程序能运行在体系结构不同的另一种目标平台上，但是编译平台本身却不能运行该程序。比如，我们在 x86 平台上，编写程序并编译成能运行在 ARM 平台的程序，编译得到的程序在 x86 平台上是不能运行的，必须放到 ARM 平台上才能运行。
+
+当前手头有个项目，目标平台是 aarch64 的嵌入式平台，但开发工作是在 x86_64 架构下的 Windows 或者 Ubuntu 系统上进行的， 如果每次开发完，都去嵌入式平台上编译，不仅耗时费力，很多时候嵌入式平台的内存都要爆掉。因此，搭建一个交叉编译环境，在开发平台上编译，在目标平台上运行，显得尤为重要。
+环境搭建
+在参考了 Ubuntu安装arm-linux-gcc交叉编译器 后，了解到，在 ubuntu 上，既可以使用包管理的方式安装交叉编译器，也可以手动安装较新版本的。arm-linux-gcc 的交叉编译器 7.5 以前的版本由 linaro 维护，可以在 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/8852ee2b/" title="Qt中的反射机制">Qt中的反射机制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-16T08:11:05.000Z" title="发表于 2024-01-16 16:11:05">2024-01-16</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.169Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/Qt/">Qt</a></span></div><div class="content">什么是反射？
+反射是指在程序运行时动态加载类并获取类的详细信息，从而操作类或对象的属性和方法。在 Java 中，反射是通过JVM实现的。JVM在得到class对象之后，再通过对class对象进行反编译，从而获取对象的各种信息。
+可以参考 廖雪峰的官方网站 来帮助理解。Java 不是我们这篇文章的重点。
+简单来说，如果编译不知道类或对象的具体信息，比如我们在搭 Java的SSH或者SSM框架的时候，类的名称放在XML文件中，属性和属性值放在XML文件中，需要在运行时读取XML文件，动态获取类的信息，此时就可以用反射来实现。
+下面的代码来自 Java反射机制-十分钟搞懂
+123456789101112131415161718public class Test &#123;    public static void main(String[] args) throws Exception &#123;        //编码/编译的时候，已经知道要创建哪个类的对象，此时和反射没关系        Animal an = new Cat();        an.nickName =&quo ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/533f028c/" title="Nginx实现授权访问">Nginx实现授权访问</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-03T09:27:59.000Z" title="发表于 2023-12-03 17:27:59">2023-12-03</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.168Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Nginx/">Nginx</a></span></div><div class="content">有需求如下：公网上搭建文件服务器，但为了防止人人都可以下载，需要经授权的人才可访问。对于经过公网的流量，一般做如下安全措施：
+
+只能允许已知的 IP 访问。
+流量需要加密。
+
+实现方式
+本文只借助
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/3552f53/" title="Linux 图形界面的显示原理">Linux 图形界面的显示原理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-11-27T15:08:35.000Z" title="发表于 2023-11-27 23:08:35">2023-11-27</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.167Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/X11/">X11</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">显示服务（Display Server）
+参考Linux 图形界面的显示原理是什么？ - silaoA的回答 - 知乎，Linux 图形界面的显示原理是什么？ - 韩朴宇的回答 - 知乎
+大名鼎鼎的X窗口系统（X Window System，也可以叫做 X11 或者 X）是1980s由MIT提出的以位图图像显示图形化界面的一套软件规范及协议，之所以叫“X11”是因为目前是该协议迭代的第11个版本。可以在终端运行 sudo X -version 来查看：
+12345678X.Org X Server 1.21.1.4X Protocol Version 11, Revision 0Current Operating System: Linux lsn-Y9000X 6.2.0-37-generic #38~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov  2 18:01:13 UTC 2 x86_64Kernel command line: BOOT_IMAGE=/@/boot/vmlinuz-6.2.0-37-generic root=UUID=a ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/99ce0d25/" title="我的Arch Linux配置">我的Arch Linux配置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-06T05:47:38.000Z" title="发表于 2023-10-06 13:47:38">2023-10-06</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.179Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/Arch/">Arch</a></span></div><div class="content">享受极简主义的世界</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/6b694a6f/" title="CMake简洁使用说明">CMake简洁使用说明</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-09T04:56:07.000Z" title="发表于 2023-04-09 12:56:07">2023-04-09</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.160Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/CMake/">CMake</a></span></div><div class="content">最简单的情况
+main.cpp
+12345678#include &lt;cstdio&gt;void hello();int main() &#123;    hello();    return 0;&#125;
+hellp.cpp
+12345#include &lt;cstdio&gt;void hello() &#123;    printf(&quot;Hello, world\n&quot;);&#125;
+CMakeLists.txt
+1234cmake_minimum_required(VERSION 3.12)project(hellocmake LANGUAGES CXX)add_executable(a.out main.cpp hello.cpp)
+将 hello.cpp 和 main.cpp 生成一个可执行文件
+库
+静态库
+静态库可以当成多个 .o 文件的打包，相当于直接把代码插入到生成的可执行文件中，会导致生成的可执行文件体积变大。
+而动态库则只在生成的可执行文件中生成“插桩”函数，当可执行文件被加载时会读取指定目录中的 .dll 文件（或 .so），加载到 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/1be2f238/" title="pkg-config用法详解">pkg-config用法详解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-05T12:26:50.000Z" title="发表于 2022-12-05 20:26:50">2022-12-05</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.172Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/CMake/">CMake</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/pkg-config/">pkg-config</a></span></div><div class="content">本文是转载自简书pkg-config用法详解，并根据自己的环境修改。
+背景
+当开发过程中使用第三方库时，我们需要知道被使用的第三方库，它包含的头文件在哪儿、它依赖哪些库、它的编译选项有哪些、它的链接选项有哪些等等，也就是说需要知道这些信息我们才能正确的编译和链接它。当然可以通过直接在编译选项中指定的方式来使用，但是，对于一些大型或者比较复杂的第三方库，包含的头文件或者依赖库非常多、非常复杂的时候，这样做的成本就非常高，而且非常不便于在不同平台之间的移植。
+pkg-config 就是解决这个问题的一种方案。
+pkg-config 是什么
+pkg-config 是一个用于获取系统中安装的包/库的相关信息（例如依赖头文件目录、依赖库文件目录）的程序，通常用于编译和链接一个或多个库，典型的用法为：
+12345# Makefileprogram: program.c            cc program.c `pkg-config --cflags --libs XXX` # 此处的XXX表示库名称，（数字1左边的符号）            
+注意符号 `，不是引号，而是重音符
+pkg- ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/5461203d/" title="CMake的两种模式">CMake的两种模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-05T12:12:37.000Z" title="发表于 2022-12-05 20:12:37">2022-12-05</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.160Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/CMake/">CMake</a></span></div><div class="content">本文主要总结了 find_package 的两种搜索模式：Module 模式和 Config 模式，对每种模式，都写了两个示例，分别搜索第三方库和自己写的测试库，相关代码在文章中可以找到。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/7f05e256/" title="类模板中的编写方式及友元函数在类模板中的使用">类模板中的编写方式及友元函数在类模板中的使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-06-28T00:45:49.000Z" title="发表于 2022-06-28 08:45:49">2022-06-28</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.187Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">实现方式
+编译器有差别，在windows中和在linux中的实现方式不同。
+在VS 编译器下
+在VS编译器下可以这么实现：
+test.cpp
+123456789101112131415161718192021222324252627282930313233343536373839404142434445#include &lt;iostream&gt;using namespace std;template&lt;class T&gt;class Person &#123;public:    Person(T age, T id);    void show();    template&lt;class T&gt;    friend ostream&amp; operator&lt;&lt;(ostream&amp; os, Person&lt;T&gt;&amp; p);    template&lt;class T&gt;    friend void  print_person&lt;T&gt;(Person&lt;T&gt;&amp; p);private:    T m ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/b895802c/" title="STL各容器的基本操作">STL各容器的基本操作</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-06-27T10:49:51.000Z" title="发表于 2022-06-27 18:49:51">2022-06-27</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.169Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">分配器
+allocator 是一种 STL 标准，不同的编译器有不同的实现。
+直接使用分配器，分配 512 个字节的整数。
+12int* p = allocator&lt;int&gt;().allocate(512);allocator&lt;int&gt;().deallocate(p, 512);
+注意 allocator&lt;int&gt;()语法，这里产生了一个临时对象（见《STL源码剖析》36页）。
+VC、BC5、G2.9 的分配器没有任何独特设计，它们就是调用了 C 的 malloc() 和 free() 来分配和释放内存，而且它们的接口设计使得我们不太容易去用（没有程序员会去记忆申请的时候申请了 512个字节，释放的时候再释放 512 字节）。
+G2.9 里面各种容器的默认分配器是 alloc，其实现如下 &lt;stl_alloc.h&gt;，其设计了 16 条单向链表，分别负责以 8 为倍数，不同字节大小的区块（例如 0 号链表负责大小为 8 字节的块，15 号链表负责大小为 128 字节的块）。这个设计节省了很多每次 malloc 时内存的额外开销。
+G4.9  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/6413021f/" title="How to Use Inline Assembly Language in C Code">How to Use Inline Assembly Language in C Code</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-01T12:33:56.000Z" title="发表于 2022-04-01 20:33:56">2022-04-01</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.166Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></span></div><div class="content">内核代码中经常会见到内联汇编的使用，读起来丈二和尚摸不着头脑，本文是对文章 *GCC-Inline-Assembly-HOWTO* 的翻译，希望可以帮助到学习内联汇编的人。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/9eba23ca/" title="站在巨人的肩上之操作系统篇（三）">站在巨人的肩上之操作系统篇（三）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-24T03:17:31.000Z" title="发表于 2022-03-24 11:17:31">2022-03-24</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.186Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">__attribute__((packed))
+最近在写结构体的时候经常遇到下面的这种代码
+12345// GDTRtypedef struct &#123;    uint16_t limit; // 全局段描述符限长 0 ~ 15    uint32_t base;  // 全局段描述符表32位基地址 16 ~ 47&#125; __attribute__((packed)) gdt_ptr_t;
+__attribute__关键字主要是用来设置函数属性（Function Attribute）、变量属性（Variable Attribute）、类型属性（Type Attribute）。也可以修饰结构体（struct）或共用体（union）。设置属性的主要目的在于让编译器进行优化。
+写法为__attribute__ ((attribute-list))，后面的 attribute-list 大概有6个参数值可以设置：aligned, packed, transparent_union, unused, deprecated 和 may_alias。（详情请参见GCC文档）
+而 pack ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/f20345b1/" title="Ubuntu安装完后的个人设置">Ubuntu安装完后的个人设置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-21T00:57:11.000Z" title="发表于 2022-03-21 08:57:11">2022-03-21</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.171Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/Ubuntu/">Ubuntu</a></span></div><div class="content">一个在 ubuntu 的世界里摸爬滚打了5年的技术小白的总结，适用于 ubuntu18, ubuntu 20, ubuntu 22。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/c09fd86d/" title="计网复习记录">计网复习记录</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-11T04:19:37.000Z" title="发表于 2022-03-11 12:19:37">2022-03-11</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.191Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="content">网络体系结构
+OSI7层模型和计算机网络5层模型
+//TODO
+为什么有了7层模型还需要5层模型？
+//TODO
+链路层
+流量控制
+链路层的流量控制是点对点的，传输层的流量控制是端到端的。
+数据链路层流量控制手段：接收端收不下就不回复。
+传输层流量控制手段：接收端给发送端发送一个窗口公告。
+停等协议
+每发送完一个分组就停止发送，等待对方的确认，在收到确认后再发送下一个帧。这是一种特殊的滑动窗口协议（窗口大小为1）。
+
+滑动窗口协议
+
+
+后退N帧协议（GBN）
+
+
+选择重传协议（SR）
+
+
+网络层
+ip地址决定最终要到哪台计算机，mac地址决定下一跳给谁
+ip地址分类及特殊地址
+
+计算机A和B通信过程
+
+IP数据报
+
+详情见王道P144页
+TTL
+TTL用以确保ip数据报分组不会永远在网络中循环。路由器在转发分组之前，先把TTL减1，若TTL被减为0，则将该分组丢弃。
+可以在ping一个地址的时候，通过-i参数指定TTL的大小，以此来追踪该数据报都经过了哪些网关
+
+协议
+数值1表示ICMP，6表示TCP，8表示EGP，17表示UDP，41表示IPV6
+首部校验和
+只校验分组的首部，不校验 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/40df9206/" title="左神算法基础班第三周">左神算法基础班第三周</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-02-08T07:48:01.000Z" title="发表于 2022-02-08 15:48:01">2022-02-08</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.177Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="content">二叉树遍历
+二叉树结构体定义
+12345678struct TreeNode &#123;  int val;  TreeNode *left;  TreeNode *right;  TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;  TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;&#125;;
+先序遍历
+力扣144题
+
+递归
+
+12345678910vector&lt;int&gt; order = &#123;&#125;;vector&lt;int&gt; preorderTraversal(TreeNode* root)&#123;  if (root) &#123;    order.push_back(root-&g ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/5bc7b055/" title="CMake菜谱（二）">CMake菜谱（二）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-06T03:02:57.000Z" title="发表于 2022-01-06 11:02:57">2022-01-06</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.161Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/CMake/">CMake</a></span></div><div class="content">Chapter 3
+在学习的过程中总结的关于python路径的一些问题
+ubuntu中自带了python，我的ubuntu版本是20.04，python版本是3.8，但是不像自己编译安装一样，ubuntu把这个python安装到了很多的地方。
+首先，默认是没有安装pip的，可以通过sudo apt install python3-pip来安装。
+然后，再使用pip来安装python的一些模块的时候，这些模块被安装到的路径是由USER_SITE变量来决定的。可以通过python3 -m site来查看这些信息。比如我的就是
+12345678910111213~ ❯ python3 -m site               sys.path = [    &#x27;/home/lushuangning&#x27;,    &#x27;/usr/lib/python38.zip&#x27;,    &#x27;/usr/lib/python3.8&#x27;,    &#x27;/usr/lib/python3.8/lib-dynload&#x27;,    &#x27;/home/lu ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/f8e49d55/" title="CMake菜谱（一）">CMake菜谱（一）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-29T14:26:04.000Z" title="发表于 2021-12-29 22:26:04">2021-12-29</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.161Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/CMake/">CMake</a></span></div><div class="content">序
+不知道从什么地方开始写起，后面慢慢补吧。CMake 系列学习源自CMake-Cookbook，一本翻译来的书。作者提供了书中的源代码，我自己学习的过程中手动码了一遍，放在了MyCmakeExample
+中文版在线网站CMake Cookbook，本书中的绝大部分内容源自该中文版翻译，在此只是为了做个学习上的记录，以后项目中用到的时候方便查找，可自由转载。
+Chapter 1
+chapter 1.1 对单个源文件编译
+
+配置项目
+
+生成构建器的命令：
+123$ mkdir -p build$ cd build$ cmake ..
+等效于
+1$ cmake -H. -Bbuild
+
+构建项目
+
+构建命令：
+1$ cmake --build .
+后面可以带参数，详情如下
+123456789101112$ cmake --build . --target helpThe following are some of the valid targets for this Makefile:... all (the default if no target is provided)... cle ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/dc13154/" title="左神算法基础班第二周">左神算法基础班第二周</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-21T00:36:25.000Z" title="发表于 2021-12-21 08:36:25">2021-12-21</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.178Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="content">哈希表和有序表
+在 C++ 中，用 unordered_map 替代了 hash_amp。
+在 Java 中，基本数据类型 byte, short, int, long, float, double, char, boolean 以及其对应的对象类型如 Integer, String等在哈希表内部按值传递。除此以外按引用传递。
+链表
+链表结构
+单链表：
+1234567struct ListNode&#123;  int val;  ListNode *next;  ListNode(): val(0), next(nullptr)&#123;&#125;  ListNode(int x) : val(x), next(nullptr)&#123;&#125;  ListNode(int x, ListNode *n) : val(x), next(n)&#123;&#125;&#125;;
+双向链表：
+12345678struct DoublyListNode&#123;  int val;  DoublyListNode *pre;  DoublyListNode *next;  D ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/d05fa7f2/" title="平方根倒数快速算法">平方根倒数快速算法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-17T01:47:57.000Z" title="发表于 2021-12-17 09:47:57">2021-12-17</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.178Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="content">
+快速平方根倒数算法也称为平方根倒数速算法(Fast Inverse Square Root)是用于快速计算的一种算法。此算法由于出现在《雷神之锤III竞技场》源代码中而被人们所熟知。此算法最早被认为是由约翰·卡马克所发明，但后来的调查显示，该算法在这之前就于计算机图形学的硬件与软件领域有所应用，此算法至今为止仍未能确切知晓算法中所使用的特殊常数的起源。
+
+早已听闻这个算法的大名，这几天在做履带车的项目，无意中在树莓派上的源码里发现了这段代码：
+123456789101112131415161718/**************************************Date: May 31, 2020Function: 平方根倒数 求四元数用到***************************************/float InvSqrt(float number)&#123;  volatile long i;  volatile float x, y;  volatile const float f = 1.5F;  x = number * 0.5F;  y  ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">路双宁</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lushuangning"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lushuangning" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sdyglsn@126.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/19352681" rel="external nofollow noreferrer" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a></div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/72db60bd/" title="Linux手动安装MySQL8.4.3LTS版本的注意事项">Linux手动安装MySQL8.4.3LTS版本的注意事项</a><time datetime="2024-12-26T05:17:00.000Z" title="发表于 2024-12-26 13:17:00">2024-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/34f0feb8/" title="ubuntu x86_64 配置 aarch64 交叉编译环境">ubuntu x86_64 配置 aarch64 交叉编译环境</a><time datetime="2024-07-08T07:44:26.000Z" title="发表于 2024-07-08 15:44:26">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/8852ee2b/" title="Qt中的反射机制">Qt中的反射机制</a><time datetime="2024-01-16T08:11:05.000Z" title="发表于 2024-01-16 16:11:05">2024-01-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/533f028c/" title="Nginx实现授权访问">Nginx实现授权访问</a><time datetime="2023-12-03T09:27:59.000Z" title="发表于 2023-12-03 17:27:59">2023-12-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/3552f53/" title="Linux 图形界面的显示原理">Linux 图形界面的显示原理</a><time datetime="2023-11-27T15:08:35.000Z" title="发表于 2023-11-27 23:08:35">2023-11-27</time></div></div></div></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Arch/" style="font-size: 1.1em; color: #999">Arch</a> <a href="/tags/C/" style="font-size: 1.34em; color: #99a3b0">C</a> <a href="/tags/C/" style="font-size: 1.5em; color: #99a9bf">C++</a> <a href="/tags/CMake/" style="font-size: 1.26em; color: #999fa8">CMake</a> <a href="/tags/CNN/" style="font-size: 1.3em; color: #99a1ac">CNN</a> <a href="/tags/CV/" style="font-size: 1.3em; color: #99a1ac">CV</a> <a href="/tags/Deep-Learning/" style="font-size: 1.46em; color: #99a7bb">Deep Learning</a> <a href="/tags/Emacs/" style="font-size: 1.1em; color: #999">Emacs</a> <a href="/tags/GDB/" style="font-size: 1.1em; color: #999">GDB</a> <a href="/tags/Hadoop/" style="font-size: 1.1em; color: #999">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 1.14em; color: #999b9d">Hexo</a> <a href="/tags/KaTex/" style="font-size: 1.1em; color: #999">KaTex</a> <a href="/tags/Latex/" style="font-size: 1.1em; color: #999">Latex</a> <a href="/tags/Linux/" style="font-size: 1.42em; color: #99a6b7">Linux</a> <a href="/tags/MathJax/" style="font-size: 1.1em; color: #999">MathJax</a> <a href="/tags/MySQL/" style="font-size: 1.1em; color: #999">MySQL</a> <a href="/tags/NLP/" style="font-size: 1.18em; color: #999ca1">NLP</a> <a href="/tags/Nginx/" style="font-size: 1.1em; color: #999">Nginx</a> <a href="/tags/OpenCV/" style="font-size: 1.14em; color: #999b9d">OpenCV</a> <a href="/tags/PyTorch/" style="font-size: 1.38em; color: #99a4b4">PyTorch</a> <a href="/tags/Python/" style="font-size: 1.18em; color: #999ca1">Python</a> <a href="/tags/Qt/" style="font-size: 1.14em; color: #999b9d">Qt</a> <a href="/tags/RCNN/" style="font-size: 1.1em; color: #999">RCNN</a> <a href="/tags/RHCE/" style="font-size: 1.22em; color: #999ea4">RHCE</a> <a href="/tags/Socket/" style="font-size: 1.1em; color: #999">Socket</a> <a href="/tags/Spark/" style="font-size: 1.1em; color: #999">Spark</a> <a href="/tags/Ubuntu/" style="font-size: 1.14em; color: #999b9d">Ubuntu</a> <a href="/tags/X11/" style="font-size: 1.1em; color: #999">X11</a> <a href="/tags/YOLOv5/" style="font-size: 1.1em; color: #999">YOLOv5</a> <a href="/tags/anaconda/" style="font-size: 1.1em; color: #999">anaconda</a> <a href="/tags/docker/" style="font-size: 1.1em; color: #999">docker</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/pkg-config/" style="font-size: 1.1em; color: #999">pkg-config</a> <a href="/tags/rust/" style="font-size: 1.1em; color: #999">rust</a> <a href="/tags/tensorflow/" style="font-size: 1.1em; color: #999">tensorflow</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 1.26em; color: #999fa8">博客</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 1.3em; color: #99a1ac">总结</a> <a href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">推荐系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.18em; color: #999ca1">操作系统</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.3em; color: #99a1ac">数据结构</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/12/"><span class="card-archive-list-date">十二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/04/"><span class="card-archive-list-date">四月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/12/"><span class="card-archive-list-date">十二月 2022</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item more is-center"><a class="card-archive-list-link-more" href="/archives/">
+              <span>查看更多</span><i class="fas fa-angle-right"  ></i></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">105</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2019-01-31T16:00:00.000Z"></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-12-26T05:19:04.816Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    var typed = new Typed("#subtitle", {
+      strings: "也许他们会明白莫泊桑的一句话：生活可能不像你想象的那么好，但是也不会像你想象的那么糟。人的脆弱和坚强都超乎了自己的想象，有时候可能脆弱的一句话就泪流满面，有时候你发现自己咬着牙已经走过了很长的路。".split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: false,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '也许他们会明白莫泊桑的一句话：生活可能不像你想象的那么好，但是也不会像你想象的那么糟。人的脆弱和坚强都超乎了自己的想象，有时候可能脆弱的一句话就泪流满面，有时候你发现自己咬着牙已经走过了很长的路。'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') subtitleType()
+  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
+} else {
+  subtitleType()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

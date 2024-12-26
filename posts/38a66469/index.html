@@ -1,0 +1,437 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>汇编语言学习记录（二） | 路双宁的博客</title><meta name="keywords" content="汇编"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="除了看王爽的汇编语言程序设计之外，最近还在 b 站上看到了 up 主谭玉刚讲的 Coding Master系列视频，从计算机底层讲起，清晰易懂，包括 x86 汇编，感觉比看书学习效率更快。不过该系列视频使用的是 NASM 汇编器，在语法上与王爽的代码有很多不同之处。 在这之前，补充点计算机启动时候的知识。 计算机是如何启动的？ 内存分配 8086 CPU 是如何分配内存的？  计算机 BIOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="汇编语言学习记录（二）">
+<meta property="og:url" content="https://lushuangning.github.io/posts/38a66469/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="除了看王爽的汇编语言程序设计之外，最近还在 b 站上看到了 up 主谭玉刚讲的 Coding Master系列视频，从计算机底层讲起，清晰易懂，包括 x86 汇编，感觉比看书学习效率更快。不过该系列视频使用的是 NASM 汇编器，在语法上与王爽的代码有很多不同之处。 在这之前，补充点计算机启动时候的知识。 计算机是如何启动的？ 内存分配 8086 CPU 是如何分配内存的？  计算机 BIOS">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-08-10T11:21:14.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.184Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="汇编">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/38a66469/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">内存分配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%9A%84%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">内存的寻址方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B1%80"><span class="toc-number">1.2.</span> <span class="toc-text">数据在内存中的布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E5%B1%9E%E6%80%A7"><span class="toc-number">1.3.</span> <span class="toc-text">显示属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">逻辑地址与物理地址</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">位宽</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">内存分段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">Bochs 调试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">加减法指令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">乘除法指令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">汇编指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%8F%B7"><span class="toc-number">8.1.</span> <span class="toc-text">标号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%BF%97%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E6%A0%87%E5%BF%97%E4%BD%8D"><span class="toc-number">8.2.</span> <span class="toc-text">标志寄存器的标志位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4"><span class="toc-number">8.3.</span> <span class="toc-text">条件转移指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-%E5%88%86%E6%AE%B5"><span class="toc-number">8.4.</span> <span class="toc-text">section 分段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#and-or-not-xor"><span class="toc-number">8.5.</span> <span class="toc-text">and&#x2F;or&#x2F;not&#x2F;xor</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">用户程序结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">10.</span> <span class="toc-text">硬盘读取</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#in"><span class="toc-number">10.1.</span> <span class="toc-text">in</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#out"><span class="toc-number">10.2.</span> <span class="toc-text">out</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E6%AD%A5%E9%AA%A4"><span class="toc-number">10.3.</span> <span class="toc-text">读取步骤</span></a></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">汇编语言学习记录（二）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-10T11:21:14.000Z" title="发表于 2021-08-10 19:21:14">2021-08-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.184Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109071.jpg" alt=""></p>
+<p>除了看王爽的汇编语言程序设计之外，最近还在 b 站上看到了 up 主谭玉刚讲的 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://space.bilibili.com/41036636">Coding Master</a>系列视频，从计算机底层讲起，清晰易懂，包括 x86 汇编，感觉比看书学习效率更快。不过该系列视频使用的是 NASM 汇编器，在语法上与王爽的代码有很多不同之处。</p>
+<p>在这之前，补充点计算机启动时候的知识。</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.ruanyifeng.com/blog/2013/02/booting.html">计算机是如何启动的？</a></p>
+<h1>内存分配</h1>
+<p>8086 CPU 是如何分配内存的？</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108101.png" alt=""></p>
+<p>计算机 BIOS 执行完 POST 后，会到硬盘等设备的 MBR 分区上找 BootLoader，找到就加载到内存 <strong>0x7c00</strong> 的位置。注意这个 0x7c00，刚好等于 32KB - 1024B。这个数字与 IBM PC Model 5150 有关。该计算机支持的最大内存时 32KB，也就是 0x0000~0x7FFF。操作系统起来后，BootLoader 的使命也就完成了，可以将其占用的内存释放。因此，最好的方法是将 BootLoader 放在内存的最后。那么 BootLoader 要占多少空间呢？MBR 扇区要占 512 个字节，栈/数据要占 512 个字节，总共 1KB。将其放在 32KB 的内存空间的最后，BootLoader 的起始位置就是 <code>0x7FFF - 0x0400 + 1 = 0x7C00</code>。后来，计算机内存扩展到了 1MB，数 GB，这个数字也一直没有变。BootLoader的位置也就是从 0x7c00~0x7DFF 的这 512 个字节。</p>
+<p>对图形模式的细分：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108111.png" alt=""></p>
+<p>而最新的显卡，显存有十几 GB，但系统只给它分配了几百 MB 的地址空间，不够用怎么办？切换映射到相应地址空间的显存。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108112.png" alt=""></p>
+<h2 id="内存的寻址方式">内存的寻址方式</h2>
+<ol>
+<li>直接寻址</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov ax, [0x5c0f]</span><br><span class="line">add word [0x0230], [0x5000]</span><br><span class="line">xor byte [es:label_b], 0x05</span><br></pre></td></tr></table></figure>
+<p>第一条指令中，源操作数寻址时，处理器将数据段寄存器 DS 中的内容左移4位，加上 0x5c0f，形成20位物理地址。</p>
+<p>第二条指令的寻址方式与第一条指令相同。</p>
+<p>第三条指令，目的操作数使用了标号和段超越前缀（es:），但它依然属于直接寻址方式。因为标号是数值的等价形式，代表了所在位置的汇编地址。段超越前缀仅仅用来改变默认的数据段。</p>
+<ol start="2">
+<li>基址寻址</li>
+</ol>
+<p>所谓基址寻址，就是在指令的地址部分使用基址寄存器 BX 或者 BP 来提供偏移地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov [bx], dx</span><br><span class="line">add byte [bx], 0x55</span><br></pre></td></tr></table></figure>
+<p>第一条指令执行时，处理器将数据段寄存器 DS 的内容左移4位，加上基址寄存器 BX 中的内容，形成20位物理地址。然后，把寄存器 DX 中的内容传送到该地址所处的字单元里。</p>
+<p>使用基址寻址可以使代码变得简洁高效。例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  mov bx,buffer</span><br><span class="line">  mov cx,4</span><br><span class="line">lpinc:</span><br><span class="line">  inc word [bx]</span><br><span class="line">  add bx,2</span><br><span class="line">  loop lpinc</span><br></pre></td></tr></table></figure>
+<p>基址寻址允许在基址寄存器的基础上使用一个偏移量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  xor bx,bx</span><br><span class="line">  mov cx,4</span><br><span class="line">lpinc:</span><br><span class="line">  inc word [bx+buffer]</span><br><span class="line">  add bx,2</span><br><span class="line">  loop lpinc</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>变址寻址</li>
+</ol>
+<p>变址寻址类似于基址寻址，不同之处在于使用的是变址寄存器（又叫索引寄存器）SI 和 DI。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov [si],dx</span><br><span class="line">add ax,[di]</span><br><span class="line">xor word [si],0x8000</span><br></pre></td></tr></table></figure>
+<p>处理器访问由段寄存器 DS 指向的数据段，偏移地址由寄存器 SI 或者 DI 提供。</p>
+<p>同样地，编制寻址方式也允许带一个偏移量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov [si+0x100],al</span><br><span class="line">add byte [di+label_al],0x80</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>基址变址寻址</li>
+</ol>
+<p>8086 处理器支持一种基址加变址的寻址方式，建成基址变址寻址。</p>
+<p>使用基址变址的操作数可以使用一个基址寄存器（BX 或者 BP），外加一个变址寄存器（SI 或者 DI），基本形式为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov ax,[bx+si]</span><br><span class="line">add word [bx+di], 0x3000</span><br></pre></td></tr></table></figure>
+<h2 id="数据在内存中的布局">数据在内存中的布局</h2>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109072.png" alt=""></p>
+<h2 id="显示属性">显示属性</h2>
+<p>属性字节：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108113.png" alt=""></p>
+<p>例如，显示一个黑底白字的字母’A’，就要发送 <code>0x4107</code>。由于默认显示就是黑底白字，因此可以发送 <code>0x41</code>，但是必须把属性字节的位置空出来（即隔一个字节发送一个字符）。</p>
+<h1>逻辑地址与物理地址</h1>
+<p>IP 寄存器中，存储的是逻辑地址，需要配合 DS 寄存器确定最终的物理地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">mov ax,0b800h</span><br><span class="line">mov ds,ax</span><br><span class="line"></span><br><span class="line">mov byte [0x00],&#x27;2&#x27;</span><br><span class="line">mov byte [0x02],&#x27;0&#x27;</span><br><span class="line">mov byte [0x04],&#x27;2&#x27;</span><br><span class="line">mov byte [0x06],&#x27;1&#x27;</span><br><span class="line">mov byte [0x08],&#x27;,&#x27;</span><br><span class="line">mov byte [0x0a],&#x27;H&#x27;</span><br><span class="line">mov byte [0x0c],&#x27;a&#x27;</span><br><span class="line">mov byte [0x0e],&#x27;p&#x27;</span><br><span class="line">mov byte [0x10],&#x27;p&#x27;</span><br><span class="line">mov byte [0x12],&#x27;y&#x27;</span><br><span class="line">mov byte [0x14],&#x27; &#x27;</span><br><span class="line">mov byte [0x16],&#x27;N&#x27;</span><br><span class="line">mov byte [0x18],&#x27;i&#x27;</span><br><span class="line">mov byte [0x1a],&#x27;u&#x27;</span><br><span class="line">mov byte [0x1c],&#x27; &#x27;</span><br><span class="line">mov byte [0x1e],&#x27;Y&#x27;	</span><br><span class="line">mov byte [0x20],&#x27;e&#x27;</span><br><span class="line">mov byte [0x22],&#x27;a&#x27;</span><br><span class="line">mov byte [0x24],&#x27;r&#x27;</span><br><span class="line">mov byte [0x26],&#x27;!&#x27;</span><br><span class="line"></span><br><span class="line">jmp $</span><br><span class="line"></span><br><span class="line">times 510-($-$$) db 0</span><br><span class="line">db 0x55,0xaa</span><br></pre></td></tr></table></figure>
+<p>该段代码里，一开始设置了段寄存器 DS 的值为 0b800h</p>
+<p>通过 jmp 指令来间接修改 IP，<code>$$</code> 代表程序起始位置，<code>$</code> 代表当前的地址。 <code>jmp $</code> 是在当前打转转，不让程序直接退出。<code>$-$$</code> 代表从程序起始到 jmp 的字节数，512 字节减去最后的 55 aa 两个字节的标志位为510，<code>510-($-$$)</code> 代表总共需要填充的 0 的个数。</p>
+<h1>位宽</h1>
+<p>某些情况下，我们需要指定位宽，例如立即数传送到内存</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108114.png" alt=""></p>
+<h1>内存分段</h1>
+<p>16 位模式也称为实模式，当我们进入 32 位模式的时候会有一个保护模式。</p>
+<p>8086CPU 的 IP 寄存器有 16 位，因此段的最大长度为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup><mo>=</mo><mn>64</mn><mi>K</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">2^{16} = 64KB</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">64</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span>。这种情况下，总共有 16 个 64KB 的段。</p>
+<p>那么段的最小长度是多少呢？答案是 16B，这种情况下，总共有 65536 个大小为 16B 的段。</p>
+<h1>Bochs 调试</h1>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108121.png" alt=""></p>
+<p>图中的第一条指令，即红框框起来的，是来自 ROM-BIOS 的指令。该指令跳转到地址 e05b。这个地址是 BIOS 程序的入口。</p>
+<p>指令说明：</p>
+<p>s，单步调试<br>
+b 0x7c00，打断点到内存某个位置<br>
+c，执行断点<br>
+r，查看寄存器<br>
+sreg，查看段寄存器<br>
+xp /nuf addr，查看物理内存，n=查看多少个单位，u=单位，u可以使b（字节），h（2字节），w（4字节），g（8字节），f=格式，f可以是 x（十六进制），d（十进制），u（无符号十进制），o（八进制），t（二进制），addr=地址</p>
+<h1>加减法指令</h1>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108122.png" alt=""></p>
+<p>reg8 代表8位寄存器<br>
+imm16 代表16位的立即数</p>
+<p>寄存器 eflags 的 CF 位，代表两个数相加、相减时产生的进位、借位。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108123.png" alt=""></p>
+<p>CF 是大写的，它就为1，小写的为0</p>
+<p>inc 和 dec 是自增、自减的指令，但不影响 cf 的标志位。</p>
+<p>在 16 位的 CPU 上做 32 位数的加减，需要使用2个新的指令 adc 和 sbb。</p>
+<p>adc 在计算式额外增加 CF 的值，sbb 在计算时会额外减去 CF 的值。</p>
+<h1>乘除法指令</h1>
+<p>乘法的乘数需要实现放到 al 或者 ax 寄存器，<strong>被乘数跟在 mul 指令后面，即<code>reg mul ax</code></strong>，计算结果放到 ax（8 位数乘法） 或者 ax:dx 寄存器（16 位数乘法，结果的高 16 位放到 dx，低 16 位放到 ax）</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108131.png" alt=""></p>
+<p>被除数需要先放到 ax 或者 dx:ax 寄存器，<strong>除数跟在 div 指令后面，即<code>dx:ax div reg</code></strong>，商存在 al 寄存器，余数存在 ah 寄存器。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108132.png" alt=""></p>
+<p>注意，mul 和 div 指令无法处理复数，而 add, sub, adc, sbb 指令剋应对有符号操作数。</p>
+<p>在做 32 位除法的时候，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov dx,0x0008</span><br><span class="line">mov ax,0x0006</span><br><span class="line">mov cx,0x0002</span><br><span class="line">div cx</span><br></pre></td></tr></table></figure>
+<p>会出现溢出的情况，造成死循环。我们可以自己写算法，用2个寄存器来保存出发的商，用1个寄存器来保存除法的余数。这里需要用到栈。可以将栈顶指针设置为<code>0x0000</code>，还记得在中的入栈和出栈的过程吗？入栈的时候，首先执行<code>sp=sp-2</code>，即<code>sp=0x0000-2</code>，为 <code>0xfffe</code></p>
+<p>32 位除法思路：被除数放在 dx:ax 里，除数放在 cx 里。除法做完后，商的高 16 位放在bx里，低 16 位放在 ax 里，余数放 dx 里。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mov dx,0x0009</span><br><span class="line">mov ax,0x0006</span><br><span class="line">mov cx,0x0002</span><br><span class="line"></span><br><span class="line">push ax ;低16位保存到栈里</span><br><span class="line">mov ax,dx ;高16位放到低16位</span><br><span class="line">mov dx,0 ;高16位置0</span><br><span class="line">div cx  ;执行完后，商会保存到ax，余数在dx</span><br><span class="line">mov bx,ax ;高16位的商保存到bx，余数作为高位参与下一次计算</span><br><span class="line">pop ax</span><br><span class="line">div cx</span><br></pre></td></tr></table></figure>
+<p>数学上可证明，第二次除法不会导致溢出。</p>
+<h1>汇编指令</h1>
+<h2 id="标号">标号</h2>
+<p>在 NASM 汇编语言里，每条指令的前面都可以拥有一个标号，以代表和指示该指令的汇编地址。</p>
+<p>例如，<code>infi: jmp near infi</code>。这里带冒号的 infi 及是标号。 假如这条指令的汇编地址是 0x0000012B，那么 infi 就代表数值 0x0000012B，或者说是 0x0000012B 的符号化表示。</p>
+<p>另外，标号之后的冒号也是可选的，所以下面的写法也正确 <code>infi jmp near infi</code>。标号并不是必需的，只有在我们需要引用某条指令的汇编地址时，才使用标号。正因如此，源程序中的绝大多数指令都没有标号。</p>
+<p>标号可以单独占用一行的位置，像这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">infi:</span><br><span class="line">    jmp near infi</span><br></pre></td></tr></table></figure>
+<h2 id="标志寄存器的标志位">标志寄存器的标志位</h2>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108171.png" alt=""></p>
+<h2 id="条件转移指令">条件转移指令</h2>
+<p>当 ZF 标志位满足/不满足要求时执行：</p>
+<p><code>jz jump if zero</code></p>
+<p><code>jnz jump if not zero</code></p>
+<p>cmp dest目的(reg/mem) source源(reg/mem/imm)</p>
+<p>用于比较两个操作数，然后改变标志位的值</p>
+<h2 id="section-分段">section 分段</h2>
+<p>nasm 中不再有 assume 操作，段地址完全取决于存入段寄存器的值。</p>
+<p><code>section code align=16 vstart=0x7c00</code>,section 后接名字，align设置内存对齐，vstart设置偏移地址</p>
+<h2 id="and-or-not-xor">and/or/not/xor</h2>
+<p>and dest(reg/mem) source(reg/mem/imm)，用来取特定某些位的值</p>
+<p>or dest(reg/mem) source(reg/mem/imm)，用来设置操作数某位的值</p>
+<p>not reg/mem，用来取反</p>
+<p>xor dest(reg/mem) source(reg/mem/imm)，源和目的操作数都是同一个的话，可以将该操作数所有位置零</p>
+<h1>用户程序结构</h1>
+<p>一个规范的程序，应当包括代码段、数据点、附加段和栈段。这样一来，段的划分和段与段之间的界限在程序加载到内存之前就已经准备好了。</p>
+<p>NASM 编译器使用汇编指令 <code>SECTION</code> 或 <code>SEGMENT</code> 来定义段。它的一般格式是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SECTION 段名称</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SEGMENT 段名称</span><br></pre></td></tr></table></figure>
+<p>一旦定义段，后面的内容就都属于该段，除非又出现了另一个段的定义。有时候，程序并不以段定义语句开始。这种情况下，这些内容默认地自成一个段。</p>
+<p>NASM 对段的数量没有限制，即，一些大的程序可能拥有不止一个代码段和数据段。</p>
+<p>Intel 处理器要求段在内存中的起始物理地址起码是16字节对齐。汇编语言源程序中定义的各个段也有对齐方面的要求。具体做法是使用<code>align=</code>，用于指定某个 SECTION 的汇编地址对齐方式。</p>
+<p>段的汇编地址是段内第一个元素（数据、指令）的汇编地址。为了方便取得该段的汇编地址，NASM 编译器提供了 <code>section.段名称.start</code> 来获取段地址。</p>
+<p>伪指令 dd 用于声明和初始化一个双字，即一个32位的数据。</p>
+<p>结合《X86汇编语言：从实模式到保护模式》的117-119页阅读下面的源码</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/c08.asm">代码清单8-2</a></p>
+<h1>硬盘读取</h1>
+<p>硬盘读取指令为 in/out</p>
+<p>现在一般采用 LBA 方式，即逻辑块方式来读写硬盘。</p>
+<h2 id="in">in</h2>
+<p>从硬盘上读数据需要使用 in 指令，读到的数据会保存在寄存器中。由硬盘-&gt;寄存器。</p>
+<p>in dest(al/ax) source(dx/imm8)</p>
+<p>imm8 的最大值为255，而使用 dx 寄存器，则可以访问全部的 65535 个端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">in ax,imm8</span><br><span class="line"></span><br><span class="line">mov dx,ox1f0</span><br><span class="line">in ax,dx</span><br></pre></td></tr></table></figure>
+<h2 id="out">out</h2>
+<p>写入指令 out，目标是端口，由寄存器-&gt;硬盘</p>
+<p>out dest(dx/imm8) source(al/ax)</p>
+<p>例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">out imm8,ax</span><br><span class="line"></span><br><span class="line">mov dx,0x1f0</span><br><span class="line">out dx,al</span><br></pre></td></tr></table></figure>
+<h2 id="读取步骤">读取步骤</h2>
+<p>LBA28 模式下读取硬盘，有 8 个端口，从 0x1f0 ~ 0x1f7</p>
+<ol>
+<li>
+<p>首先要告诉硬盘读取几个扇区，该参数写入 0x1f2 中。</p>
+</li>
+<li>
+<p>告诉硬盘从哪个逻辑扇区开始读。需要写入 28 位的逻辑扇区号，从 0x1f3 ~ 0x1f6；0x1f6 这个端口，只写入了逻辑扇区号的 24 ~ 27 位，剩下的 4 位要标识硬盘号和读写模式</p>
+</li>
+<li>
+<p>向 0x1f7 端口写入 0x20 或 0x30，分别表示读硬盘和写硬盘</p>
+</li>
+</ol>
+<p>端口的含义如下图所示：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108221.png" alt=""></p>
+<p>查看硬盘状态是否准备就绪，也是通过 0x1f7 端口查询。</p>
+<p>只关心第 3 位和第 7 位，用 and 把其他位置零。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108222.png" alt=""></p>
+<ol start="4">
+<li>读取硬盘，0x1f0 是个 16 位的端口，一次可以读 2 个字节或者 1 个字。循环读取 0x1f0，把得到的数据保存到目标内存即可。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">readword:</span><br><span class="line">  mov dx,0x1f0</span><br><span class="line">  in ax,dx</span><br><span class="line">  loop readword</span><br></pre></td></tr></table></figure></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/38a66469/">https://lushuangning.github.io/posts/38a66469/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/ad791eac/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">C++分配器</div></div></a></div><div class="next-post pull-right"><a href="/posts/65200a64/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">红帽RHCE培训记录（三）</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

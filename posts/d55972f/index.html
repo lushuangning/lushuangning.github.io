@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Let’s Build A Simple Interpreter. Part 1. | 路双宁的博客</title><meta name="keywords" content="编译原理"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="出处：https:&#x2F;&#x2F;ruslanspivak.com&#x2F;lsbasi-part1&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Let’s Build A Simple Interpreter. Part 1.">
+<meta property="og:url" content="https://lushuangning.github.io/posts/d55972f/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="出处：https:&#x2F;&#x2F;ruslanspivak.com&#x2F;lsbasi-part1&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-07-27T02:18:59.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.166Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/d55972f/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Let%E2%80%99s-Build-A-Simple-Interpreter-%E7%B3%BB%E5%88%97%E5%85%A8%E9%83%A8%E5%87%BA%E8%87%AA-Ruslan%E2%80%99s-Blog%EF%BC%8C%E5%9B%A0%E5%85%B6%E4%B8%AD%E7%9A%84%E9%93%BE%E6%8E%A5%E5%92%8C%E5%9B%BE%E7%89%87%E6%9D%A5%E8%87%AA%E5%9B%BD%E5%A4%96%EF%BC%8C%E5%A6%82%E9%81%87%E5%8A%A0%E8%BD%BD%E8%BE%83%E6%85%A2%E6%88%96%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E7%9A%84%E6%83%85%E5%86%B5%E8%AF%B7%E6%8C%82%E4%BB%A3%E7%90%86%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">Let’s Build A Simple Interpreter 系列全部出自 Ruslan’s Blog，因其中的链接和图片来自国外，如遇加载较慢或无法访问的情况请挂代理。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">Let’s Build A Simple Interpreter. Part 1.</span></a></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">Let’s Build A Simple Interpreter. Part 1.</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-27T02:18:59.000Z" title="发表于 2021-07-27 10:18:59">2021-07-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.166Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h3 id="Let’s-Build-A-Simple-Interpreter-系列全部出自-Ruslan’s-Blog，因其中的链接和图片来自国外，如遇加载较慢或无法访问的情况请挂代理。"><em>Let’s Build A Simple Interpreter</em> 系列全部出自 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://ruslanspivak.com/">Ruslan’s Blog</a>，因其中的链接和图片来自国外，如遇加载较慢或无法访问的情况请挂代理。</h3>
+<h1><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ruslanspivak.com/lsbasi-part1/">Let’s Build A Simple Interpreter. Part 1.</a></h1>
+<blockquote>
+<p>“If you don’t know how compilers work, then you don’t know how computers work. If you’re not 100% sure whether you know how compilers work, then you don’t know how they work.” — <em>Steve Yegge</em></p>
+</blockquote>
+<p>There you have it. Think about it. It doesn’t really matter whether you’re a newbie or a seasoned software developer: if you don’t know how compilers and interpreters work, then you don’t know how computers work. It’s that simple.</p>
+<p>So, do you know how compilers and interpreters work? And I mean, are you 100% sure that you know how they work? If you don’t.</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_part1_i_dont_know.png" alt=""></p>
+<p>Or if you don’t and you’re really agitated about it.</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_part1_omg.png" alt=""></p>
+<p>Do not worry. If you stick around and work through the series and build an interpreter and a compiler with me you will know how they work in the end. And you will become a confident happy camper too. At least I hope so.</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_part1_i_know.png" alt=""></p>
+<p>Why would you study interpreters and compilers? I will give you three reasons.</p>
+<ol>
+<li>To write an interpreter or a compiler you have to have a lot of technical skills that you need to use together. Writing an interpreter or a compiler will help you improve those skills and become a better software developer. As well, the skills you will learn are useful in writing any software, not just interpreters or compilers.</li>
+<li>You really want to know how computers work. Often interpreters and compilers look like magic. And you shouldn’t be comfortable with that magic. You want to demystify the process of building an interpreter and a compiler, understand how they work, and get in control of things.</li>
+<li>You want to create your own programming language or domain specific language. If you create one, you will also need to create either an interpreter or a compiler for it. Recently, there has been a resurgence of interest in new programming languages. And you can see a new programming language pop up almost every day: Elixir, Go, Rust just to name a few.</li>
+</ol>
+<p>Okay, but what are interpreters and compilers?</p>
+<p>The goal of an <strong>interpreter</strong> or a <strong>compiler</strong> is to translate a source program in some high-level language into some other form. Pretty vague, isn’t it? Just bear with me, later in the series you will learn exactly what the source program is translated into.</p>
+<p>At this point you may also wonder what the difference is between an interpreter and a compiler. For the purpose of this series, let’s agree that if a translator translates a source program into machine language, it is a <strong>compiler</strong>. If a translator processes and executes the source program without translating it into machine language first, it is an <strong>interpreter</strong>. Visually it looks something like this:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_part1_compiler_interpreter.png" alt=""></p>
+<p>I hope that by now you’re convinced that you really want to study and build an interpreter and a compiler. What can you expect from this series on interpreters?</p>
+<p>Here is the deal. You and I are going to create a simple interpreter for a large subset of <a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Pascal_%28programming_language%29">Pascal</a> language. At the end of this series you will have a working Pascal interpreter and a source-level debugger like Python’s <a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.python.org/2/library/pdb.html">pdb</a>.</p>
+<p>You might ask, why Pascal? For one thing, it’s not a made-up language that I came up with just for this series: it’s a real programming language that has many important language constructs. And some old, but useful, CS books use Pascal programming language in their examples (I understand that that’s not a particularly compelling reason to choose a language to build an interpreter for, but I thought it would be nice for a change to learn a non-mainstream language :)</p>
+<p>Here is an example of a factorial function in Pascal that you will be able to interpret with your own interpreter and debug with the interactive source-level debugger that you will create along the way:</p>
+<figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">program</span> factorial;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span><span class="params">(n: integer)</span>:</span> longint;</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> n = <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">        factorial := <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        factorial := n * factorial(n - <span class="number">1</span>);</span><br><span class="line"><span class="keyword">end</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span></span><br><span class="line">    n: integer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">for</span> n := <span class="number">0</span> <span class="keyword">to</span> <span class="number">16</span> <span class="keyword">do</span></span><br><span class="line">        writeln(n, <span class="string">&#x27;! = &#x27;</span>, factorial(n));</span><br><span class="line"><span class="keyword">end</span>.</span><br></pre></td></tr></table></figure>
+<p>The implementation language of the Pascal interpreter will be Python, but you can use any language you want because the ideas presented don’t depend on any particular implementation language. Okay, let’s get down to business. Ready, set, go!</p>
+<p>You will start your first foray into interpreters and compilers by writing a simple interpreter of arithmetic expressions, also known as a calculator. Today the goal is pretty minimalistic: to make your calculator handle the addition of two single digit integers like 3+5. Here is the source code for your calculator, sorry, interpreter:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Token types</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># EOF (end-of-file) token is used to indicate that</span></span><br><span class="line"><span class="comment"># there is no more input left for lexical analysis</span></span><br><span class="line">INTEGER, PLUS, EOF = <span class="string">&#x27;INTEGER&#x27;</span>, <span class="string">&#x27;PLUS&#x27;</span>, <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Token</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">type</span>, value</span>):</span><br><span class="line">        <span class="comment"># token type: INTEGER, PLUS, or EOF</span></span><br><span class="line">        <span class="variable language_">self</span>.<span class="built_in">type</span> = <span class="built_in">type</span></span><br><span class="line">        <span class="comment"># token value: 0, 1, 2. 3, 4, 5, 6, 7, 8, 9, &#x27;+&#x27;, or None</span></span><br><span class="line">        <span class="variable language_">self</span>.value = value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;String representation of the class instance.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Examples:</span></span><br><span class="line"><span class="string">            Token(INTEGER, 3)</span></span><br><span class="line"><span class="string">            Token(PLUS &#x27;+&#x27;)</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Token(&#123;type&#125;, &#123;value&#125;)&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">            <span class="built_in">type</span>=<span class="variable language_">self</span>.<span class="built_in">type</span>,</span><br><span class="line">            value=<span class="built_in">repr</span>(<span class="variable language_">self</span>.value)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.__str__()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Interpreter</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, text</span>):</span><br><span class="line">        <span class="comment"># client string input, e.g. &quot;3+5&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.text = text</span><br><span class="line">        <span class="comment"># self.pos is an index into self.text</span></span><br><span class="line">        <span class="variable language_">self</span>.pos = <span class="number">0</span></span><br><span class="line">        <span class="comment"># current token instance</span></span><br><span class="line">        <span class="variable language_">self</span>.current_token = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">error</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">&#x27;Error parsing input&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_next_token</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Lexical analyzer (also known as scanner or tokenizer)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        This method is responsible for breaking a sentence</span></span><br><span class="line"><span class="string">        apart into tokens. One token at a time.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        text = <span class="variable language_">self</span>.text</span><br><span class="line"></span><br><span class="line">        <span class="comment"># is self.pos index past the end of the self.text ?</span></span><br><span class="line">        <span class="comment"># if so, then return EOF token because there is no more</span></span><br><span class="line">        <span class="comment"># input left to convert into tokens</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.pos &gt; <span class="built_in">len</span>(text) - <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> Token(EOF, <span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># get a character at the position self.pos and decide</span></span><br><span class="line">        <span class="comment"># what token to create based on the single character</span></span><br><span class="line">        current_char = text[<span class="variable language_">self</span>.pos]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># if the character is a digit then convert it to</span></span><br><span class="line">        <span class="comment"># integer, create an INTEGER token, increment self.pos</span></span><br><span class="line">        <span class="comment"># index to point to the next character after the digit,</span></span><br><span class="line">        <span class="comment"># and return the INTEGER token</span></span><br><span class="line">        <span class="keyword">if</span> current_char.isdigit():</span><br><span class="line">            token = Token(INTEGER, <span class="built_in">int</span>(current_char))</span><br><span class="line">            <span class="variable language_">self</span>.pos += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> token</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> current_char == <span class="string">&#x27;+&#x27;</span>:</span><br><span class="line">            token = Token(PLUS, current_char)</span><br><span class="line">            <span class="variable language_">self</span>.pos += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> token</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.error()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eat</span>(<span class="params">self, token_type</span>):</span><br><span class="line">        <span class="comment"># compare the current token type with the passed token</span></span><br><span class="line">        <span class="comment"># type and if they match then &quot;eat&quot; the current token</span></span><br><span class="line">        <span class="comment"># and assign the next token to the self.current_token,</span></span><br><span class="line">        <span class="comment"># otherwise raise an exception.</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.current_token.<span class="built_in">type</span> == token_type:</span><br><span class="line">            <span class="variable language_">self</span>.current_token = <span class="variable language_">self</span>.get_next_token()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.error()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">expr</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;expr -&gt; INTEGER PLUS INTEGER&quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># set current token to the first token taken from the input</span></span><br><span class="line">        <span class="variable language_">self</span>.current_token = <span class="variable language_">self</span>.get_next_token()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># we expect the current token to be a single-digit integer</span></span><br><span class="line">        left = <span class="variable language_">self</span>.current_token</span><br><span class="line">        <span class="variable language_">self</span>.eat(INTEGER)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># we expect the current token to be a &#x27;+&#x27; token</span></span><br><span class="line">        op = <span class="variable language_">self</span>.current_token</span><br><span class="line">        <span class="variable language_">self</span>.eat(PLUS)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># we expect the current token to be a single-digit integer</span></span><br><span class="line">        right = <span class="variable language_">self</span>.current_token</span><br><span class="line">        <span class="variable language_">self</span>.eat(INTEGER)</span><br><span class="line">        <span class="comment"># after the above call the self.current_token is set to</span></span><br><span class="line">        <span class="comment"># EOF token</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># at this point INTEGER PLUS INTEGER sequence of tokens</span></span><br><span class="line">        <span class="comment"># has been successfully found and the method can just</span></span><br><span class="line">        <span class="comment"># return the result of adding two integers, thus</span></span><br><span class="line">        <span class="comment"># effectively interpreting client input</span></span><br><span class="line">        result = left.value + right.value</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># To run under Python3 replace &#x27;raw_input&#x27; call</span></span><br><span class="line">            <span class="comment"># with &#x27;input&#x27;</span></span><br><span class="line">            text = raw_input(<span class="string">&#x27;calc&gt; &#x27;</span>)</span><br><span class="line">        <span class="keyword">except</span> EOFError:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> text:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        interpreter = Interpreter(text)</span><br><span class="line">        result = interpreter.expr()</span><br><span class="line">        <span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>Save the above code into <em><a target="_blank" rel="noopener external nofollow noreferrer" href="http://calc1.py">calc1.py</a></em> file or download it directly from <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/rspivak/lsbasi/blob/master/part1/calc1.py">GitHub</a>. Before you start digging deeper into the code, run the calculator on the command line and see it in action. Play with it! Here is a sample session on my laptop (if you want to run the calculator under Python3 you will need to replace <em>raw_input</em> with <em>input</em>):</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python calc1.py</span></span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">3+4</span></span><br><span class="line">7</span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">3+5</span></span><br><span class="line">8</span><br><span class="line"><span class="meta prompt_">calc&gt; </span><span class="language-bash">3+9</span></span><br><span class="line">12</span><br><span class="line"><span class="meta prompt_">calc&gt;</span></span><br></pre></td></tr></table></figure>
+<p>For your simple calculator to work properly without throwing an exception, your input needs to follow certain rules:</p>
+<ul>
+<li>Only single digit integers are allowed in the input</li>
+<li>The only arithmetic operation supported at the moment is addition</li>
+<li>No whitespace characters are allowed anywhere in the input</li>
+</ul>
+<p>Those restrictions are necessary to make the calculator simple. Don’t worry, you’ll make it pretty complex pretty soon.</p>
+<p>Okay, now let’s dive in and see how your interpreter works and how it evaluates arithmetic expressions.</p>
+<p>When you enter an expression <em>3+5</em> on the command line your interpreter gets a string <em>“3+5”</em>. In order for the interpreter to actually understand what to do with that string it first needs to break the input <em>“3+5”</em> into components called <strong>tokens</strong>. A <strong>token</strong> is an object that has a type and a value. For example, for the string <em>“3”</em> the type of the token will be INTEGER and the corresponding value will be integer <em>3</em>.</p>
+<p>The process of breaking the input string into tokens is called <strong>lexical analysis</strong>. So, the first step your interpreter needs to do is read the input of characters and convert it into a stream of tokens. The part of the interpreter that does it is called a <strong>lexical analyzer</strong>, or <strong>lexer</strong> for short. You might also encounter other names for the same component, like <strong>scanner</strong> or <strong>tokenizer</strong>. They all mean the same: the part of your interpreter or compiler that turns the input of characters into a stream of tokens.</p>
+<p>The method <em>get_next_token</em> of the <em>Interpreter</em> class is your lexical analyzer. Every time you call it, you get the next token created from the input of characters passed to the interpreter. Let’s take a closer look at the method itself and see how it actually does its job of converting characters into tokens. The input is stored in the variable <em>text</em> that holds the input string and <em>pos</em> is an index into that string (think of the string as an array of characters). <em>pos</em> is initially set to 0 and points to the character <em>‘3’</em>. The method first checks whether the character is a digit and if so, it increments <em>pos</em> and returns a token instance with the type INTEGER and the value set to the integer value of the string <em>‘3’</em>, which is an integer <em>3</em>:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_part1_lexer1.png" alt=""></p>
+<p>The <em>pos</em> now points to the <em>‘+’</em> character in the <em>text</em>. The next time you call the method, it tests if a character at the position <em>pos</em> is a digit and then it tests if the character is a plus sign, which it is. As a result the method increments <em>pos</em> and returns a newly created token with the type PLUS and value <em>‘+’</em>:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_part1_lexer2.png" alt=""></p>
+<p>The <em>pos</em> now points to character <em>‘5’</em>. When you call the <em>get_next_token</em> method again the method checks if it’s a digit, which it is, so it increments <em>pos</em> and returns a new INTEGER token with the value of the token set to integer <em>5</em>:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_part1_lexer3.png" alt=""></p>
+<p>Because the <em>pos</em> index is now past the end of the string <em>“3+5”</em> the <em>get_next_token</em> method returns the EOF token every time you call it:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_part1_lexer4.png" alt=""></p>
+<p>Try it out and see for yourself how the lexer component of your calculator works:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; from calc1 import Interpreter</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt;</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; interpreter = Interpreter(<span class="string">&#x27;3+5&#x27;</span>)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; interpreter.get_next_token()</span></span><br><span class="line">Token(INTEGER, 3)</span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt;</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; interpreter.get_next_token()</span></span><br><span class="line">Token(PLUS, &#x27;+&#x27;)</span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt;</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; interpreter.get_next_token()</span></span><br><span class="line">Token(INTEGER, 5)</span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt;</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; interpreter.get_next_token()</span></span><br><span class="line">Token(EOF, None)</span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt;</span></span><br></pre></td></tr></table></figure>
+<p>So now that your interpreter has access to the stream of tokens made from the input characters, the interpreter needs to do something with it: it needs to find the structure in the flat stream of tokens it gets from the lexer <em>get_next_token</em>. Your interpreter expects to find the following structure in that stream: INTEGER -&gt; PLUS -&gt; INTEGER. That is, it tries to find a sequence of tokens: integer followed by a plus sign followed by an integer.</p>
+<p>The method responsible for finding and interpreting that structure is <em>expr</em>. This method verifies that the sequence of tokens does indeed correspond to the expected sequence of tokens, i.e INTEGER -&gt; PLUS -&gt; INTEGER. After it’s successfully confirmed the structure, it generates the result by adding the value of the token on the left side of the PLUS and the right side of the PLUS, thus successfully interpreting the arithmetic expression you passed to the interpreter.</p>
+<p>The <em>expr</em> method itself uses the helper method <em>eat</em> to verify that the token type passed to the <em>eat</em> method matches the current token type. After matching the passed token type the <em>eat</em> method gets the next token and assigns it to the <em>current_token</em> variable, thus effectively “eating” the currently matched token and advancing the imaginary pointer in the stream of tokens. If the structure in the stream of tokens doesn’t correspond to the expected INTEGER PLUS INTEGER sequence of tokens the <em>eat</em> method throws an exception.</p>
+<p>Let’s recap what your interpreter does to evaluate an arithmetic expression:</p>
+<ul>
+<li>
+<p>The interpreter accepts an input string, let’s say “3+5”</p>
+</li>
+<li>
+<p>The interpreter calls the <em>expr</em> method to find a structure in the stream of tokens returned by the lexical analyzer <em>get_next_token</em>. The structure it tries to find is of the form INTEGER PLUS INTEGER. After it’s confirmed the structure, it interprets the input by adding the values of two INTEGER tokens because it’s clear to the interpreter at that point that what it needs to do is add two integers, 3 and 5.</p>
+</li>
+</ul>
+<p>Congratulate yourself. You’ve just learned how to build your very first interpreter!</p>
+<p>Now it’s time for exercises.</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_exercises2.png" alt=""></p>
+<p>You didn’t think you would just read this article and that would be enough, did you? Okay, get your hands dirty and do the following exercises:</p>
+<ol>
+<li>Modify the code to allow multiple-digit integers in the input, for example “12+3”</li>
+<li>Add a method that skips whitespace characters so that your calculator can handle inputs with whitespace characters like ” 12 + 3”</li>
+<li>Modify the code and instead of ‘+’ handle ‘-‘ to evaluate subtractions like “7-5”</li>
+</ol>
+<p><strong>Check your understanding</strong></p>
+<ol>
+<li>What is an interpreter?</li>
+<li>What is a compiler?</li>
+<li>What’s the difference between an interpreter and a compiler?</li>
+<li>What is a token?</li>
+<li>What is the name of the process that breaks input apart into tokens?</li>
+<li>What is the part of the interpreter that does lexical analysis called?</li>
+<li>What are the other common names for that part of an interpreter or a compiler?</li>
+</ol>
+<p>Before I finish this article, I really want you to commit to studying interpreters and compilers. And I want you to do it right now. Don’t put it on the back burner. Don’t wait. If you’ve skimmed the article, start over. If you’ve read it carefully but haven’t done exercises - do them now. If you’ve done only some of them, finish the rest. You get the idea. And you know what? Sign the commitment pledge to start learning about interpreters and compilers today!</p>
+<p>I, ________, of being sound mind and body, do hereby pledge to commit to studying interpreters and compilers starting today and get to a point where I know 100% how they work!</p>
+<p>Signature:</p>
+<p>Date:</p>
+<p><img src="https://ruslanspivak.com/lsbasi-part1/lsbasi_part1_commitment_pledge.png" alt=""></p>
+<p>Sign it, date it, and put it somewhere where you can see it every day to make sure that you stick to your commitment. And keep in mind the definition of commitment:</p>
+<blockquote>
+<p>“Commitment is doing the thing you said you were going to do long after the mood you said it in has left you.” — Darren Hardy</p>
+</blockquote>
+<p>Okay, that’s it for today. In the next article of the mini series you will extend your calculator to handle more arithmetic expressions. Stay tuned.</p>
+<p>If you can’t wait for the second article and are chomping at the bit to start digging deeper into interpreters and compilers, here is a list of books I recommend that will help you along the way:</p>
+<ol>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/193435645X/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=193435645X&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=MP4DCXDV6DJMEJBL">Language Implementation Patterns: Create Your Own Domain-Specific and General Programming Languages (Pragmatic Programmers)</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/0470177071/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0470177071&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=UCLGQTPIYSWYKRRM">Writing Compilers and Interpreters: A Software Engineering Approach</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/052182060X/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=052182060X&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=ZSKKZMV7YWR22NMW">Modern Compiler Implementation in Java</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/1461446988/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1461446988&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=PAXWJP5WCPZ7RKRD">Modern Compiler Design</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.amazon.com/gp/product/0321486811/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321486811&amp;linkCode=as2&amp;tag=russblo0b-20&amp;linkId=GOEGDQG4HIHU56FQ">Compilers: Principles, Techniques, and Tools (2nd Edition)</a></p>
+</li>
+</ol>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/d55972f/">https://lushuangning.github.io/posts/d55972f/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lushuangning.github.io" target="_blank">路双宁的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/2678c4ec/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Let’s Build A Simple Interpreter. Part 2.</div></div></a></div><div class="next-post pull-right"><a href="/posts/a09b3912/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C++常见问题总结</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

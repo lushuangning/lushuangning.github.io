@@ -1,0 +1,392 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>站在巨人的肩上之操作系统篇（一） | 路双宁的博客</title><meta name="keywords" content="C,操作系统"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="本系列博客承接自 https:&#x2F;&#x2F;lushuangning.github.io&#x2F;posts&#x2F;f0c07695&#x2F;，在了解了一些汇编的基础知识和计算机的底层原理之后，现在开始尝试搭建一个操作系统的微内核。由于目前的进度已经到了第五章，我会在这篇博客上慢慢补充前五章里比较重要的部分。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="站在巨人的肩上之操作系统篇（一）">
+<meta property="og:url" content="https://lushuangning.github.io/posts/487ea7e6/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="本系列博客承接自 https:&#x2F;&#x2F;lushuangning.github.io&#x2F;posts&#x2F;f0c07695&#x2F;，在了解了一些汇编的基础知识和计算机的底层原理之后，现在开始尝试搭建一个操作系统的微内核。由于目前的进度已经到了第五章，我会在这篇博客上慢慢补充前五章里比较重要的部分。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111088.png">
+<meta property="article:published_time" content="2021-09-21T06:47:46.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.186Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111088.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/487ea7e6/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">缘起</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">开发工具安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">可变形参</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E7%9A%84%E5%A2%9E%E9%95%BF%E6%96%B9%E5%90%91%E5%8F%8A%E5%8F%82%E6%95%B0%E7%9A%84%E5%85%A5%E6%A0%88%E9%A1%BA%E5%BA%8F"><span class="toc-number">3.2.</span> <span class="toc-text">栈的增长方向及参数的入栈顺序</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">内核级屏幕打印函数 printk 的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8F%E5%AE%9A%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text">宏定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vsprintf-star"><span class="toc-number">4.2.</span> <span class="toc-text">vsprintf :star:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">内核调试</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111088.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">站在巨人的肩上之操作系统篇（一）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-21T06:47:46.000Z" title="发表于 2021-09-21 14:47:46">2021-09-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.186Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><!-- 接下来将会用到的汇编格式有两种，一种是之前的 Intel 汇编，一种是 AT&T 汇编，原因为：
+
+* 由于 BootLoader 全部使用汇编编写，代码量大，如果采用 Intel 格式的汇编，可以保证既书写简单又便于阅读
+
+* 内核和应用程序只有一小部分关键代码必须使用汇编，绝大部分代码会使用 GNU C 语言编写，为 GNU C 搭配上 AT&T 格式的 GNU 汇编语言，可使两者更加自然流畅地相互调用，进而提高两者的互相兼容性。
+
+Intel 汇编和 AT&T 汇编的区别如下图所示
+
+![](https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202109241.png) -->
+<p><strong>开发工具及测试环境配置：</strong></p>
+<p>OS Name: Ubuntu 20.04.3 LTS<br>
+OS Type: 64-bit<br>
+gcc version: 7.5.0<br>
+QEMU emulator version: 6.1.0<br>
+clang version: 10.0.0-4ubuntu1<br>
+Visual Studio: VS2019</p>
+<h1>缘起</h1>
+<p>我本来打算跟着田宇的《一个64位操作系统的设计与实现》慢慢写，但是看到第四章就把我劝退了。我这种程度的小白，他竟然试图教会我手写一个 bootloader。就算我能学会怎么实现一个 bootloader，也只是半只脚刚跨过操作系统殿堂的门槛，离操作系统的精髓，进程的管理，内存的分配，分页等等相距甚远，有点本末倒置了。就像你打开PS准备修一张图，<strong>在没有整体观的时候进入了细节的误区</strong>，总是想着把天空调得更蓝，树木调得更绿。这实际上是非常害人的。</p>
+<p>有没有第三方实现的 bootloader，我只需要关注操作系统核心实现的部分就好的项目呢？直到有一天我漫无目的的在 Github 上闲逛，突然这个项目出现在了我的视线中：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hurley25/hurlex-doc">hurlex-doc</a>，既有分章的代码，又有文档，而且文档是用 latex 编译的。粗略的看了下，作者也是参照了一个外国人的博客和国内的《一个操作系统的实现》写了一个 32 位操作系统的内核，成稿在2014年，距今已有7年，麻雀虽小，五脏俱全，对于学习来说足够了。于是，我从头开始，参照这位作者的文档，一点点的实现一个操作系统的内核。</p>
+<h1>开发工具安装</h1>
+<p>Ubuntu 20.04.3 LTS</p>
+<ol>
+<li>虚拟机 qemu</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install qemu</span><br></pre></td></tr></table></figure>
+<p>在 <code>Makefile</code> 中已经定义好了内核的编译、链接，镜像的挂载，虚拟机加载，只需执行 <code>make all</code> 即可编译、链接并将镜像加载至虚拟机（想看这个命令执行后发生了什么参见 <code>Makefile</code> 中第 25 行），然后执行 <code>make qemu</code> （对应 <code>Makefile</code> 中第 59 行）即可运行。 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lushuangning/MiniOS/blob/main/chapter3/Makefile">lushuangning/MiniOS/chapter3/Makefile</a></p>
+<h1>可变形参</h1>
+<h2 id="原理">原理</h2>
+<p>关于可变形参</p>
+<p>在 CSDN 和博客园里找东西的时候，总给我一种在垃圾堆里刨食的感觉。我对这上面大多数程序员的博客印象都特别差。转载不标明出处，转载投自制，代码排版混乱，抄袭严重，逻辑不严谨。哪一样拎出来都让我这个有着强迫症和精神洁癖的人感到恶心。</p>
+<p>这篇博文 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/cpoint/p/3368993.html">C语言中可变参数函数实现原理</a>，是一篇好博文，里面详细讲述了可变形参的实现。</p>
+<p>但是我在根据这篇博客写测试代码的时候发现了一个意外的问题。</p>
+<h2 id="栈的增长方向及参数的入栈顺序">栈的增长方向及参数的入栈顺序</h2>
+<p>默认情况下 C 语言的调用约定是 cdecl，参数的入栈顺序是从<strong>自右向左</strong>，即最右边的参数先入栈在栈底，最左边的参数最后入栈在栈顶。栈的增长方向是从<strong>高地址向低地址增长</strong>，即栈底的地址最高，栈顶的地址最低。可是当我执行完下面的代码的时候却出现了完全相反的情况：</p>
+<p>我使用的平台是 x86-64</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">fixed_args_func</span><span class="params">(<span class="type">int</span> a, <span class="type">double</span> b, <span class="type">const</span> <span class="type">char</span> *c)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">fixed_args_func</span><span class="params">(<span class="type">int</span> a, <span class="type">double</span> b, <span class="type">const</span> <span class="type">char</span> *c)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;a = %p\n&quot;</span>, &amp;a);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;b = %p\n&quot;</span>, &amp;b);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;c = %p\n&quot;</span>, &amp;c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">void</span> <span class="title function_">fixed_args_func</span><span class="params">(<span class="number">17</span>, <span class="number">5.40</span>, <span class="string">&quot;hello world!&quot;</span>)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = 0x7fff09284c8c</span><br><span class="line">b = 0x7fff09284c80</span><br><span class="line">c = 0x7fff09284c78</span><br></pre></td></tr></table></figure>
+<!-- ![](https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111081.png) -->
+<p>导致我一时不知道是因为入栈顺序变成从左向右了还是栈的增长方向变了。由于在 VS Code 里我使用的是 clang 进行编译的，严谨起见，我又使用 gcc 编译运行了一遍，结果仍然是</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111084.png" alt=""></p>
+<p>考虑到系统的问题，我在 windows 上做了相同的测试：</p>
+<p>在 VS2019 上编译运行的结果如下：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111085.png" alt=""></p>
+<p>使用 CMake + MinGW 编译运行的结果如下：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111086.png" alt=""></p>
+<p>现在很明显了，<strong>win10上的运行结果显示参数入栈的顺序是从右往左</strong>。那么问题就出在了系统上。</p>
+<p>为了查清楚原因，我写了如下代码来确定 ubuntu 下 C 语言栈的增长方向：</p>
+<!-- ![](https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111082.png) -->
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> m1 = <span class="number">1</span>, m2 = <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;m1 = %p\n&quot;</span>, &amp;m1);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;m2 = %p\n&quot;</span>, &amp;m2);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m1 = 0x7ffc42954300</span><br><span class="line">m2 = 0x7ffc42954304</span><br></pre></td></tr></table></figure>
+<p>但事实上，<strong>一个函数内的栈顺序说明不了这个问题</strong>。见问题<a target="_blank" rel="noopener external nofollow noreferrer" href="https://ask.csdn.net/questions/1070590">C语言中，栈的增长方向是向下增，但我测试结果是向上增</a>，正确的方式应该是看函数调用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">foo1</span><span class="params">()</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">foo2</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">foo1</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> i1 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;foo1 i1 = %p\n&quot;</span>, &amp;i1);</span><br><span class="line">  foo2();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">foo2</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> i2 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;foo2 i2 = %p\n&quot;</span>, &amp;i2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  foo1();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">foo1 i1 = 0x7fff0e59b584</span><br><span class="line">foo2 i2 = 0x7fff0e59b564</span><br></pre></td></tr></table></figure>
+<!-- ![](https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111083.png) -->
+<p>可见，地址是变小的，说明栈的增长方向是<strong>高地址-&gt;低地址</strong>。</p>
+<p>排除所有的不可能，剩下的结果就是：</p>
+<p>在 ubuntu 下使用 gcc 或者 clang 编译 64 位程序，参数的入栈顺序是从左向右的。</p>
+<p>到底是不是如此呢？在知乎上看到了这么一个问题：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.zhihu.com/question/42091882/answer/494933265">这能说明函数参数入栈顺序是从左到右吗? - 守望的回答</a></p>
+<p>结论：分平台</p>
+<p>在 32 位平台上，参数是从右往左入栈的。</p>
+<p>在 64 位平台上，对 x86-64 平台来说，寄存器最多可以传递 6 个整型变量。对临时变量使用<code>&amp;</code>的时候，寄存器入栈，但是是按照<strong>从左往右</strong>的顺序，超过 6 个的参数，他们是连续的，且从右至左入栈。</p>
+<p>我们可以写如下的代码进行测试：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111087.png" alt=""></p>
+<p>可以看出，前 6 个参数（a~f）的确是按照“从左往右”的顺序入栈的，a 的地址最高，f 的最低。但是从第 7 个参数开始，按照的就是从右往左的顺序入栈了，i 的地址最高，g的地址最低。</p>
+<p>但是该测试并不严谨，由于涉及到平台的位数、gcc 和 clang 两个不同的编译器、形参的个数，是整型还是浮点数，不能一一测试。最专业的应该是这个回答<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.zhihu.com/question/42091882/answer/141075687">这能说明函数参数入栈顺序是从左到右吗? - evilpan的回答 - 知乎</a>。</p>
+<p>总结：</p>
+<p>这是一个<strong>函数调用约定(Calling Convention)问题</strong>，不同的调用约定会用不同的方法来传参以及获得返回值。在不同的平台(处理器架构)上,不同的编译器可能使用的调用约定并不相同. 不同的调用约定表格(C/C++编译器)见<a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.m.wikipedia.org/wiki/X86_calling_conventions#List_of_x86_calling_conventions">这里</a></p>
+<p>该问题就此打住，再深究下去对我们的目标来说又成了本末倒置了。我们要实现的是一个 32 位系统的内核，可以姑且认为，<strong>函数形参的入栈顺序是从右往左的</strong>。</p>
+<p>为此，我们将使用命令 <code>gcc test.c -m32 -o test -O0</code> 或者 <code>clang test.c -m32 -o test -O0</code> 来编译 32 位的程序。</p>
+<h1>内核级屏幕打印函数 printk 的实现</h1>
+<p>有了可变形参的知识和前面给出的几个宏定义，再结合<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/linux-0.12%E5%86%85%E6%A0%B8%E5%AE%8C%E5%85%A8%E6%B3%A8%E9%87%8Av5.0.pdf">《linux-0.12内核完全注释v5.0》</a>中第 341 页的代码（赵炯博士的博客见<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.oldlinux.org/">Welcome to OldLinux</a>），我们直接复制了 Linux 早期内核里的一些思想和子函数的实现。</p>
+<p>其中 <code>vsprintf</code> 函数见 0.11 内核的第 333 页。</p>
+<p>虽然有注释，但是理解起来还是不容易的。可结合 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/wucongzhou/p/12668766.html">C语言printf函数详解</a> 中 printf 函数来理解。</p>
+<h2 id="宏定义">宏定义</h2>
+<p>flags(type) 的宏定义，在进行位运算时很方便，flags 在 vsprintf() 函数中默认为 0</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZEROPAD 1   <span class="comment">// 填充0</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIGN    2   <span class="comment">// 无符号/符号长整数</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PLUS    4   <span class="comment">// 显示加 </span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPACE   8   <span class="comment">// 如果是加，则置空格</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LEFT    16  <span class="comment">// 左调整</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPECIAL 32  <span class="comment">// 0x</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SMALL   64  <span class="comment">// 使用小写字母</span></span></span><br></pre></td></tr></table></figure>
+<p>printk 和 printk_color 函数。有了<strong>可变形参</strong>的认识，这两个函数的代码就容易看懂了，它们本身也较为相似，区别仅仅在于传参时多了两个颜色参数和打印缓冲区内容时调用的打印函数不同而已。顺便一体，<code>buff</code>是一个全局变量，为了节省宝贵的栈资源定义的 <code>static char buff[1024]; // 显示用临时缓冲</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">printk</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * format, ...)</span> &#123;</span><br><span class="line">  </span><br><span class="line">  va_list args;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line"></span><br><span class="line">  va_start(args, format);</span><br><span class="line">  i = <span class="built_in">vsprintf</span>(buff, format, args);</span><br><span class="line">  va_end(args);</span><br><span class="line"></span><br><span class="line">  buff[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  console_write(buff);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">printk_color</span><span class="params">(<span class="type">real_color_t</span> back, <span class="type">real_color_t</span> fore, <span class="type">const</span> <span class="type">char</span> *format, ...)</span> &#123;</span><br><span class="line">  va_list args;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line"></span><br><span class="line">  va_start(args, format);</span><br><span class="line">  i = <span class="built_in">vsprintf</span>(buff, format, args);</span><br><span class="line">  va_end(args);</span><br><span class="line"></span><br><span class="line">  buff[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  console_write_color(buff, back, fore);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关键指出在于 <code>vsprintf</code> 这个函数的实现。</p>
+<h2 id="vsprintf-star">vsprintf :star:</h2>
+<p>函数的声明为 <code>static int vsprintf(char *buff, const char *format, va_list args);</code></p>
+<p>变量的定义如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> len;</span><br><span class="line"><span class="type">int</span> i;</span><br><span class="line"><span class="type">char</span> *str;  <span class="comment">// 用于存放转换过程中的字符串</span></span><br><span class="line"><span class="type">char</span> *s;</span><br><span class="line"><span class="type">int</span> *ip;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> flags;  <span class="comment">// number() 函数的 type 参数</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> field_width;  <span class="comment">// 输出字符串宽度</span></span><br><span class="line"><span class="type">int</span> precision;  <span class="comment">// min. 整数数字个数；max，字符串中字符个数</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> qualifier;  <span class="comment">// &#x27;h&#x27;, &#x27;l&#x27; 或 &#x27;L&#x27; 用于整数字段</span></span><br></pre></td></tr></table></figure>
+<p>紧接着用一个 <code>for</code> 循环扫描格式字符串，对各个格式转换指示进行相应的处理。这个 <code>for</code> 循环代码较多，为了方便讲述，我先将后面的代码用 <code>...</code> 作为替代，下面再对每个部分说明。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(str = buff; *format; ++format)&#123;</span><br><span class="line">    <span class="comment">// 格式转换指示字符串均以&#x27;%&#x27;开始，这里从 format 格式字符串中扫描 &#x27;%&#x27;；不是格式指示的一般字符均被依次存入 str。</span></span><br><span class="line">    <span class="keyword">if</span>(*format != <span class="string">&#x27;%&#x27;</span>)&#123;</span><br><span class="line">      *str++ = *format;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当找到第一个 <code>%</code> 的时候，意味着后面紧挨着的部分是格式指示字符串了，取得格式指示字符串中的标志域，并将标志常量放入flags变量中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">flags = <span class="number">0</span>;</span><br><span class="line">repeat:</span><br><span class="line">++format;	<span class="comment">// this also skips first &#x27;%&#x27;</span></span><br><span class="line"><span class="keyword">switch</span> (*format)&#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>: flags |= LEFT;</span><br><span class="line">    <span class="keyword">goto</span> repeat;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&#x27;+&#x27;</span>: flags |= PLUS;</span><br><span class="line">    <span class="keyword">goto</span> repeat;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&#x27; &#x27;</span>: flags |= SPACE;</span><br><span class="line">    <span class="keyword">goto</span> repeat;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&#x27;#&#x27;</span>: flags |= SPECIAL;</span><br><span class="line">    <span class="keyword">goto</span> repeat;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&#x27;0&#x27;</span>: flags |= ZEROPAD;</span><br><span class="line">    <span class="keyword">goto</span> repeat;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>取当前参数字段宽度域值放入 <code>field_width</code> 变量中。如果宽度域中是数值则直接取其为宽度值。如果宽度域中是字符 <code>*</code>,表示下一个参数指定宽度。因此调用 <code>va_arg</code> 取宽度值。若此时宽度值小于0，则该负数表示其带有标志域 <code>-</code> 标志（左对齐），因此还需在标志变量中加入该标志，并将字段宽度之取其绝对值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">field_width = <span class="number">-1</span>;</span><br><span class="line"><span class="keyword">if</span> (is_digit(*format))&#123;</span><br><span class="line">  field_width = skip_atoi(&amp;format);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (*format == <span class="string">&#x27;*&#x27;</span>)&#123;</span><br><span class="line">  <span class="comment">// 下一个参数指定宽度</span></span><br><span class="line">  field_width = va_arg(args, <span class="type">int</span>);</span><br><span class="line">  <span class="keyword">if</span> (field_width &lt; <span class="number">0</span>)&#123;</span><br><span class="line">    field_width = -field_width;</span><br><span class="line">    flags |= LEFT;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先用到了 <code>is_digit()</code> 用于判断是数字还是其它，这是一个宏定义，<code>#define is_digit(c) ((c) &gt;= '0' &amp;&amp; (c) &lt;= '9')</code></p>
+<p>然后又用到了 <code>skip_atoi()</code> 函数，该函数将字符数字串转换成整数。输入是数字串指针的指针，返回结果是数值。例如，输入 <code>'123ab'</code> 输出 <code>123</code>，输入 <code>'ab123'</code> 输出 <code>0</code>，输入 <code>'1a23b'</code> 输出 <code>1</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">skip_atoi</span><span class="params">(<span class="type">const</span> <span class="type">char</span> **s)</span> &#123;</span><br><span class="line">  <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (is_digit(**s))&#123;</span><br><span class="line">    i = i * <span class="number">10</span> + *((*s)++) - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来是获取格式转换字符串中关于精度的部分。取格式转换串的精度域，并放入 <code>precision</code> 变量中。精度域开始的标志是 <code>.</code> ，其处理过程域和上面宽度域的类似。如果精度域中是数值则直接取其为精度值。如果精度域中是字符 <code>*</code>，表示下一个参数指定精度域。因此调用 <code>va_arg</code> 取其精度值。若此时宽度值小于 0，则字段精度值取 0.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">precision = <span class="number">-1</span>;</span><br><span class="line"><span class="keyword">if</span> (*format == <span class="string">&#x27;.&#x27;</span>)&#123;</span><br><span class="line">  ++format;</span><br><span class="line">  <span class="keyword">if</span> (is_digit(*format))</span><br><span class="line">    precision = skip_atoi(&amp;format);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (*format == <span class="string">&#x27;*&#x27;</span>)&#123;</span><br><span class="line">  <span class="comment">// 下一个参数指定精度</span></span><br><span class="line">  precision = va_arg(args, <span class="type">int</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (precision &lt; <span class="number">0</span>)&#123;</span><br><span class="line">  precision = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来分析长度修饰符，并将其存入 <code>qualifer</code> 变量</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">qualifier = <span class="number">-1</span>;</span><br><span class="line"><span class="keyword">if</span> (*format == <span class="string">&#x27;h&#x27;</span> || *format == <span class="string">&#x27;l&#x27;</span> || *format == <span class="string">&#x27;L&#x27;</span>)&#123;</span><br><span class="line">  qualifier = *format;</span><br><span class="line">  ++format;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，分析转换格式指示符，例如我们常用的 <code>d</code> 是表示输出十进制数， <code>c</code> 表示输出字符。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(*format)&#123;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;c&#x27;</span>:</span><br><span class="line">  <span class="keyword">if</span> (!(flags &amp; LEFT))&#123;</span><br><span class="line">    <span class="keyword">while</span> (--field_width &gt; <span class="number">0</span>)</span><br><span class="line">*str++ = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  *str++ = (<span class="type">unsigned</span> <span class="type">char</span>) va_arg(args, <span class="type">int</span>);</span><br><span class="line">  <span class="keyword">while</span>(--field_width &gt; <span class="number">0</span>)</span><br><span class="line">    *str++ = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;s&#x27;</span>:</span><br><span class="line">  s = va_arg(args, <span class="type">char</span> *);</span><br><span class="line">  len = <span class="built_in">strlen</span>(s);</span><br><span class="line">  <span class="keyword">if</span> (precision &lt; <span class="number">0</span>)</span><br><span class="line">    precision = len;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (len &gt; precision)</span><br><span class="line">    len = precision;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!(flags &amp; LEFT))</span><br><span class="line">    <span class="keyword">while</span> (len &lt; field_width--)</span><br><span class="line">*str++ = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; ++i)</span><br><span class="line">    *str++ = *s++;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (len &lt; field_width--)</span><br><span class="line">    *str++= <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;o&#x27;</span>:</span><br><span class="line">  str = number(str, va_arg(args, <span class="type">unsigned</span> <span class="type">long</span>), <span class="number">8</span>, field_width, precision, flags);</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;p&#x27;</span>:</span><br><span class="line">  <span class="keyword">if</span> (field_width == <span class="number">-1</span>) &#123;</span><br><span class="line">    field_width = <span class="number">0</span>;</span><br><span class="line">    flags |= ZEROPAD;</span><br><span class="line">  &#125;</span><br><span class="line">  str = number(str, (<span class="type">unsigned</span> <span class="type">long</span>) va_arg(args, <span class="type">void</span> *), <span class="number">16</span>, field_width, precision, flags);</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;x&#x27;</span>:</span><br><span class="line">  flags |= SMALL;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;X&#x27;</span>:</span><br><span class="line">  str = number(str, va_arg(args, <span class="type">unsigned</span> <span class="type">long</span>), <span class="number">16</span>, field_width, precision, flags);</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;d&#x27;</span>:</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;i&#x27;</span>:</span><br><span class="line">  flags |= SIGN;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;u&#x27;</span>:</span><br><span class="line">  str = number(str, va_arg(args, <span class="type">unsigned</span> <span class="type">long</span>), <span class="number">10</span>, field_width, precision, flags);</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;b&#x27;</span>:</span><br><span class="line">  str = number(str, va_arg(args, <span class="type">unsigned</span> <span class="type">long</span>), <span class="number">2</span>, field_width, precision, flags);</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;n&#x27;</span>:</span><br><span class="line">  ip = va_arg(args, <span class="type">int</span> *);</span><br><span class="line">  *ip = (str - buff);</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">  <span class="keyword">if</span> (*format != <span class="string">&#x27;%&#x27;</span>)</span><br><span class="line">    *str++ = <span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">  <span class="keyword">if</span> (*format) &#123;</span><br><span class="line">    *str++ = *format;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    --format;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里面又用到了一个 <code>number()</code> 函数，用于将整数转换为指定进制的字符串。</p>
+<p>输入：num-整数；base-进制；size-字符串长度；precision-数字长度（精度）；type-类型选项。</p>
+<p>输出：数字转换成字符串后指向该字符串末端<strong>后面</strong>的指针</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">char</span> *<span class="title function_">number</span><span class="params">(<span class="type">char</span> *str, <span class="type">int</span> num, <span class="type">int</span> base, <span class="type">int</span> size, <span class="type">int</span> precision,</span></span><br><span class="line"><span class="params">                    <span class="type">int</span> type)</span> &#123;</span><br><span class="line">  <span class="type">char</span> c, sign, tmp[<span class="number">36</span>];</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *digits = <span class="string">&quot;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果类型 type 指出用小写字母，则定义小写字母集</span></span><br><span class="line">  <span class="comment">// 如果类型指出左调整（靠左边界），则屏蔽类型中的填零标志。</span></span><br><span class="line">  <span class="comment">// 如果进制基数小于2或大于36，则退出处理。即本程序只能处理基础在 2-32 之间的数</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type &amp; SMALL) &#123;</span><br><span class="line">    digits = <span class="string">&quot;0123456789abcdefghijklmnopqrstuvwxyz&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type &amp; LEFT) &#123;</span><br><span class="line">    type &amp;= -ZEROPAD;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (base &lt; <span class="number">2</span> || base &gt; <span class="number">36</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  c = (type &amp; ZEROPAD) ? <span class="string">&#x27;0&#x27;</span> : <span class="string">&#x27; &#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type &amp; SIGN &amp;&amp; num &lt; <span class="number">0</span>)&#123;</span><br><span class="line">    sign = <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">    num = -num;</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    sign = (type &amp; PLUS) ? <span class="string">&#x27;+&#x27;</span> : ((type &amp; SPACE) ? <span class="string">&#x27; &#x27;</span> : <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (sign)&#123;</span><br><span class="line">    size--;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type &amp; SPECIAL) &#123;</span><br><span class="line">    <span class="keyword">if</span> (base == <span class="number">16</span>)&#123;</span><br><span class="line">      size -= <span class="number">2</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (base == <span class="number">0</span>)&#123;</span><br><span class="line">      size--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (num == <span class="number">0</span>)&#123;</span><br><span class="line">    tmp[i++] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (num != <span class="number">0</span>)</span><br><span class="line">      tmp[i++] = digits[do_div(num, base)];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (i &gt; precision)&#123;</span><br><span class="line">    precision = i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  size -= precision;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(!(type &amp; (ZEROPAD+LEFT)))&#123;</span><br><span class="line">    <span class="keyword">while</span> (size-- &gt; <span class="number">0</span>)&#123;</span><br><span class="line">      *str++ = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (sign)&#123;</span><br><span class="line">    *str++ = sign;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (type &amp; SPECIAL)&#123;</span><br><span class="line">    <span class="keyword">if</span> (base == <span class="number">8</span>)&#123;</span><br><span class="line">      *str++ = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (base == <span class="number">16</span>)&#123;</span><br><span class="line">      <span class="comment">// 拼凑成 &#x27;0X&#x27;</span></span><br><span class="line">      *str++ = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">      *str++ = digits[<span class="number">33</span>];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!(type &amp; LEFT))&#123;</span><br><span class="line">    <span class="keyword">while</span> (size-- &gt; <span class="number">0</span>)</span><br><span class="line">      *str++ = c;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (i &lt; precision--)</span><br><span class="line">    *str++ = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (i-- &gt; <span class="number">0</span>)</span><br><span class="line">    *str++ = tmp[i];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (size-- &gt; <span class="number">0</span>)</span><br><span class="line">    *str++ = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此 <code>for</code> 循环结束。</p>
+<p>经过上面的 <code>number()</code> 函数，现在的指针 <code>str</code> 指向的是 <code>buff</code> 字符串的末端，我们还需要再添加一个 <code>\0</code> 作为字符串结束的标志，并返回整个字符串的长度。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*str = <span class="string">&#x27;\0&#x27;</span>;    <span class="comment">// 最后在转换好的字符串结尾处添上结束符</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> (str - buff);   <span class="comment">// 返回转换好的字符串长度值</span></span><br></pre></td></tr></table></figure>
+<p>至此，<code>vsprintf()</code> 函数结束。完整的代码可参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lushuangning/MiniOS/blob/main/chapter5/kernel/debug/printk.c">Github - printk.c</a>。</p>
+<h1>内核调试</h1>
+<p>使用 qemu 联合 gdb 进行 C 语言源代码级别的调试。</p>
+<p>qemu 和 gdb 是两个不同的进程，数据交换必然涉及进程间的通信机制。所幸它们都支持一个标准的调试协议，通过下面的命令即可开启。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu -S -s -fda boot.img -boot a</span><br></pre></td></tr></table></figure>
+<p><code>-s</code> 启动时开启 1234 端口等待 gdb 链接， <code>-S</code> 指启动时不自动运行，等待调试器的执行命令。</p>
+<p>这个命令运行之后，gdb 没有内核程序的符号文件，没有办法进行代码级调试，使用下面命令加载待调试内核对应的可执行文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">file os_kernel</span><br><span class="line">target remote :1234</span><br><span class="line">break kern_entry</span><br><span class="line">c</span><br></pre></td></tr></table></figure>
+<p>参考 <a href="https://lushuangning.github.io/posts/398e1cfc/">GDB调试</a> 相关命令。</p>
+<p>我已经把这几条命令放到了 <code>scripts/gdbinit</code> 这个文件中，<code>Makefile</code> 文件第 68 行对应的是 gdb 调试的代码。因此我们现在只需要执行 <code>qemu debug</code> 即可开启内核调试（我这里使用的 <code>cgbd</code>，语法与 <code>gdb</code> 并无二致）。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/487ea7e6/">https://lushuangning.github.io/posts/487ea7e6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C</a><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="post_share"><div class="social-share" data-image="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202111088.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/22753817/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">左神算法基础班第一周</div></div></a></div><div class="next-post pull-right"><a href="/posts/d1db4267/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">汇编语言学习记录（七）</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

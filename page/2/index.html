@@ -1,0 +1,489 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>路双宁的博客</title><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta property="og:type" content="website">
+<meta property="og:title" content="路双宁的博客">
+<meta property="og:url" content="https://lushuangning.github.io/page/2/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lushuangning.github.io/img/avatar.jpg">
+<meta property="article:author" content="路双宁">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lushuangning.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/page/2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2024-12-26 13:19:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://lushuangning.oss-cn-beijing.aliyuncs.com/image/199604112.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">路双宁的博客</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/lushuangning" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sdyglsn@126.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/19352681" rel="external nofollow noreferrer" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/4f6bc14d/" title="Qt5下Socket通信demo">Qt5下Socket通信demo</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-13T08:20:39.000Z" title="发表于 2021-12-13 16:20:39">2021-12-13</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.168Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Qt/">Qt</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/Socket/">Socket</a></span></div><div class="content">写在前面
+本文是Qt5下使用socket通信的一个示例，通过该示例，你可以学到：
+
+Qt5下信号与槽的使用方式
+Qt中线程与线程之间的通信方式
+拉姆达表达式的简单使用
+Qt5下Socket通信的流程
+
+界面样式
+
+客户端启动后的页面如上图所示，端口默认为6665，IP为127.0.0.1，连接服务器按钮可点击，断开连接和发送信息按钮不可点击，左下角连接状态后面的图片为一把红色的锁。
+服务器启动后的页面如上图所示，监听端口默认为6665，启动监听按钮可点击，左下角连接状态后面的图片为一把红色的锁。
+
+当点击服务器的启动监听按钮后，该按钮变为不可点击，此时点击客户端的连接服务器按钮，如果连接成功，客户端的历史信息一栏将会出现“连接服务器，成功！”的信息，连接服务器按钮变为不可点击，断开连接和发送信息按钮变为可点击。同时，服务器和客户端左下角连接状态后面的图片都会变为一把绿色的盾牌。如上图所示。
+
+当客户端点击断开连接按钮，三个按钮的状态将会回到客户端启动的时候，客户端的历史信息栏将会多出一条“与服务器断开连接”的信息，同时服务器和客户端左下角连接状态后面的图片都会变为一把红色的锁。如上图所 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/26e0f57b/" title="2023秋招进展">2023秋招进展</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-11T09:57:38.000Z" title="发表于 2021-12-11 17:57:38">2021-12-11</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.158Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a></span></div><div class="content">graph LR
+	A(事项)-->LC(力扣)
+	LC-->easy(easy 60题)
+  LC-->medium(medium 10题)
+  LC-->hard(hard 2题)
+  A-->OS(操作系统内核)
+  OS-->inline(内联汇编)
+  inline-->trans(fa:fa-hand-o-right 翻译 )
+  OS-->boot(内核实现)
+  boot-->chapter8(fa:fa-hand-o-right 第八章 )
+  A-->DP(设计模式)
+  DP-->EF(简单工厂)
+  DP-->ST(单例)
+  DP-->OB(fa:fa-hand-o-right 观察者 )
+  A-->CSAPP(CSAPP)
+  CSAPP-->num3(fa:fa-hand-o-right 第3章 )
+  A-->CN(计算机网络)
+  CN-->HT(fa:fa-hand-o-right 图解HTTP)
+  A-->Rust(Rust)
+  A-->RHCE(红帽认证)
+  RHCE-->STUDY(fa:fa-hand-o-right 课程学习 )
+  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/d20d1301/" title="红帽RHCE培训记录（四）">红帽RHCE培训记录（四）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-29T12:10:28.000Z" title="发表于 2021-11-29 20:10:28">2021-11-29</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.189Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/RHCE/">RHCE</a></span></div><div class="content">日志管理
+systemd-journald 服务
+记录的是本次启动之后的日志，是二进制文件，只能通过日志来看
+rsyslog 服务
+该服务对 syslog 消息进行排序，写入到 /var/log/ 文件夹下，重启后依然保存
+系统日志文件
+/etc/rsyslog.conf 专门管理日志的配置文件，配置了什么类型的日志记录在哪个文件中
+在 /var/log/ 文件夹下
+
+
+/var/log/messages 大多数系统日志消息记录在此，包括记录服务信息，系统报错信息等
+
+
+/var/log/secure 与安全性和身份验证相关的日志
+
+
+/var/log/cron 与定时任务和执行相关的日志
+
+
+/var/log/maillog 与系统中邮件服务日志
+
+
+/var/log/boot.log 与系统启动相关的日志，用 dmesg 命令查看
+
+
+查看追加的日志中，err、warn、fail 的前后10行的内容。
+tail -f /var/log/messages | grep -iE -C10 'err|warn|fail'
+rsyslog 服务管理
+rsyslog 服务使用日志消息的类型和 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/d3a48098/" title="站在巨人的肩上之操作系统篇（二）">站在巨人的肩上之操作系统篇（二）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-27T10:19:31.000Z" title="发表于 2021-11-27 18:19:31">2021-11-27</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.187Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">终于从科研中抽出身来搞一搞自己的项目，MiniOS目前到了第8章了，越深入下去不懂的地方也就越多。
+
+你能递归的去死磕一个问题多深，并且能安全的返回到原来你最初想要解决的问题，没有＂爆栈＂，那么这个深度就代表你的学习能力。深度越深，学习能力越强。人不可能一直拥有一个足够舒适的环境去系统地把所有东西都搞定，不可能把所有的基础知识都搞定了再上项目，去解决实际问题。在实际问题中发现问题，解决问题，才是真真的学习能力！！！不是TM卷子上多少分！
+
+目前最难懂部分还是汇编。之前看王爽的《汇编语言》，这本书虽然易懂，但是对应到目前操作系统的底层汇编代码，还是不够。再次踏上汇编的学习之路，目前在看《X86汇编语言：从实模式到保护模式》和《深度理解计算机系统》第三章。
+本篇所有的描述都是AT&amp;T格式的汇编
+汇编的补充知识
+基本指令
+
+
+
+源操作数指定的值是一个立即数，存储在寄存器或者内存中。目的操作数指定一个位置，要么是一个寄存器，要么是一个内存地址。x86-64加了一条限制，传送指令的两个操作数不能都指向内存位置。 将一个值从一个内存位置复制到另一个内存位置需要两条指令——第一条指令将源值加 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/398e1cfc/" title="GDB调试">GDB调试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-18T01:26:39.000Z" title="发表于 2021-11-18 09:26:39">2021-11-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.164Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/GDB/">GDB</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/C/">C</a></span></div><div class="content">C语言GDB调试
+用 gcc 编译的时候，编译后的可执行文件不会包含源程序代码。如果想要编译后的文件用于调试，需要加 -g 参数，例如
+1gcc -g -o book113 book113.c
+编译完成后在终端输入
+1gdb book113
+即可进行调试
+
+
+
+命令
+缩写
+说明
+
+
+
+
+set args
+
+设置主程序的参数，方法为 set args arg1 arg2 ...如果参数中包含特殊符号，用 “” 把参数包含进来，即 set args &quot;arg1&quot; &quot;arg2&quot; ...
+
+
+break
+b
+设置断点，b 20表示在第20行设置断点。可以设置多个断点
+
+
+run
+r
+开始运行程序，运行到断点位置停下来。如果没有遇到断点，程序一直运行下去
+
+
+next
+n
+执行当前语句，如果该语句为函数调用，不会进入函数内部执行
+
+
+step
+s
+执行当前语句，如果该语句为函数调用，则进入函数执行其中的第一条语句如果是库函数或第三方提供的函数，用 s 是进不去的，因为没有源代码。自己定义的函数可以进入
+
+
+print
+p
+显示变量值，例如：p name 表 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/64dfce40/" title="win10与ubuntu双系统蓝牙配对问题">win10与ubuntu双系统蓝牙配对问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-07T14:39:55.000Z" title="发表于 2021-11-07 22:39:55">2021-11-07</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.173Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a></span></div><div class="content">在 win10 与 ubuntu 双系统下，如果你使用的是蓝牙耳机、蓝牙键盘、蓝牙鼠标等蓝牙设备，那么一定会遇到过，在 win10 上面配对成功可以正常使用的蓝牙设备，在切换到 ubuntu 上再次重新配对，然而切换回 win10 系统之后却无法连接，只能再次重新配对的情况。即，在一个系统上配对成功的设备，若想在另一个系统上使用，每次都需要重新配对。
+烦烦烦！！！
+本文参照 win10 ubuntu16 双系统共用蓝牙鼠标 一文总结了解决方案，请务必每一步都按照下面的去做：
+本文以一个蓝牙耳机为例
+
+
+删除在 win10 上已成功配对的蓝牙设备
+
+
+在 win10 上重新配对
+
+
+删除在 ubuntu 上已成功配对的蓝牙设备
+
+
+在 ubuntu 上重新配对，按照如下路径找到该 key，保存下来，等下要用
+
+
+
+
+特别注意，3、4 两步顺序不能颠倒！
+
+
+关闭蓝牙耳机，并重启电脑进入 win10
+
+
+在 win10 上，下载这个工具 PsExec，解压后，以管理员身份运行 PowerShell，进入到该工具目录下
+
+
+执行 PsExec.exe -s -i regedit 打开注册表， ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/22753817/" title="左神算法基础班第一周">左神算法基础班第一周</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-03T03:04:16.000Z" title="发表于 2021-11-03 11:04:16">2021-11-03</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.177Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="content">异或的性质及扩展
+将异或看成“无进位相加”。那么，它的一些性质就好理解了。
+
+
+0 ^ N = N，0 与任何数异或都是这个数本身。N ^ N = 0，任何数与自己异或都为 0。
+
+
+异或运算满足交换律和结合律
+
+
+不用额外变量即可交换两个数
+
+
+123456int a = 7;int b = 103;a = a ^ b;b = a ^ b;a = a ^ b;
+证明：把第4行代入第5行，b = (a ^ b) ^ b = a。把第4行和第5行的结果代入第6行，a = (a ^ b) ^ a = b
+
+一个数组中，有1种数出现了奇数次，其他都出现了偶数次。怎么找到这种数。 :sparkles:
+
+力扣 136，剑指offer 56
+用一个初值为 0 的变量去异或数组中的每一个元素，最后的结果就是出现了奇数次的数。
+原因：因为异或运算满足交换律，只要是出现了偶数次的数，那么其异或的结果必为0；出现了奇数次的数，异或的结果必为它本身。
+力扣 136题
+12345678int singleNumber(vector&lt;int&gt;&amp; nums) &#123;  int ero  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/487ea7e6/" title="站在巨人的肩上之操作系统篇（一）">站在巨人的肩上之操作系统篇（一）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-21T06:47:46.000Z" title="发表于 2021-09-21 14:47:46">2021-09-21</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.186Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">本系列博客承接自 https://lushuangning.github.io/posts/f0c07695/，在了解了一些汇编的基础知识和计算机的底层原理之后，现在开始尝试搭建一个操作系统的微内核。由于目前的进度已经到了第五章，我会在这篇博客上慢慢补充前五章里比较重要的部分。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/d1db4267/" title="汇编语言学习记录（七）">汇编语言学习记录（七）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-21T04:49:26.000Z" title="发表于 2021-09-21 12:49:26">2021-09-21</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.183Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></span></div><div class="content">本篇主要介绍四级页表的代码实现</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/26b06a24/" title="汇编语言学习记录（六）">汇编语言学习记录（六）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-20T10:16:25.000Z" title="发表于 2021-09-20 18:16:25">2021-09-20</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.184Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></span></div><div class="content">本篇主要介绍内存分页</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/f4b01dbb/" title="汇编语言学习记录（五）">汇编语言学习记录（五）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-19T08:22:36.000Z" title="发表于 2021-09-19 16:22:36">2021-09-19</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.184Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></span></div><div class="content">本篇主要介绍 CPU 如何从实模式切换到保护模式</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/fe209325/" title="汇编语言学习记录（四）">汇编语言学习记录（四）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-18T08:23:51.000Z" title="发表于 2021-09-18 16:23:51">2021-09-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.184Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></span></div><div class="content">本篇主要介绍 FAT32 文件系统</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/490d8a40/" title="汇编语言学习记录（三）">汇编语言学习记录（三）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-07T14:13:33.000Z" title="发表于 2021-09-07 22:13:33">2021-09-07</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.183Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></span></div><div class="content">从硬盘读取文件
+伪指令 equ
+1app_lba_start equ 100
+常数是用伪指令 equ 声明的，他的意思是“等于”。本句的意思是，用标号 app_lba_start 来代表数值 100。
+和其他伪指令 db、dw、dd 不同，用 equ 声明的数值不占用任何汇编地址，也不再运行时占用任何内存位置。
+MBR 分区
+MBR 分区存储在第0面第0道（柱面）1扇区，只占512字节。每台计算机都有一个 BIOS 程序，从硬盘的0面0道1扇区来寻找MBR。
+
+操作系统就是就是被这440字节拉起来的。
+运行启动扇区外的文件
+我们之前写的几段汇编程序，都是写在了这个BootLoader中。但毕竟 BootLoader 只有512字节，太小了，所以还是得将指令和数据写到更广阔的的空间去，BootLoader 找到它并将它加载到内存就可以了。
+BootLoader 代码
+Program 代码
+回车与换行
+ASCII 码表里，有128个字符，其中96个是可显示的。包括大小写字母、数字等等。32个控制字符不可显示，比如回车、换行、制表符等。
+处理回车和换行，就是处理 0x0a，0x0d。
+光标的 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/31ddc66/" title="ptrdiff_t, size_t, difference_type">ptrdiff_t, size_t, difference_type</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-06T10:12:19.000Z" title="发表于 2021-09-06 18:12:19">2021-09-06</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.172Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">ptrdiff_t
+ptrdiff_t 是 C/C++ 标准库中定义的一个与机器相关的数据类型。ptrdiff_t 类型变量通常用来保存两个指针减法操作的结果，在 cstddef 头文件中定义。用来保存两个指针减法操作的结果，通常被定义为 long int 类型。
+ptrdiff_t 与 difference_type 区别，前面的是 C++ 定义的标准，后面则是 STL 定义的。
+size_t
+size_t是标准C库中定义的，它是一个基本的与机器相关的无符号整数的C/C+ +类型，它是sizeof操作符返回的结果类型。
+常常会有人认为 在C/C++中 sizeof 是一个函数，而实际上 C/C++ 中的sizeof 是一个运算符。sizeof 运算符的结果是 size_t ，它是由 typedef 机制定义出来的”新”类型。
+通常，size_t 和 ptrdiff_t 都是用typedef来实现的。
+1typedef unsigned int size_t
+size_t还经常出现在C++标准库中，此外C++库中经常会使用一个相似的类型size_type。
+
+size_t 是全局定义的 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/ad791eac/" title="C++分配器">C++分配器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-06T06:12:52.000Z" title="发表于 2021-09-06 14:12:52">2021-09-06</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.171Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">分配器 allocator 对容器的效率至关重要
+operator new() 和 malloc()
+所有的 C++ 平台上，operator new()函数里面都调用了 malloc()函数。
+malloc 实际上向内存索要的空间，比它实际上返回的要多。
+
+而 operator delete() 函数里调用 free() 函数。
+allocate 和 deallocate
+VC6 附带的标准库中，allocator 的实现如下
+12345678910111213141516template&lt;class _Ty&gt;class allocator&#123;public:  typedef _SIZT size_type;  typedef _PDFT difference_type;  typedef _Ty _FARQ *pointer;  typedef _Ty value_type;  pointer allocate(size_type _N, const void *)&#123;     return (_Allocate((difference_type)_N, ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/38a66469/" title="汇编语言学习记录（二）">汇编语言学习记录（二）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-10T11:21:14.000Z" title="发表于 2021-08-10 19:21:14">2021-08-10</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.184Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></span></div><div class="content">
+除了看王爽的汇编语言程序设计之外，最近还在 b 站上看到了 up 主谭玉刚讲的 Coding Master系列视频，从计算机底层讲起，清晰易懂，包括 x86 汇编，感觉比看书学习效率更快。不过该系列视频使用的是 NASM 汇编器，在语法上与王爽的代码有很多不同之处。
+在这之前，补充点计算机启动时候的知识。
+计算机是如何启动的？
+内存分配
+8086 CPU 是如何分配内存的？
+
+计算机 BIOS 执行完 POST 后，会到硬盘等设备的 MBR 分区上找 BootLoader，找到就加载到内存 0x7c00 的位置。注意这个 0x7c00，刚好等于 32KB - 1024B。这个数字与 IBM PC Model 5150 有关。该计算机支持的最大内存时 32KB，也就是 0x0000~0x7FFF。操作系统起来后，BootLoader 的使命也就完成了，可以将其占用的内存释放。因此，最好的方法是将 BootLoader 放在内存的最后。那么 BootLoader 要占多少空间呢？MBR 扇区要占 512 个字节，栈/数据要占 512 个字节，总共 1KB。将其放在 32KB 的内存空间的 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/65200a64/" title="红帽RHCE培训记录（三）">红帽RHCE培训记录（三）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-08T01:24:17.000Z" title="发表于 2021-08-08 09:24:17">2021-08-08</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.188Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/RHCE/">RHCE</a></span></div><div class="content">文件系统
+块设备命名：
+IDE设备：/dev/hda,  /dev/hdb
+SATA/SAS/USB设备：/dev/sda, /dev/sdb
+virtio-blk 超虚拟化存储： /dev/vda, /dev/vdb
+NVMe设备（SSD）：/dev/nvme0,  /dev/nvme1
+逻辑卷：/dev/mapper/*
+文件系统类型：
+Windows 文件系统类型： fat32, NTFS
+Linux 本地文件系统： ext2, ext3, ext4(rhel6), xfs(rhel7, rhel8)
+网络文件系统： NFS, CIFS
+集群文件系统： GFS, GFS2
+分布式文件系统: CEPH
+光盘： iso9660
+文件数据块(block)：存放文件的数据，文件的最小存储单元，默认大小是 4K。
+inode 是文件的唯一标识号，存放文件的元数据，包括：
+- 文件类型，权限，UID 和 GID
+- 文件的链接数
+- 文件大小和时间戳
+- 文件数据块(block)在磁盘上的块指针
+- 其他信息
+使用 df -h 查看系统的文件组织结构
+目录和文件的关系
+系统识别文件是通过 i ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/781416c1/" title="命名空间里的友元函数">命名空间里的友元函数</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-07T13:38:28.000Z" title="发表于 2021-08-07 21:38:28">2021-08-07</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.176Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">问题描述：
+类声明：student.h
+123456789101112131415...namespace Studenti &#123;  class Student : private std::string, private std::valarray&lt;double&gt; &#123;  private:    typedef std::valarray&lt;double&gt; ArrayDb;    std::ostream&amp; arr_out(std::ostream&amp; os) const;  public:    Student();    ...        friend std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const Student&amp; stu);&#125;;&#125;
+类定义：student.cpp
+1234567891011#include &quot;student.h&quot;...using namespace Studenti;ostream ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/3050a9e2/" title="TCP-IP网络编程（二）">TCP-IP网络编程（二）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-31T12:54:14.000Z" title="发表于 2021-07-31 20:54:14">2021-07-31</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.169Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">网络编程</a></span></div><div class="content">(未完待续)
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/283ea936/" title="红帽RHCE培训记录（二）">红帽RHCE培训记录（二）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-31T01:11:40.000Z" title="发表于 2021-07-31 09:11:40">2021-07-31</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.188Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/RHCE/">RHCE</a></span></div><div class="content">最近在准备RHCE认证考试，这是培训时候的记录</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">路双宁</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lushuangning"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lushuangning" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sdyglsn@126.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/19352681" rel="external nofollow noreferrer" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a></div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/72db60bd/" title="Linux手动安装MySQL8.4.3LTS版本的注意事项">Linux手动安装MySQL8.4.3LTS版本的注意事项</a><time datetime="2024-12-26T05:17:00.000Z" title="发表于 2024-12-26 13:17:00">2024-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/34f0feb8/" title="ubuntu x86_64 配置 aarch64 交叉编译环境">ubuntu x86_64 配置 aarch64 交叉编译环境</a><time datetime="2024-07-08T07:44:26.000Z" title="发表于 2024-07-08 15:44:26">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/8852ee2b/" title="Qt中的反射机制">Qt中的反射机制</a><time datetime="2024-01-16T08:11:05.000Z" title="发表于 2024-01-16 16:11:05">2024-01-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/533f028c/" title="Nginx实现授权访问">Nginx实现授权访问</a><time datetime="2023-12-03T09:27:59.000Z" title="发表于 2023-12-03 17:27:59">2023-12-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/3552f53/" title="Linux 图形界面的显示原理">Linux 图形界面的显示原理</a><time datetime="2023-11-27T15:08:35.000Z" title="发表于 2023-11-27 23:08:35">2023-11-27</time></div></div></div></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Arch/" style="font-size: 1.1em; color: #999">Arch</a> <a href="/tags/C/" style="font-size: 1.34em; color: #99a3b0">C</a> <a href="/tags/C/" style="font-size: 1.5em; color: #99a9bf">C++</a> <a href="/tags/CMake/" style="font-size: 1.26em; color: #999fa8">CMake</a> <a href="/tags/CNN/" style="font-size: 1.3em; color: #99a1ac">CNN</a> <a href="/tags/CV/" style="font-size: 1.3em; color: #99a1ac">CV</a> <a href="/tags/Deep-Learning/" style="font-size: 1.46em; color: #99a7bb">Deep Learning</a> <a href="/tags/Emacs/" style="font-size: 1.1em; color: #999">Emacs</a> <a href="/tags/GDB/" style="font-size: 1.1em; color: #999">GDB</a> <a href="/tags/Hadoop/" style="font-size: 1.1em; color: #999">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 1.14em; color: #999b9d">Hexo</a> <a href="/tags/KaTex/" style="font-size: 1.1em; color: #999">KaTex</a> <a href="/tags/Latex/" style="font-size: 1.1em; color: #999">Latex</a> <a href="/tags/Linux/" style="font-size: 1.42em; color: #99a6b7">Linux</a> <a href="/tags/MathJax/" style="font-size: 1.1em; color: #999">MathJax</a> <a href="/tags/MySQL/" style="font-size: 1.1em; color: #999">MySQL</a> <a href="/tags/NLP/" style="font-size: 1.18em; color: #999ca1">NLP</a> <a href="/tags/Nginx/" style="font-size: 1.1em; color: #999">Nginx</a> <a href="/tags/OpenCV/" style="font-size: 1.14em; color: #999b9d">OpenCV</a> <a href="/tags/PyTorch/" style="font-size: 1.38em; color: #99a4b4">PyTorch</a> <a href="/tags/Python/" style="font-size: 1.18em; color: #999ca1">Python</a> <a href="/tags/Qt/" style="font-size: 1.14em; color: #999b9d">Qt</a> <a href="/tags/RCNN/" style="font-size: 1.1em; color: #999">RCNN</a> <a href="/tags/RHCE/" style="font-size: 1.22em; color: #999ea4">RHCE</a> <a href="/tags/Socket/" style="font-size: 1.1em; color: #999">Socket</a> <a href="/tags/Spark/" style="font-size: 1.1em; color: #999">Spark</a> <a href="/tags/Ubuntu/" style="font-size: 1.14em; color: #999b9d">Ubuntu</a> <a href="/tags/X11/" style="font-size: 1.1em; color: #999">X11</a> <a href="/tags/YOLOv5/" style="font-size: 1.1em; color: #999">YOLOv5</a> <a href="/tags/anaconda/" style="font-size: 1.1em; color: #999">anaconda</a> <a href="/tags/docker/" style="font-size: 1.1em; color: #999">docker</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/pkg-config/" style="font-size: 1.1em; color: #999">pkg-config</a> <a href="/tags/rust/" style="font-size: 1.1em; color: #999">rust</a> <a href="/tags/tensorflow/" style="font-size: 1.1em; color: #999">tensorflow</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 1.26em; color: #999fa8">博客</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 1.3em; color: #99a1ac">总结</a> <a href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">推荐系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.18em; color: #999ca1">操作系统</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.3em; color: #99a1ac">数据结构</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/12/"><span class="card-archive-list-date">十二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/04/"><span class="card-archive-list-date">四月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/12/"><span class="card-archive-list-date">十二月 2022</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item more is-center"><a class="card-archive-list-link-more" href="/archives/">
+              <span>查看更多</span><i class="fas fa-angle-right"  ></i></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">105</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2019-01-31T16:00:00.000Z"></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-12-26T05:19:04.816Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    var typed = new Typed("#subtitle", {
+      strings: "也许他们会明白莫泊桑的一句话：生活可能不像你想象的那么好，但是也不会像你想象的那么糟。人的脆弱和坚强都超乎了自己的想象，有时候可能脆弱的一句话就泪流满面，有时候你发现自己咬着牙已经走过了很长的路。".split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: false,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '也许他们会明白莫泊桑的一句话：生活可能不像你想象的那么好，但是也不会像你想象的那么糟。人的脆弱和坚强都超乎了自己的想象，有时候可能脆弱的一句话就泪流满面，有时候你发现自己咬着牙已经走过了很长的路。'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') subtitleType()
+  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
+} else {
+  subtitleType()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

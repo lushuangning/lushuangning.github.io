@@ -1,0 +1,301 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>斯坦福CS229课程资料 | 路双宁的博客</title><meta name="keywords" content="机器学习"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="公开课地址：http:&#x2F;&#x2F;open.163.com&#x2F;special&#x2F;opencourse&#x2F;machinelearning.html 主讲人：Andrew·Wang（吴恩达） 教学安排与大纲：http:&#x2F;&#x2F;cs229.stanford.edu&#x2F;syllabus.html 讲义翻译：https:&#x2F;&#x2F;kivy-cn.github.io&#x2F;Stanford-CS-229-CN&#x2F;#&#x2F;  PDF版中文讲义：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="斯坦福CS229课程资料">
+<meta property="og:url" content="https://lushuangning.github.io/posts/58d37224/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="公开课地址：http:&#x2F;&#x2F;open.163.com&#x2F;special&#x2F;opencourse&#x2F;machinelearning.html 主讲人：Andrew·Wang（吴恩达） 教学安排与大纲：http:&#x2F;&#x2F;cs229.stanford.edu&#x2F;syllabus.html 讲义翻译：https:&#x2F;&#x2F;kivy-cn.github.io&#x2F;Stanford-CS-229-CN&#x2F;#&#x2F;  PDF版中文讲义：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-02-01T14:18:05.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.181Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/58d37224/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%AC%E5%BC%80%E8%AF%BE%E5%9C%B0%E5%9D%80%EF%BC%9Ahttp-open-163-com-special-opencourse-machinelearning-html"><span class="toc-number">1.</span> <span class="toc-text">公开课地址：http:&#x2F;&#x2F;open.163.com&#x2F;special&#x2F;opencourse&#x2F;machinelearning.html</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%AE%B2%E4%BA%BA%EF%BC%9AAndrew%C2%B7Wang%EF%BC%88%E5%90%B4%E6%81%A9%E8%BE%BE%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">主讲人：Andrew·Wang（吴恩达）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%99%E5%AD%A6%E5%AE%89%E6%8E%92%E4%B8%8E%E5%A4%A7%E7%BA%B2%EF%BC%9Ahttp-cs229-stanford-edu-syllabus-html"><span class="toc-number">3.</span> <span class="toc-text">教学安排与大纲：http:&#x2F;&#x2F;cs229.stanford.edu&#x2F;syllabus.html</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B2%E4%B9%89%E7%BF%BB%E8%AF%91%EF%BC%9Ahttps-kivy-cn-github-io-Stanford-CS-229-CN"><span class="toc-number">4.</span> <span class="toc-text">讲义翻译：https:&#x2F;&#x2F;kivy-cn.github.io&#x2F;Stanford-CS-229-CN&#x2F;#&#x2F;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDF%E7%89%88%E4%B8%AD%E6%96%87%E8%AE%B2%E4%B9%89%EF%BC%9A"><span class="toc-number"></span> <span class="toc-text">PDF版中文讲义：</span></a></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">斯坦福CS229课程资料</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-02-01T14:18:05.000Z" title="发表于 2018-02-01 22:18:05">2018-02-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.181Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><hr>
+<h4 id="公开课地址：http-open-163-com-special-opencourse-machinelearning-html">公开课地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://open.163.com/special/opencourse/machinelearning.html">http://open.163.com/special/opencourse/machinelearning.html</a></h4>
+<h4 id="主讲人：Andrew·Wang（吴恩达）">主讲人：Andrew·Wang（吴恩达）</h4>
+<h4 id="教学安排与大纲：http-cs229-stanford-edu-syllabus-html">教学安排与大纲：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://cs229.stanford.edu/syllabus.html">http://cs229.stanford.edu/syllabus.html</a></h4>
+<h4 id="讲义翻译：https-kivy-cn-github-io-Stanford-CS-229-CN">讲义翻译：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://kivy-cn.github.io/Stanford-CS-229-CN/#/">https://kivy-cn.github.io/Stanford-CS-229-CN/#/</a></h4>
+<hr>
+<h3 id="PDF版中文讲义：">PDF版中文讲义：</h3>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-README.pdf">README.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes1.pdf">cs229-notes1.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes2.pdf">cs229-notes2.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes3.pdf">cs229-notes3.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes4.pdf">cs229-notes4.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes5.pdf">cs229-notes5.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes6.pdf">cs229-notes6.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes7a.pdf">cs229-notes7a.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes7b.pdf">cs229-notes7b.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes8.pdf">cs229-notes8.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes9.pdf">cs229-notes9.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes10.pdf">cs229-notes10.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes11.pdf">cs229-notes11.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes12.pdf">cs229-notes12.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes13.pdf">cs229-notes13.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes-BP.pdf">cs229-notes-BP.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes-deep_learning.pdf">cs229-notes-deep_learning.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes-dt.pdf">cs229-notes-dt.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-notes-ensemble.pdf">cs229-notes-ensemble.pdf</a><br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/cs229/cs229-linalg.pdf">cs229-linalg.pdf</a></p>
+<hr>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/58d37224/">https://lushuangning.github.io/posts/58d37224/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lushuangning.github.io" target="_blank">路双宁的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/c4d9e06e/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">李宏毅机器学习笔记</div></div></a></div><div class="next-post pull-right"><a href="/posts/97eeb240/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">git命令总结</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMake菜谱（一） | 路双宁的博客</title><meta name="keywords" content="CMake"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="序 不知道从什么地方开始写起，后面慢慢补吧。CMake 系列学习源自CMake-Cookbook，一本翻译来的书。作者提供了书中的源代码，我自己学习的过程中手动码了一遍，放在了MyCmakeExample 中文版在线网站CMake Cookbook，本书中的绝大部分内容源自该中文版翻译，在此只是为了做个学习上的记录，以后项目中用到的时候方便查找，可自由转载。 Chapter 1 chapter 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMake菜谱（一）">
+<meta property="og:url" content="https://lushuangning.github.io/posts/f8e49d55/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="序 不知道从什么地方开始写起，后面慢慢补吧。CMake 系列学习源自CMake-Cookbook，一本翻译来的书。作者提供了书中的源代码，我自己学习的过程中手动码了一遍，放在了MyCmakeExample 中文版在线网站CMake Cookbook，本书中的绝大部分内容源自该中文版翻译，在此只是为了做个学习上的记录，以后项目中用到的时候方便查找，可自由转载。 Chapter 1 chapter 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-12-29T14:26:04.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.161Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="CMake">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/f8e49d55/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">Chapter 1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-1-%E5%AF%B9%E5%8D%95%E4%B8%AA%E6%BA%90%E6%96%87%E4%BB%B6%E7%BC%96%E8%AF%91"><span class="toc-number">2.1.</span> <span class="toc-text">chapter 1.1 对单个源文件编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-2-%E5%88%87%E6%8D%A2%E7%94%9F%E6%88%90%E5%99%A8"><span class="toc-number">2.2.</span> <span class="toc-text">chapter 1.2 切换生成器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-3-%E9%9D%99%E6%80%81%E5%BA%93%E5%92%8C%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-number">2.3.</span> <span class="toc-text">chapter 1.3 静态库和动态库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-4-%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="toc-number">2.4.</span> <span class="toc-text">chapter 1.4 条件语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-5-%E9%80%9A%E8%BF%87%E5%A4%96%E9%83%A8%E4%BC%A0%E5%8F%82%E4%BF%AE%E6%94%B9%E5%8F%98%E9%87%8F"><span class="toc-number">2.5.</span> <span class="toc-text">chapter 1.5 通过外部传参修改变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-6-%E6%8C%87%E5%AE%9A%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-number">2.6.</span> <span class="toc-text">chapter 1.6 指定编译器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-7-%E5%88%87%E6%8D%A2%E6%9E%84%E5%BB%BA%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.7.</span> <span class="toc-text">chapter 1.7 切换构建类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-8-%E8%AE%BE%E7%BD%AE%E7%BC%96%E8%AF%91%E5%99%A8%E9%80%89%E9%A1%B9"><span class="toc-number">2.8.</span> <span class="toc-text">chapter 1.8 设置编译器选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-9-%E4%B8%BA%E8%AF%AD%E8%A8%80%E8%AE%BE%E5%AE%9A%E6%A0%87%E5%87%86"><span class="toc-number">2.9.</span> <span class="toc-text">chapter 1.9 为语言设定标准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-1-10-%E4%BD%BF%E7%94%A8%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">2.10.</span> <span class="toc-text">chapter 1.10 使用控制流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">Chapter 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-2-1-%E6%A3%80%E6%B5%8B%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.1.</span> <span class="toc-text">chapter 2.1 检测操作系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-2-2-%E5%A4%84%E7%90%86%E4%B8%8E%E5%B9%B3%E5%8F%B0%E7%9B%B8%E5%85%B3%E7%9A%84%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="toc-number">3.2.</span> <span class="toc-text">chapter 2.2 处理与平台相关的源代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-2-3-%E5%A4%84%E7%90%86%E4%B8%8E%E7%BC%96%E8%AF%91%E5%99%A8%E7%9B%B8%E5%85%B3%E7%9A%84%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="toc-number">3.3.</span> <span class="toc-text">chapter 2.3 处理与编译器相关的源代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-2-4-%E6%A3%80%E6%B5%8B%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">3.4.</span> <span class="toc-text">chapter 2.4 检测处理器体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-2-5-%E6%A3%80%E6%B5%8B%E5%A4%84%E7%90%86%E5%99%A8%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="toc-number">3.5.</span> <span class="toc-text">chapter 2.5 检测处理器指令集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chapter-2-6-%E4%B8%BA-Eigen-%E5%BA%93%E4%BD%BF%E8%83%BD%E5%90%91%E9%87%8F%E5%8C%96"><span class="toc-number">3.6.</span> <span class="toc-text">chapter 2.6 为 Eigen 库使能向量化</span></a></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">CMake菜谱（一）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-29T14:26:04.000Z" title="发表于 2021-12-29 22:26:04">2021-12-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.161Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h1>序</h1>
+<p>不知道从什么地方开始写起，后面慢慢补吧。CMake 系列学习源自<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xiaoweiChen/CMake-Cookbook">CMake-Cookbook</a>，一本翻译来的书。作者提供了书中的源代码，我自己学习的过程中手动码了一遍，放在了<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lushuangning/MyCmakeExample">MyCmakeExample</a></p>
+<p>中文版在线网站<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bookstack.cn/read/CMake-Cookbook/README.md">CMake Cookbook</a>，本书中的绝大部分内容源自该中文版翻译，在此只是为了做个学习上的记录，以后项目中用到的时候方便查找，可自由转载。</p>
+<h1>Chapter 1</h1>
+<h2 id="chapter-1-1-对单个源文件编译">chapter 1.1 对单个源文件编译</h2>
+<ol>
+<li>配置项目</li>
+</ol>
+<p>生成构建器的命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> -p build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake ..</span></span><br></pre></td></tr></table></figure>
+<p>等效于</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake -H. -Bbuild</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>构建项目</li>
+</ol>
+<p>构建命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake --build .</span></span><br></pre></td></tr></table></figure>
+<p>后面可以带参数，详情如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake --build . --target <span class="built_in">help</span></span></span><br><span class="line"></span><br><span class="line">The following are some of the valid targets for this Makefile:</span><br><span class="line">... all (the default if no target is provided)</span><br><span class="line">... clean</span><br><span class="line">... depend</span><br><span class="line">... rebuild_cache</span><br><span class="line">... hello-world</span><br><span class="line">... edit_cache</span><br><span class="line">... hello-world.o</span><br><span class="line">... hello-world.i</span><br><span class="line">... hello-world.s</span><br></pre></td></tr></table></figure>
+<h2 id="chapter-1-2-切换生成器">chapter 1.2 切换生成器</h2>
+<p><strong>Tips:</strong> 何为生成器呢？cmake会通过<code>CMakeLists.txt</code>文件，生成适用于不同项目类型的makefile文件，然后makefile文件被不同的编译器使用进行编译，考虑到C/C++的开发环境之多，有非常多的种类的项目开发环境，但是cmake基本上都考虑到了，这里有一个小的汇总：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/qq_27825451/article/details/103322366">cmake的generator详解</a>。</p>
+<p>使用命令 <code>cmake --help</code> 可以查看本机支持的生成器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Generators</span><br><span class="line"></span><br><span class="line">The following generators are available on this platform (* marks default):</span><br><span class="line">* Unix Makefiles               = Generates standard UNIX makefiles.</span><br><span class="line">  Green Hills MULTI            = Generates Green Hills MULTI files</span><br><span class="line">                                 (experimental, work-in-progress).</span><br><span class="line">  Ninja                        = Generates build.ninja files.</span><br><span class="line">  Watcom WMake                 = Generates Watcom WMake makefiles.</span><br><span class="line">  CodeBlocks - Ninja           = Generates CodeBlocks project files.</span><br><span class="line">  CodeBlocks - Unix Makefiles  = Generates CodeBlocks project files.</span><br><span class="line">  CodeLite - Ninja             = Generates CodeLite project files.</span><br><span class="line">  CodeLite - Unix Makefiles    = Generates CodeLite project files.</span><br><span class="line">  Sublime Text 2 - Ninja       = Generates Sublime Text 2 project files.</span><br><span class="line">  Sublime Text 2 - Unix Makefiles</span><br><span class="line">                               = Generates Sublime Text 2 project files.</span><br><span class="line">  Kate - Ninja                 = Generates Kate project files.</span><br><span class="line">  Kate - Unix Makefiles        = Generates Kate project files.</span><br><span class="line">  Eclipse CDT4 - Ninja         = Generates Eclipse CDT 4.0 project files.</span><br><span class="line">  Eclipse CDT4 - Unix Makefiles= Generates Eclipse CDT 4.0 project files.</span><br></pre></td></tr></table></figure>
+<p>带 <code>*</code> 的是默认的生成器，如果想切换成别的，命令如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> -p build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake -G Ninja ..</span></span><br></pre></td></tr></table></figure>
+<h2 id="chapter-1-3-静态库和动态库">chapter 1.3 静态库和动态库</h2>
+<p><code>add_library(message STATIC Message.hpp Message.cpp)</code>：生成必要的构建指令，将指定的源码编译到库中。<code>add_library</code>的第一个参数是目标名。整个<code>CMakeLists.txt</code>中，可使用相同的名称来引用库。生成的库的实际名称将由CMake通过在前面添加前缀<code>lib</code>和适当的扩展名作为后缀来形成。生成库是根据第二个参数(<code>STATIC</code>或<code>SHARED</code>)和操作系统确定的。</p>
+<p><strong><code>target_link_libraries(hello-world message)</code>: 将库链接到可执行文件</strong>。此命令还确保<code>hello-world</code>可执行文件可以正确地依赖于消息库。因此，在消息库链接到<code>hello-world</code>可执行文件之前，需要完成消息库的构建。</p>
+<p>编译成功后，构建目录包含<code>libmessage.a</code>一个静态库(在GNU/Linux上)和<code>hello-world</code>可执行文件</p>
+<p>CMake接受其他值作为<code>add_library</code>的第二个参数的有效值，本书会用到的值：</p>
+<ul>
+<li><strong>STATIC</strong>：用于创建静态库，即编译文件的打包存档，以便在链接其他目标时使用，例如：可执行文件。</li>
+<li><strong>SHARED</strong>：用于创建动态库，即可以动态链接，并在运行时加载的库。可以在<code>CMakeLists.txt</code>中使用<code>add_library(message SHARED Message.hpp Message.cpp) </code>从静态库切换到动态共享对象(DSO)。</li>
+<li><strong>OBJECT</strong>：可将给定<code>add_library</code>的列表中的源码编译到目标文件，不将它们归档到静态库中，也不能将它们链接到共享对象中。如果需要一次性创建静态库和动态库，那么使用对象库尤其有用。我们将在本示例中演示。</li>
+<li><strong>MODULE</strong>：又为DSO组。与<code>SHARED</code>库不同，它们不链接到项目中的任何目标，不过可以进行动态加载。该参数可以用于构建运行时插件。</li>
+</ul>
+<h2 id="chapter-1-4-条件语句">chapter 1.4 条件语句</h2>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置CMake所需的最低版本，低于该版本将报错</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span>.<span class="number">0</span> FATAL_ERROR)</span><br><span class="line"><span class="comment"># 声明项目名称recipe-04，编程语言CXX表示C++</span></span><br><span class="line"><span class="keyword">project</span>(recipe-<span class="number">04</span> LANGUAGES CXX)</span><br><span class="line"><span class="comment"># 引入一个逻辑变量，值为OFF</span></span><br><span class="line"><span class="keyword">set</span>(USE_LIBRARY <span class="keyword">OFF</span>)</span><br><span class="line"><span class="comment"># 打印变量的值</span></span><br><span class="line"><span class="keyword">message</span>(STATUS <span class="string">&quot;Compile sources into a library? $&#123;USE_LIBRARY&#125;&quot;</span>)</span><br><span class="line"><span class="comment"># 定义BUILD_SHARED_LIBS变量</span></span><br><span class="line"><span class="keyword">set</span>(BUILD_SHARED_LIBS <span class="keyword">OFF</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 引入一个变量_source，包括Message.hpp和Message.cpp</span></span><br><span class="line"><span class="keyword">list</span>(APPEND _sources <span class="keyword">Message</span>.hpp <span class="keyword">Message</span>.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 引入一个基于USE_LIBRARY的if-else语句，如果逻辑为真</span></span><br><span class="line"><span class="comment"># 则Message.hpp和Message.cpp将打包成一个库</span></span><br><span class="line"><span class="keyword">if</span>(USE_LIBRARY)</span><br><span class="line">  <span class="keyword">add_library</span>(<span class="keyword">message</span> <span class="variable">$&#123;_sources&#125;</span>)</span><br><span class="line">  <span class="keyword">add_executable</span>(hello-world hello-world.cpp)</span><br><span class="line">  <span class="keyword">target_link_libraries</span>(hello-world <span class="keyword">message</span>)</span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">  <span class="keyword">add_executable</span>(hello-world hello-world.cpp <span class="variable">$&#123;_sources&#125;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+<p><strong>TIPS</strong>:<em><code>_sources</code>变量是一个局部变量，不应该在当前范围之外使用，可以在名称前加下划线。</em></p>
+<p><code>BUILD_SHARED_LIBS</code>是CMake的一个全局标志。因为CMake内部要查询<code>BUILD_SHARED_LIBS</code>全局变量，所以<code>add_library</code>命令可以在不传递<code>STATIC/SHARED/OBJECT</code>参数的情况下调用；如果为<code>false</code>或未定义，将生成一个静态库。</p>
+<h2 id="chapter-1-5-通过外部传参修改变量">chapter 1.5 通过外部传参修改变量</h2>
+<p>通过<code>option</code>替代<code>set</code>，可从外部传值</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">option</span>(USE_LIBRARY <span class="string">&quot;Compile sources into a library&quot;</span> <span class="keyword">OFF</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> -p build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake -D USE_LIBRARY=ON ..</span></span><br></pre></td></tr></table></figure>
+<p><code>-D</code>开关用于为CMake设置任何类型的变量：逻辑变量、路径等等。</p>
+<h2 id="chapter-1-6-指定编译器">chapter 1.6 指定编译器</h2>
+<p>CMake将语言的编译器存储在<code> CMAKE_&lt;LANG&gt;_COMPILER</code>变量中，建议通过下面的命令显式地设置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake -D CMAKE_CXX_COMPILER=clang++ ..</span></span><br></pre></td></tr></table></figure>
+<p>CMake提供<code>--system-information</code>标志，它将把关于系统的所有信息转储到屏幕或文件中。可以看到<code>CMAKE_CXX_COMPILER</code>、<code>CMAKE_C_COMPILER</code>和<code>CMAKE_Fortran_COMPILER</code>的默认值。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake --system-information information.txt</span></span><br></pre></td></tr></table></figure>
+<p>CMake提供了额外的变量来与编译器交互：</p>
+<ul>
+<li><code>CMAKE_&lt;LANG&gt;_COMPILER_LOADED </code>:如果为项目启用了语言<code>&lt;LANG&gt;</code>，则将设置为<code>TRUE</code>。</li>
+<li><code>CMAKE_&lt;LANG&gt;_COMPILER_ID</code>:编译器标识字符串，编译器供应商所特有。例如，<code>GCC</code>用于GNU编译器集合，<code>AppleClang</code>用于macOS上的Clang, <code>MSVC</code>用于Microsoft Visual Studio编译器。注意，不能保证为所有编译器或语言定义此变量。</li>
+<li><code>CMAKE_COMPILER_IS_GNU&lt;LANG&gt; </code>:如果语言<code>&lt;LANG&gt;</code>是GNU编译器集合的一部分，则将此逻辑变量设置为<code>TRUE</code>。注意变量名的<code>&lt;LANG&gt;</code>部分遵循GNU约定：C语言为<code>CC</code>, C++语言为<code>CXX</code>, Fortran语言为<code>G77</code>。</li>
+<li><code>CMAKE_&lt;LANG&gt;_COMPILER_VERSION</code>:此变量包含一个字符串，该字符串给定语言的编译器版本。版本信息在<code>major[.minor[.patch[.tweak]]]</code>中给出。但是，对于<code>CMAKE_&lt;LANG&gt;_COMPILER_ID</code>，不能保证所有编译器或语言都定义了此变量。</li>
+</ul>
+<p>尝试使用不同的编译器，下面是个示例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置CMake所需的最低版本，低于该版本将报错</span></span><br><span class="line">cmake_minimum_required(VERSION 3.12.0 FATAL_ERROR)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">声明项目名称recipe-04，编程语言CXX表示C++</span></span><br><span class="line">project(recipe-06 LANGUAGES CXX)</span><br><span class="line"></span><br><span class="line">message(STATUS &quot;Is the C++ compiler loaded? $&#123;CMAKE_CXX_COMPILER_LOADED&#125;&quot;)</span><br><span class="line"></span><br><span class="line">if(CMAKE_CXX_COMPILER_LOADED)</span><br><span class="line">  message(STATUS &quot;The C++ compiler ID is: $&#123;CMAKE_CXX_COMPILER_ID&#125;&quot;)</span><br><span class="line">  message(STATUS &quot;Is the C++ from GNU? $&#123;CMAKE_COMPILER_IS_GNUCXX&#125;&quot;)</span><br><span class="line">  message(STATUS &quot;The C++ compiler version is: $&#123;CMAKE_COMPILER_VERSION&#125;&quot;)</span><br><span class="line"></span><br><span class="line">endif()</span><br><span class="line"></span><br><span class="line">message(STATUS &quot;Is the C compiler loaded? $&#123;CMAKE_C_COMPILER_LOADED&#125;&quot;)</span><br><span class="line">if(CMAKE_C_COMPILER_LOADED)</span><br><span class="line">  message(STATUS &quot;The C compiler ID is: $&#123;CMAKE_C_COMPILER_ID&#125;&quot;)</span><br><span class="line">  message(STATUS &quot;Is the C from GNU? $&#123;CMAKE_COMPILER_IS_GNUCC&#125;&quot;)</span><br><span class="line">  message(STATUS &quot;The C compiler version is: $&#123;CMAKE_COMPILER_VERSION&#125;&quot;)</span><br><span class="line">endif()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="chapter-1-7-切换构建类型">chapter 1.7 切换构建类型</h2>
+<p>控制生成构建系统使用的配置变量是<code>CMAKE_BUILD_TYPE</code>。该变量默认为空，CMake识别的值为:</p>
+<ol>
+<li><strong>Debug</strong>：用于在没有优化的情况下，使用带有调试符号构建库或可执行文件。</li>
+<li><strong>Release</strong>：用于构建的优化的库或可执行文件，不包含调试符号。</li>
+<li><strong>RelWithDebInfo</strong>：用于构建较少的优化库或可执行文件，包含调试符号。</li>
+<li><strong>MinSizeRel</strong>：用于不增加目标代码大小的优化方式，来构建库或可执行文件。</li>
+</ol>
+<p>切换构建类型:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake -D CMAKE_BUILD_TYPE=Debug ..</span></span><br></pre></td></tr></table></figure>
+<p>下面是对Visual Studio的CMake调用:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> -p build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake .. -G <span class="string">&quot;Visual Studio 12 2017 Win64&quot;</span> -D CMAKE_CONFIGURATION_TYPES=<span class="string">&quot;Release;Debug&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p>将为Release和Debug配置生成一个构建树。然后，您可以使<code>--config</code>标志来决定构建这两个中的哪一个:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake --build . --config Release</span></span><br></pre></td></tr></table></figure>
+<h2 id="chapter-1-8-设置编译器选项">chapter 1.8 设置编译器选项</h2>
+<p>编译标志</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">list</span>(APPEND flags <span class="string">&quot;-fPIC&quot;</span> <span class="string">&quot;-Wall&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">NOT</span> WIN32)</span><br><span class="line">  <span class="keyword">list</span>(APPEND flags <span class="string">&quot;-Wextra&quot;</span> <span class="string">&quot;-Wpedantic&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+<p>添加一个新的静态库<code>geometry</code></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(geometry</span><br><span class="line">  STATIC</span><br><span class="line">    geometry_circle.cpp</span><br><span class="line">    geometry_circle.hpp</span><br><span class="line">    geometry_polygon.cpp</span><br><span class="line">    geometry_polygon.hpp</span><br><span class="line">    geometry_rhombus.cpp</span><br><span class="line">    geometry_rhombus.hpp</span><br><span class="line">    geometry_square.cpp</span><br><span class="line">    geometry_square.hpp</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<p>设置编译选项</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_compile_options</span>(geometry</span><br><span class="line">  PRIVATE</span><br><span class="line">    <span class="variable">$&#123;flags&#125;</span></span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<p>编译选项可以添加三个级别的可见性：<code>INTERFACE</code>、<code>PUBLIC</code>和<code>PRIVATE</code>。</p>
+<p>可见性的含义如下:</p>
+<ul>
+<li><strong>PRIVATE</strong>，编译选项会应用于给定的目标，不会传递给与目标相关的目标。我们的示例中， 即使<code>compute-areas</code>将链接到<code>geometry</code>库，<code>compute-areas</code>也不会继承<code>geometry</code>目标上设置的编译器选项。</li>
+<li><strong>INTERFACE</strong>，给定的编译选项将只应用于指定目标，并传递给与目标相关的目标。</li>
+<li><strong>PUBLIC</strong>，编译选项将应用于指定目标和使用它的目标。</li>
+</ul>
+<p>这种方式添加编译选项，不会影响全局CMake变量<code>CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;</code>，并能更细粒度控制在哪些目标上使用哪些选项。</p>
+<p>如何确定项目在CMake构建时，实际使用了哪些编译标志？一种方法是，使用CMake将额外的参数传递给本地构建工具。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> -p build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake ..</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake --build . -- VERBOSE=1</span></span><br></pre></td></tr></table></figure>
+<h2 id="chapter-1-9-为语言设定标准">chapter 1.9 为语言设定标准</h2>
+<p>从CMake 3.1版本开始，引入了一个独立于平台和编译器的机制，用于为<code>C++</code>和<code>C</code>设置语言标准：为目标设置<code> &lt;LANG&gt;_STANDARD</code>属性。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set_target_properties</span>(animals</span><br><span class="line">  PROPERTIES</span><br><span class="line">    CXX_STANDARD <span class="number">14</span></span><br><span class="line">    CXX_EXTENSIONS <span class="keyword">OFF</span></span><br><span class="line">    CXX_STANDARD_REQUIRED <span class="keyword">ON</span></span><br><span class="line">    POSITION_INDEPENDENT_CODE <span class="number">1</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>这些属性的含义如下</p>
+<ul>
+<li><strong>CXX_STANDARD</strong>会设置我们想要的标准。</li>
+<li><strong>CXX_EXTENSIONS</strong>告诉CMake，只启用<code>ISO C++</code>标准的编译器标志，而不使用特定编译器的扩展。</li>
+<li><strong>CXX_STANDARD_REQUIRED</strong>指定所选标准的版本。如果这个版本不可用，CMake将停止配置并出现错误。当这个属性被设置为<code>OFF</code>时，CMake将寻找下一个标准的最新版本，直到一个合适的标志。这意味着，首先查找<code>C++14</code>，然后是<code>C++11</code>，然后是<code>C++98</code>。（译者注：目前会从<code>C++20</code>或<code>C++17</code>开始查找）</li>
+</ul>
+<h2 id="chapter-1-10-使用控制流">chapter 1.10 使用控制流</h2>
+<p>使用 1.8 中的示例代码</p>
+<p>使用<code>-O3</code>编译器优化级别编译库，对目标设置一个私有编译器选项:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_compile_options</span>(geometry</span><br><span class="line">   PRIVATE</span><br><span class="line">   -O3</span><br><span class="line">   )</span><br></pre></td></tr></table></figure>
+<p>然后，生成一个源文件列表，以较低的优化选项进行编译:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">list</span>(</span><br><span class="line">  APPEND sources_with_lower_optimization</span><br><span class="line">    geometry_circle.cpp</span><br><span class="line">    geometry_rhombus.cpp</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<p>循环这些源文件，将它们的优化级别调到<code>-O2</code>。使用它们的源文件属性完成:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>(STATUS <span class="string">&quot;Setting source properties using IN LISTS syntax:&quot;</span>)</span><br><span class="line"><span class="keyword">foreach</span>(_source IN LISTS sources_with_lower_optimization)</span><br><span class="line">  <span class="keyword">set_source_files_properties</span>(<span class="variable">$&#123;_source&#125;</span> PROPERTIES COMPILE_FLAGS -O2)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Appending -O2 flag for $&#123;_source&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">endforeach</span>()</span><br></pre></td></tr></table></figure>
+<p>为了确保设置属性，再次循环并在打印每个源文件的<code>COMPILE_FLAGS</code>属性:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>(STATUS <span class="string">&quot;Querying sources properties using plain syntax:&quot;</span>)</span><br><span class="line"><span class="keyword">foreach</span>(_source <span class="variable">$&#123;sources_with_lower_optimization&#125;</span>)</span><br><span class="line">  <span class="keyword">get_source_file_property</span>(_flags <span class="variable">$&#123;_source&#125;</span> COMPILE_FLAGS)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Source $&#123;_source&#125; has the following extra COMPILE_FLAGS: $&#123;_flags&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">endforeach</span>()</span><br></pre></td></tr></table></figure>
+<hr>
+<h1>Chapter 2</h1>
+<h2 id="chapter-2-1-检测操作系统">chapter 2.1 检测操作系统</h2>
+<p>根据变量<code>CMAKE_SYSTEM_NAME</code>判断操作系统类型</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;Linux&quot;</span>)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Configuring on/for Linux&quot;</span>)</span><br><span class="line"><span class="keyword">elseif</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;Darwin&quot;</span>)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Configuring on/for macOS&quot;</span>)</span><br><span class="line"><span class="keyword">elseif</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;Windows&quot;</span>)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Configuring on/for Windows&quot;</span>)</span><br><span class="line"><span class="keyword">elseif</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;AIX&quot;</span>)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Configuring on/for IBM AIX&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Configuring on/for $&#123;CMAKE_SYSTEM_NAME&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+<h2 id="chapter-2-2-处理与平台相关的源代码">chapter 2.2 处理与平台相关的源代码</h2>
+<p><code>hello-world.cpp</code>，基于预处理器定义<code>IS_WINDOWS</code>、<code>IS_LINUX</code>、<code>IS_MACOS</code>的条件编译。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">std::string <span class="title">say_hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> IS_WINDOWS</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello from Windows!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> IS_LINUX</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello from Linux!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> IS_MACOS</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello from macOS!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello from an unknown system!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  std::cout &lt;&lt; <span class="built_in">say_hello</span>() &lt;&lt; std::endl;</span><br><span class="line">  <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>CMakeLists.txt</code>，通过使用<code>target_compile_definition</code>在预处理阶段使用。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span> FATAL_ERROR)</span><br><span class="line"><span class="keyword">project</span>(recipe-<span class="number">02</span> LANGUAGES CXX)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(hello-world hello-world.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;Linux&quot;</span>)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_LINUX&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;Darwin&quot;</span>)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_MACOS&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;Windows&quot;</span>)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_WINDOWS&quot;</span>) </span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+<p><code>PRIVATE|INTERFACE|PUBLIC</code>限定符在 chapter 1.8 中有介绍。</p>
+<h2 id="chapter-2-3-处理与编译器相关的源代码">chapter 2.3 处理与编译器相关的源代码</h2>
+<p>hello-world.cpp</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">std::string <span class="title">say_hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> IS_INTEL_CXX_COMPILER</span></span><br><span class="line">  <span class="comment">// only compiled when Intel compiler is selected</span></span><br><span class="line">  <span class="comment">// such compiler will not compile the other branches</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello Intel compiler!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> IS_GNU_CXX_COMPILER</span></span><br><span class="line">  <span class="comment">// only compiled when GNU compiler is selected</span></span><br><span class="line">  <span class="comment">// such compiler will not compile the other branches</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello GNU compiler!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> IS_PGI_CXX_COMPILER</span></span><br><span class="line">  <span class="comment">// etc.</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello PGI compiler!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> IS_XL_CXX_COMPILER</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello XL compiler!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello unknown compiler - have we met before?&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  std::cout &lt;&lt; <span class="built_in">say_hello</span>() &lt;&lt; std::endl;</span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;compiler name is &quot;</span> COMPILER_NAME &lt;&lt; std::endl;</span><br><span class="line">  <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>CMakeLists.txt</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;COMPILER_NAME=\&quot;$&#123;CMAKE_CXX_COMPILER_ID&#125;\&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(CMAKE_CXX_COMPILER_ID <span class="keyword">MATCHES</span> Intel)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_INTEL_CXX_COMPILER&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">if</span>(CMAKE_CXX_COMPILER_ID <span class="keyword">MATCHES</span> GNU)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_GNU_CXX_COMPILER&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">if</span>(CMAKE_CXX_COMPILER_ID <span class="keyword">MATCHES</span> PGI)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_PGI_CXX_COMPILER&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">if</span>(CMAKE_CXX_COMPILER_ID <span class="keyword">MATCHES</span> XL)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_XL_CXX_COMPILER&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+<h2 id="chapter-2-4-检测处理器体系结构">chapter 2.4 检测处理器体系结构</h2>
+<p>通过检测空指针<code>CMAKE_SIZEOF_VOID_P</code>的大小来判断是32位还是64位系统，通过<code>CMAKE_HOST_SYSTEM_PROCESSOR MATCHES</code>来检测处理器架构。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(CMAKE_SIZEOF_VOID_P <span class="keyword">EQUAL</span> <span class="number">8</span>)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(arch-dependent PUBLIC <span class="string">&quot;IS_64_BIT_ARCH&quot;</span>)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Target is 64 bits&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(arch-dependent PUBLIC <span class="string">&quot;IS_32_BIT_ARCH&quot;</span>)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Target is 32 bits&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(CMAKE_HOST_SYSTEM_PROCESSOR <span class="keyword">MATCHES</span> <span class="string">&quot;i386&quot;</span>)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;i386 architecture detected&quot;</span>)</span><br><span class="line"><span class="keyword">elseif</span>(CMAKE_HOST_SYSTEM_PROCESSOR <span class="keyword">MATCHES</span> <span class="string">&quot;i686&quot;</span>)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;i686 architecture detected&quot;</span>)</span><br><span class="line"><span class="keyword">elseif</span>(CMAKE_HOST_SYSTEM_PROCESSOR <span class="keyword">MATCHES</span> <span class="string">&quot;x86_64&quot;</span>)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;x86_64 architecture detected&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;host processor architecture is unknown&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_compile_definitions</span>(arch-dependent</span><br><span class="line">  PUBLIC <span class="string">&quot;ARCHITECTURE=$&#123;CMAKE_HOST_SYSTEM_PROCESSOR&#125;&quot;</span></span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<h2 id="chapter-2-5-检测处理器指令集">chapter 2.5 检测处理器指令集</h2>
+<p>核心代码在<code>CMakeLists.txt</code>中</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span> FATAL_ERROR)</span><br><span class="line"><span class="keyword">project</span>(recipe-<span class="number">05</span> LANGUAGES CXX)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(processor-info <span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_sources</span>(processor-info</span><br><span class="line">  PRIVATE</span><br><span class="line">  processor-info.cpp</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_include_directories</span>(processor-info</span><br><span class="line">  PRIVATE</span><br><span class="line">  <span class="variable">$&#123;PROJECT_BINARY_DIR&#125;</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(key</span><br><span class="line">  IN ITEMS</span><br><span class="line">    NUMBER_OF_LOGICAL_CORES</span><br><span class="line">    NUMBER_OF_PHYSICAL_CORES</span><br><span class="line">    TOTAL_VIRTUAL_MEMORY</span><br><span class="line">    AVAILABLE_VIRTUAL_MEMORY</span><br><span class="line">    TOTAL_PHYSICAL_MEMORY</span><br><span class="line">    AVAILABLE_PHYSICAL_MEMORY</span><br><span class="line">    IS_64BIT</span><br><span class="line">    HAS_FPU</span><br><span class="line">    HAS_MMX</span><br><span class="line">    HAS_MMX_PLUS</span><br><span class="line">    HAS_SSE</span><br><span class="line">    HAS_SSE2</span><br><span class="line">    HAS_SSE_FP</span><br><span class="line">    HAS_SSE_MMX</span><br><span class="line">    HAS_AMD_3DNOW</span><br><span class="line">    HAS_AMD_3DNOW_PLUS</span><br><span class="line">    HAS_IA64</span><br><span class="line">    OS_NAME</span><br><span class="line">    OS_RELEASE</span><br><span class="line">    OS_VERSION</span><br><span class="line">    OS_PLATFORM</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">cmake_host_system_information</span>(RESULT _<span class="variable">$&#123;key&#125;</span> QUERY <span class="variable">$&#123;key&#125;</span>)</span><br><span class="line"><span class="keyword">endforeach</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">configure_file</span>(config.h.in config.h @ONLY)</span><br></pre></td></tr></table></figure>
+<p><code>add_library</code>将指定的源文件生成链接文件（编译成库）并添加到工程中，<code>add_executable</code>生成可执行文件并与库链接。</p>
+<p><strong><code>target_sources</code> 往目标中追加源文件</strong>。</p>
+<p><strong><code>target_include_directories</code> 指定目标包含的头文件路径</strong></p>
+<p><strong><code>target_link_libraries</code> 将目标文件与库文件进行链接</strong></p>
+<p><strong><code>target_compile_options</code> 指定目标的编译选项</strong></p>
+<p><code>CMakeLists.txt</code>中的<code>foreach</code>循环会查询多个键值，并定义相应的变量。此示例的核心函数是<code>cmake_host_system_information</code>，它查询主机的系统信息。本例中，我们对每个键使用了一个函数调用。然后，使用这些变量来配置<code>config.h.in</code>中的占位符，输入并生成<code>config.h</code>。此配置使用<code>configure_file</code>命令完成。最后，<code>config.h</code>包含在<code>processor-info.cpp</code>中。编译后，它将把值打印到屏幕上。</p>
+<p><code>configure_file</code>命令的使用：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">configure_file</span>(&lt;input&gt; &lt;output&gt;</span><br><span class="line">               [COPYONLY] [ESCAPE_QUOTES] [@ONLY]</span><br><span class="line">               [NEWLINE_STYLE [UNIX|DOS|WIN32|LF|CRLF] ])</span><br></pre></td></tr></table></figure>
+<p>拷贝 input 文件到其它地方 output，并更改其中的内容。</p>
+<p>把 input 文件中<code>@VAR@</code> 或者 <code>$&#123;VAR&#125;</code> 引用的变量值替换成当前的变量值。</p>
+<p>@ONLY是啥意思？</p>
+<p>限制变量的替换，因为<code>configure_file</code>命令会把输入文件中@或<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>类型的变量都会替换成其变量值。</mtext><mi mathvariant="normal">@</mi><mi>O</mi><mi>N</mi><mi>L</mi><mi>Y</mi><mtext>的意思是只替换</mtext><mi mathvariant="normal">@</mi><mtext>类型的变量，而不替换</mtext></mrow><annotation encoding="application/x-tex">类型的变量都会替换成其变量值。@ONLY的意思是只替换@类型的变量，而不替换</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord cjk_fallback">类型的变量都会替换成其变量值。</span><span class="mord">@</span><span class="mord mathnormal" style="margin-right:0.10903em;">ON</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="mord cjk_fallback">的意思是只替换</span><span class="mord">@</span><span class="mord cjk_fallback">类型的变量，而不替换</span></span></span></span>类型的变量。这在配置 ${VAR} 语法的脚本时是非常有用的。</p>
+<p><code>configure.h.in</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NUMBER_OF_LOGICAL_CORES @_NUMBER_OF_LOGICAL_CORES@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NUMBER_OF_PHYSICAL_CORES @_NUMBER_OF_PHYSICAL_CORES@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TOTAL_VIRTUAL_MEMORY @_TOTAL_VIRTUAL_MEMORY@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> AVAILABLE_VIRTUAL_MEMORY @_AVAILABLE_VIRTUAL_MEMORY@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TOTAL_PHYSICAL_MEMORY @_TOTAL_PHYSICAL_MEMORY@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> AVAILABLE_PHYSICAL_MEMORY @_AVAILABLE_PHYSICAL_MEMORY@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IS_64BIT @_IS_64BIT@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_FPU @_HAS_FPU@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_MMX @_HAS_MMX@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_MMX_PLUS @_HAS_MMX_PLUS@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_SSE @_HAS_SSE@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_SSE2 @_HAS_SSE2@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_SSE_FP @_HAS_SSE_FP@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_SSE_MMX @_HAS_SSE_MMX@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_AMD_3DNOW @_HAS_AMD_3DNOW@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_AMD_3DNOW_PLUS @_HAS_AMD_3DNOW_PLUS@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HAS_IA64 @_HAS_IA64@</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OS_NAME <span class="string">&quot;@_OS_NAME@&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OS_RELEASE <span class="string">&quot;@_OS_RELEASE@&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OS_VERSION <span class="string">&quot;@_OS_VERSION@&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OS_PLATFORM <span class="string">&quot;@_OS_PLATFORM@&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p><code>processor-info.cpp</code>只是把这些宏定义打印了一下。</p>
+<p><strong>Tips：</strong> 关于<code>PROJECT_BINARY_DIR</code>和<code>PROJECT_SOURCE_DIR</code>的区别。</p>
+<p>如果目录结构是这样：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── build</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── config.h.in</span><br><span class="line">└── processor-info.cpp</span><br></pre></td></tr></table></figure>
+<p>也就是把cmake编译生成的文件放在build文件夹中</p>
+<p>那么<code>PROJECT_BINARY_DIR</code>的值为<code>/home/lushuangning/CodeHub/CMake/MyCmakeExample/chapter2/2.5/build</code></p>
+<p><code>PROJECT_SOURCE_DIR</code>的值为<code>/home/lushuangning/CodeHub/CMake/MyCmakeExample/chapter2/2.5/</code></p>
+<p>如果让cmake编译生成的文件就生成在当前目录下(<code>cmake .</code>)，那么<code>PROJECT_BINARY_DIR</code>的值为<code>/home/lushuangning/CodeHub/CMake/MyCmakeExample/chapter2/2.5</code></p>
+<h2 id="chapter-2-6-为-Eigen-库使能向量化">chapter 2.6 为 Eigen 库使能向量化</h2>
+<p>暂未用到，如有需要后期补充。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/f8e49d55/">https://lushuangning.github.io/posts/f8e49d55/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lushuangning.github.io" target="_blank">路双宁的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CMake/">CMake</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/5bc7b055/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CMake菜谱（二）</div></div></a></div><div class="next-post pull-right"><a href="/posts/dc13154/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">左神算法基础班第二周</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

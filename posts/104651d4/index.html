@@ -1,0 +1,426 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>使用Python的Pandas库实现基于用户的协同过滤推荐算法 | 路双宁的博客</title><meta name="keywords" content="Python,推荐系统"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="参考： 【笔记3】用pandas实现矩阵数据格式的推荐算法 (基于用户的协同)    环境 版本     Python 3.5.5   Pandas 0.22.0    123456789101112131415import pandas as pddf &#x3D; Nonedef dataSet2Matrix(filename):    &quot;&quot;&quot;       导入训练数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Python的Pandas库实现基于用户的协同过滤推荐算法">
+<meta property="og:url" content="https://lushuangning.github.io/posts/104651d4/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="参考： 【笔记3】用pandas实现矩阵数据格式的推荐算法 (基于用户的协同)    环境 版本     Python 3.5.5   Pandas 0.22.0    123456789101112131415import pandas as pddf &#x3D; Nonedef dataSet2Matrix(filename):    &quot;&quot;&quot;       导入训练数据">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-04-15T10:19:50.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.175Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="推荐系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/104651d4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">参考：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%90%E7%AC%94%E8%AE%B03%E3%80%91%E7%94%A8pandas%E5%AE%9E%E7%8E%B0%E7%9F%A9%E9%98%B5%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95-%E5%9F%BA%E4%BA%8E%E7%94%A8%E6%88%B7%E7%9A%84%E5%8D%8F%E5%90%8C"><span class="toc-number">1.1.</span> <span class="toc-text">【笔记3】用pandas实现矩阵数据格式的推荐算法 (基于用户的协同)</span></a></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">使用Python的Pandas库实现基于用户的协同过滤推荐算法</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-04-15T10:19:50.000Z" title="发表于 2018-04-15 18:19:50">2018-04-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.175Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h3 id="参考：">参考：</h3>
+<h4 id="【笔记3】用pandas实现矩阵数据格式的推荐算法-基于用户的协同"><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.cnblogs.com/hhh5460/p/6121839.html">【笔记3】用pandas实现矩阵数据格式的推荐算法 (基于用户的协同)</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">环境</th>
+<th style="text-align:center">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Python</td>
+<td style="text-align:center">3.5.5</td>
+</tr>
+<tr>
+<td style="text-align:center">Pandas</td>
+<td style="text-align:center">0.22.0</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dataSet2Matrix</span>(<span class="params">filename</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">       导入训练数据</span></span><br><span class="line"><span class="string">       :param filename: 数据文件路径</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    table_name = [<span class="string">&#x27;userId&#x27;</span>, <span class="string">&#x27;movieId&#x27;</span>, <span class="string">&#x27;rating&#x27;</span>, <span class="string">&#x27;timestamp&#x27;</span>]</span><br><span class="line">    <span class="comment"># 按照&#x27;,&#x27;分割读取csv文件</span></span><br><span class="line">    ratings = pd.read_table(filename, sep=<span class="string">&#x27;,&#x27;</span>, header=<span class="number">0</span>, names=table_name)</span><br><span class="line">    <span class="keyword">global</span> df</span><br><span class="line">    <span class="comment"># 转换成User-Item矩阵</span></span><br><span class="line">    df = ratings.pivot(index=<span class="string">&#x27;userId&#x27;</span>, columns=<span class="string">&#x27;movieId&#x27;</span>, values=<span class="string">&#x27;rating&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>你可以使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://grouplens.org/datasets/movielens/">MovieLens</a>提供的数据集，不过，为了便于阐述，这里使用一个很小的测试数据集。<br>
+导入test.csv这个测试数据，看dataSet2Matrix函数是否执行成功。你可以在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://lushuangning.oss-cn-beijing.aliyuncs.com/file/20200305.csv">这里</a>下载这个测试数据。<br>
+数据的格式为：用户ID,电影ID,评分（5分制）,时间戳</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataSet2Matrix(<span class="string">&#x27;test.csv&#x27;</span>)</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">userId/movieId</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3.5</td>
+<td style="text-align:center">2.0</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">4.5</td>
+<td style="text-align:center">5.0</td>
+<td style="text-align:center">1.5</td>
+<td style="text-align:center">2.5</td>
+<td style="text-align:center">2.0</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2.0</td>
+<td style="text-align:center">3.5</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">2.0</td>
+<td style="text-align:center">3.5</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">3.0</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">5.0</td>
+<td style="text-align:center">1.0</td>
+<td style="text-align:center">1.0</td>
+<td style="text-align:center">3.0</td>
+<td style="text-align:center">5.0</td>
+<td style="text-align:center">1.0</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">NaN</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">3.0</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">4.5</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">3.0</td>
+<td style="text-align:center">4.5</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">2.0</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">1.0</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">1.0</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">4.5</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">5.0</td>
+<td style="text-align:center">5.0</td>
+<td style="text-align:center">4.5</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">4.0</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">5.0</td>
+<td style="text-align:center">2.0</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">3.0</td>
+<td style="text-align:center">5.0</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">5.0</td>
+<td style="text-align:center">NaN</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center">3.0</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">NaN</td>
+<td style="text-align:center">5.0</td>
+<td style="text-align:center">4.0</td>
+<td style="text-align:center">2.5</td>
+<td style="text-align:center">3.0</td>
+<td style="text-align:center">4.0</td>
+</tr>
+</tbody>
+</table>
+<p>可以看到，成功将数据集转化成了UI矩阵。</p>
+<p>之后，我们需要构建共同评分矩阵。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建共同的评分向量</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">build_xy</span>(<span class="params">user_id1, user_id2</span>):</span><br><span class="line">    bool_array = df.loc[user_id1].notnull() &amp; df.loc[user_id2].notnull()</span><br><span class="line">    <span class="keyword">return</span> df.loc[user_id1, bool_array], df.loc[user_id2, bool_array]</span><br></pre></td></tr></table></figure>
+<p>我们测试下userId分别为1和2的两个用户的共同评分矩阵：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(build_xy(<span class="number">1</span>,<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(movieId</span><br><span class="line">1    3.5</span><br><span class="line">2    2.0</span><br><span class="line">5    5.0</span><br><span class="line">6    1.5</span><br><span class="line">8    2.0</span><br><span class="line">Name: 1, dtype: float64, movieId</span><br><span class="line">1    2.0</span><br><span class="line">2    3.5</span><br><span class="line">5    2.0</span><br><span class="line">6    3.5</span><br><span class="line">8    3.0</span><br><span class="line">Name: 2, dtype: float64)</span><br></pre></td></tr></table></figure>
+<p>对比UI矩阵，1和2的共同评分向量是正确的，即用户1和用户2都曾经对电影1、2、5、6、8做出过评价。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 欧几里德距离</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">euclidean</span>(<span class="params">user_id1, user_id2</span>):</span><br><span class="line">    x, y = build_xy(user_id1, user_id2)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        value = <span class="built_in">sum</span>((x - y)**<span class="number">2</span>)**<span class="number">0.5</span></span><br><span class="line">    <span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">        value = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 余弦相似度</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cosine</span>(<span class="params">user_id1, user_id2</span>):</span><br><span class="line">    x, y = build_xy(user_id1, user_id2)</span><br><span class="line">    <span class="comment"># 分母</span></span><br><span class="line">    denominator = (<span class="built_in">sum</span>(x*x)*<span class="built_in">sum</span>(y*y))**<span class="number">0.5</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        value = <span class="built_in">sum</span>(x*y)/denominator</span><br><span class="line">    <span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">        value = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 皮尔逊相关系数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pearson</span>(<span class="params">user_id1, user_id2</span>):</span><br><span class="line">    x, y = build_xy(user_id1, user_id2)</span><br><span class="line">    mean1, mean2 = x.mean(), y.mean()</span><br><span class="line">    <span class="comment"># 分母</span></span><br><span class="line">    denominator = (<span class="built_in">sum</span>((x-mean1)**<span class="number">2</span>)*<span class="built_in">sum</span>((y-mean2)**<span class="number">2</span>))**<span class="number">0.5</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        value = <span class="built_in">sum</span>((x - mean1) * (y - mean2)) / denominator</span><br><span class="line">    <span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">        value = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> value</span><br></pre></td></tr></table></figure>
+<p>我们来看一下用户1和用户2的皮尔逊相关系数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(pearson(<span class="number">1</span>,<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-0.9040534990682686</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">metric_funcs = &#123;</span><br><span class="line">    <span class="string">&#x27;euclidean&#x27;</span>: euclidean,</span><br><span class="line">    <span class="string">&#x27;pearson&#x27;</span>: pearson,</span><br><span class="line">    <span class="string">&#x27;cosine&#x27;</span>: cosine</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算最近的邻居</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">computeNearestNeighbor</span>(<span class="params">user_id, metric=<span class="string">&#x27;pearson&#x27;</span>, k=<span class="number">3</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    metric: 度量函数</span></span><br><span class="line"><span class="string">    k:      返回k个邻居</span></span><br><span class="line"><span class="string">    返回：pd.Series，其中index是邻居名称，values是距离</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> metric <span class="keyword">in</span> [<span class="string">&#x27;manhattan&#x27;</span>, <span class="string">&#x27;euclidean&#x27;</span>]:</span><br><span class="line">        <span class="keyword">return</span> df.drop(user_id).index.to_series().apply(metric_funcs[metric], args=(user_id,)).nsmallest(k)</span><br><span class="line">    <span class="keyword">elif</span> metric <span class="keyword">in</span> [<span class="string">&#x27;pearson&#x27;</span>, <span class="string">&#x27;cosine&#x27;</span>]:</span><br><span class="line">        <span class="keyword">return</span> df.drop(user_id).index.to_series().apply(metric_funcs[metric], args=(user_id,)).nlargest(k)</span><br></pre></td></tr></table></figure>
+<p>我们使用皮尔逊相似度计算一下与用户3兴趣最相近的3个用户：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(computeNearestNeighbor(<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">userId</span><br><span class="line">1    0.819782</span><br><span class="line">6    0.801784</span><br><span class="line">7    0.766965</span><br><span class="line">Name: userId, dtype: float64</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 向给定用户推荐（返回：pd.Series）</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">recommend</span>(<span class="params">user_id</span>):</span><br><span class="line">    <span class="comment"># 找到距离最近的用户id</span></span><br><span class="line">    nearest_user_id = computeNearestNeighbor(user_id, metric=<span class="string">&#x27;cosine&#x27;</span>).index[<span class="number">0</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;最近邻用户id：&#x27;</span>, nearest_user_id)</span><br><span class="line">    <span class="comment"># 找出邻居评价过、但自己未曾评价的乐队（或商品）</span></span><br><span class="line">    <span class="comment"># 结果：index是商品名称，values是评分</span></span><br><span class="line">    <span class="keyword">return</span> df.loc[nearest_user_id, df.loc[user_id].isnull() &amp; df.loc[nearest_user_id].notnull()].sort_values()</span><br></pre></td></tr></table></figure>
+<p>尝试对用户3做出推荐：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">recommend(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">最近邻用户id： 1</span><br><span class="line"></span><br><span class="line">movieId</span><br><span class="line">8    2.0</span><br><span class="line">7    2.5</span><br><span class="line">Name: 1, dtype: float64</span><br></pre></td></tr></table></figure>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/104651d4/">https://lushuangning.github.io/posts/104651d4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/">推荐系统</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/3b04db31/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">2018年4月份小问题总结</div></div></a></div><div class="next-post pull-right"><a href="/posts/49d920a5/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hadoop2.7.5伪分布式配置及遇到的问题总结</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>$(function () {
+  $('span.katex-display').wrap('<div class="katex-wrap"></div>')
+})</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

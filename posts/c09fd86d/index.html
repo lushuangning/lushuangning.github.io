@@ -1,0 +1,457 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计网复习记录 | 路双宁的博客</title><meta name="keywords" content="计算机网络"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="网络体系结构 OSI7层模型和计算机网络5层模型 &#x2F;&#x2F;TODO 为什么有了7层模型还需要5层模型？ &#x2F;&#x2F;TODO 链路层 流量控制 链路层的流量控制是点对点的，传输层的流量控制是端到端的。 数据链路层流量控制手段：接收端收不下就不回复。 传输层流量控制手段：接收端给发送端发送一个窗口公告。 停等协议 每发送完一个分组就停止发送，等待对方的确认，在收到确认后再发送下一个帧。这是一种特殊的滑动窗口协议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网复习记录">
+<meta property="og:url" content="https://lushuangning.github.io/posts/c09fd86d/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="网络体系结构 OSI7层模型和计算机网络5层模型 &#x2F;&#x2F;TODO 为什么有了7层模型还需要5层模型？ &#x2F;&#x2F;TODO 链路层 流量控制 链路层的流量控制是点对点的，传输层的流量控制是端到端的。 数据链路层流量控制手段：接收端收不下就不回复。 传输层流量控制手段：接收端给发送端发送一个窗口公告。 停等协议 每发送完一个分组就停止发送，等待对方的确认，在收到确认后再发送下一个帧。这是一种特殊的滑动窗口协议">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-03-11T04:19:37.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.191Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/c09fd86d/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">网络体系结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">链路层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">2.1.</span> <span class="toc-text">流量控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E7%AD%89%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.1.1.</span> <span class="toc-text">停等协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.1.2.</span> <span class="toc-text">滑动窗口协议</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ip%E5%9C%B0%E5%9D%80%E5%88%86%E7%B1%BB%E5%8F%8A%E7%89%B9%E6%AE%8A%E5%9C%B0%E5%9D%80"><span class="toc-number">3.1.</span> <span class="toc-text">ip地址分类及特殊地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BAA%E5%92%8CB%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B"><span class="toc-number">3.2.</span> <span class="toc-text">计算机A和B通信过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP%E6%95%B0%E6%8D%AE%E6%8A%A5"><span class="toc-number">3.3.</span> <span class="toc-text">IP数据报</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TTL"><span class="toc-number">3.3.1.</span> <span class="toc-text">TTL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.3.2.</span> <span class="toc-text">协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E9%83%A8%E6%A0%A1%E9%AA%8C%E5%92%8C"><span class="toc-number">3.3.3.</span> <span class="toc-text">首部校验和</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">3.4.</span> <span class="toc-text">路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1"><span class="toc-number">3.4.1.</span> <span class="toc-text">静态路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1"><span class="toc-number">3.4.2.</span> <span class="toc-text">动态路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ICMP%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.5.</span> <span class="toc-text">ICMP协议</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">传输层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP"><span class="toc-number">4.1.</span> <span class="toc-text">UDP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.1.</span> <span class="toc-text">报文格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%A1%E9%AA%8C%E8%BF%87%E7%A8%8B"><span class="toc-number">4.1.2.</span> <span class="toc-text">校验过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP"><span class="toc-number">4.2.</span> <span class="toc-text">TCP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F-2"><span class="toc-number">4.2.1.</span> <span class="toc-text">报文格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="toc-number">4.2.2.</span> <span class="toc-text">三次握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="toc-number">4.2.3.</span> <span class="toc-text">四次挥手</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="toc-number">4.3.</span> <span class="toc-text">可靠传输</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E4%BC%A0"><span class="toc-number">4.3.1.</span> <span class="toc-text">重传</span></a></li></ol></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">计网复习记录</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-11T04:19:37.000Z" title="发表于 2022-03-11 12:19:37">2022-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.191Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h1>网络体系结构</h1>
+<p>OSI7层模型和计算机网络5层模型</p>
+<p>//TODO</p>
+<p>为什么有了7层模型还需要5层模型？</p>
+<p>//TODO</p>
+<h1>链路层</h1>
+<h2 id="流量控制">流量控制</h2>
+<p>链路层的流量控制是<strong>点对点</strong>的，传输层的流量控制是<strong>端到端</strong>的。</p>
+<p>数据链路层流量控制手段：接收端收不下就不回复。</p>
+<p>传输层流量控制手段：接收端给发送端发送一个窗口公告。</p>
+<h3 id="停等协议">停等协议</h3>
+<p>每发送完一个分组就停止发送，等待对方的确认，在收到确认后再发送下一个帧。这是一种特殊的滑动窗口协议（窗口大小为1）。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203101.png" alt=""></p>
+<h3 id="滑动窗口协议">滑动窗口协议</h3>
+<ul>
+<li>
+<p>后退N帧协议（GBN）</p>
+</li>
+<li>
+<p>选择重传协议（SR）</p>
+</li>
+</ul>
+<h1>网络层</h1>
+<p>ip地址决定最终要到哪台计算机，mac地址决定下一跳给谁</p>
+<h2 id="ip地址分类及特殊地址">ip地址分类及特殊地址</h2>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203011.png" alt=""></p>
+<h2 id="计算机A和B通信过程">计算机A和B通信过程</h2>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203012.png" alt=""></p>
+<h2 id="IP数据报">IP数据报</h2>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203013.png" alt=""></p>
+<p>详情见王道P144页</p>
+<h3 id="TTL">TTL</h3>
+<p>TTL用以确保ip数据报分组不会永远在网络中循环。路由器在转发分组之前，先把TTL减1，若TTL被减为0，则将该分组丢弃。</p>
+<p>可以在<code>ping</code>一个地址的时候，通过<code>-i</code>参数指定TTL的大小，以此来追踪该数据报都经过了哪些网关</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203014.png" alt=""></p>
+<h3 id="协议">协议</h3>
+<p>数值1表示ICMP，6表示TCP，8表示EGP，17表示UDP，41表示IPV6</p>
+<h3 id="首部校验和">首部校验和</h3>
+<p>只校验分组的首部，不校验数据部分</p>
+<h2 id="路由">路由</h2>
+<p>沿途的路由器必须知道目标网络下一跳给哪个接口，也必须知道源网络下一跳给哪个接口</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203021.png" alt=""></p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203022.png" alt=""></p>
+<h3 id="静态路由">静态路由</h3>
+<p>由管理员手工配置路由表。</p>
+<h3 id="动态路由">动态路由</h3>
+<p><strong>RIP协议</strong></p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203023.png" alt=""></p>
+<ul>
+<li>
+<p>每个路由器仅和相邻的路由器交换信息</p>
+</li>
+<li>
+<p>路由器交换的信息是自己的路由表</p>
+</li>
+<li>
+<p>每隔30秒交换一次信息。若超过180秒没收到邻居路由器的信息，则判断邻居宕机，更新自己的路由表。</p>
+</li>
+</ul>
+<p>通过<strong>广播UDP报文</strong>来交换路由信息</p>
+<p>练习：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203024.png" alt=""></p>
+<p>特点：好消息传得块，坏消息传得慢（慢收敛）</p>
+<p><strong>OSPF协议</strong></p>
+<p>开放最短路径优先OSPF协议，最主要的特征是使用了分布式的链路状态协议。<strong>不使用UDP或TCP，直接采用IP。</strong></p>
+<ul>
+<li>
+<p>使用洪泛法向自治系统内所有路由器发送信息，即路由器通过输出端口向所有相邻的路由器发送信息，而每一个相邻路由器又再次将此信息发送往所有的相邻路由器。</p>
+</li>
+<li>
+<p>发送的信息是与本路由器<strong>相邻的所有路由器的链路状态</strong>（本路由器和哪些路由器相邻，以及该链路的度量/代价–费用、距离、时延、带宽等）。</p>
+</li>
+<li>
+<p>只有当链路状态发生变化时，路由器才向所有路由器洪泛发送信息</p>
+</li>
+</ul>
+<p>最后，所有路由器都能建立一个链路状态数据库，即<strong>全网拓扑图</strong>。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203025.png" alt=""></p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203026.png" alt=""></p>
+<p><strong>BGP协议</strong></p>
+<ul>
+<li>
+<p>与其他AS的邻站BGP发言人交换信息（BGP发言人一般都是BGP边界路由器）</p>
+</li>
+<li>
+<p>交换的是网络的可达性信息，即要到达某个网络所要经过的一系列AS</p>
+</li>
+<li>
+<p>发生变化时更新有变化的部分</p>
+</li>
+</ul>
+<p>BGP发言人与其他BGP发言人交换路由信息的时候，要<strong>先建立TCP连接</strong></p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203031.png" alt=""></p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203032.png" alt=""></p>
+<h2 id="ICMP协议">ICMP协议</h2>
+<p>网际报文控制协议允许主机或路由器报告差错和异常情况，报文类型有2中：ICMP差错报告报文和IMCP询问报文。ICMP报文作为IP数据报的数据部分，加上数据报的首部，组成IP数据报发送出去。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203015.png" alt=""></p>
+<p>ICMP差错报告报文共有5种类型：</p>
+<ul>
+<li>
+<p>终点不可达（某个路由器不知道该怎么走导致报文无法交付）</p>
+</li>
+<li>
+<p>源点抑制（拥塞丢数据）</p>
+</li>
+<li>
+<p>时间超过（TTL=0）</p>
+</li>
+<li>
+<p>参数问题（首部字段有问题）</p>
+</li>
+<li>
+<p>改变路由（值得更好的路由）</p>
+</li>
+</ul>
+<p>ICMP询问报文有4中类型：</p>
+<ul>
+<li>
+<p>回送请求和回答报文</p>
+</li>
+<li>
+<p>时间戳请求和回答报文</p>
+</li>
+<li>
+<p>掩码地址请求和回答报文</p>
+</li>
+<li>
+<p>路由器询问和通告报文</p>
+</li>
+</ul>
+<p>命令<code>ping</code>和<code>pathping</code>就是用的ICMP协议。</p>
+<h1>传输层</h1>
+<p>功能：</p>
+<ol>
+<li>
+<p>提供进程与进程之间的逻辑通信</p>
+</li>
+<li>
+<p>复用和分用。</p>
+</li>
+<li>
+<p>对收到的报文进行差错检测（首部和数据部分）</p>
+</li>
+<li>
+<p>提供两种不同的传输协议，面向连接的TCP和无连接的TCP</p>
+</li>
+</ol>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203033.png" alt=""></p>
+<p>根据IP可以找到一台主机，根据端口可以找到主机上的一个进程，因此套接字Socket = (主机IP地址，端口号)唯一标识了网络中的一台主机和它上面的一个进程。</p>
+<h2 id="UDP">UDP</h2>
+<h3 id="报文格式">报文格式</h3>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203041.png" alt=""></p>
+<h3 id="校验过程">校验过程</h3>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203042.png" alt=""></p>
+<h2 id="TCP">TCP</h2>
+<p>协议特点</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203043.png" alt=""></p>
+<h3 id="报文格式-2">报文格式</h3>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203044.png" alt=""></p>
+<p>序号(seq)：所发送数据的第一个字节的序号</p>
+<p>确认号(ack)：期望收到对方下一个报文段的第一个数据字节的序号。确认号为N，则表示到序号N-1为止的所有数据都已正确收到。</p>
+<p>数据偏移：TCP报文段的首部长度，以4B为单位。</p>
+<p>6个控制位：</p>
+<ul>
+<li><strong>URG=1时</strong>，高优先级数据，应尽快发送，配合紧急指针使用</li>
+<li><strong>ACK=1时</strong>，确认号有效。连接建立后所有传送的报文段都必须把ACK置1</li>
+<li>PSH=1时，接收方尽快交付待接收的应用进程，不用再等到缓存填满再向上交付。</li>
+<li>RST=1时，表明TCP连接中出现严重差错，必须释放连接，然后重新建立传输连接</li>
+<li><strong>SYN=1时</strong>，表明是一个连接请求/连接请求的确认（三次握手的前两次）</li>
+<li>FIN=1时，表明此报文段发送方数据已发完，要求释放连接</li>
+</ul>
+<p>窗口：允许对方发送的数据量，常配合确认号使用。</p>
+<p>紧急指针：URG=1时有意义，指出报文段中紧急数据的字节数。</p>
+<h3 id="三次握手">三次握手</h3>
+<p>为什么要三次？</p>
+<p>这个问题的本质是, 信道不可靠, 但是通信双发需要就某个问题达成一致. 而要解决这个问题, 无论你在消息中包含什么信息, 三次通信是理论上的最小值. 所以三次握手不是TCP本身的要求, 而是为了满足&quot;在不可靠信道上可靠地传输信息&quot;这一需求所导致的。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203045.png" alt=""></p>
+<h3 id="四次挥手">四次挥手</h3>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203046.png" alt=""></p>
+<h2 id="可靠传输">可靠传输</h2>
+<p>TCP默认使用累计确认</p>
+<h3 id="重传">重传</h3>
+<p>TCP的发送方在规定的时间内没有收到确认就要重传已发送的报文段（超时重传），采用自适应算法，动态改变重传时间RTTs（加权平均往返时间）</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202203091.png" alt=""></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/c09fd86d/">https://lushuangning.github.io/posts/c09fd86d/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/f20345b1/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Ubuntu安装完后的个人设置</div></div></a></div><div class="next-post pull-right"><a href="/posts/40df9206/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">左神算法基础班第三周</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

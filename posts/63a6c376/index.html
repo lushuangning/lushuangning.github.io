@@ -1,0 +1,460 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>自然语言处理：从基础到RNN和LSTM | 路双宁的博客</title><meta name="keywords" content="翻译,NLP,博客"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="发起：唐里     校对：敬爱的勇哥     审核：付腾           参与翻译（2）人：路双宁、黄闯           原文：Natural Language Processing: From Basics to using RNN and LSTM      机器机器学习领域最令人着迷的进展之一，是培养机器理解人类交流的能力的进步。机器学习的这一分支被称为自然语言处理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自然语言处理：从基础到RNN和LSTM">
+<meta property="og:url" content="https://lushuangning.github.io/posts/63a6c376/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="发起：唐里     校对：敬爱的勇哥     审核：付腾           参与翻译（2）人：路双宁、黄闯           原文：Natural Language Processing: From Basics to using RNN and LSTM      机器机器学习领域最令人着迷的进展之一，是培养机器理解人类交流的能力的进步。机器学习的这一分支被称为自然语言处理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-07-06T09:27:33.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.190Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/63a6c376/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">语言是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%AF%AD%E8%A8%80%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">计算机如何理解语言？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">什么是自然语言处理？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.</span> <span class="toc-text">基本转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N-grams%EF%BC%88N%E5%85%83%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">N-grams（N元模型）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text">转换方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TF-IDF"><span class="toc-number">6.1.</span> <span class="toc-text">TF-IDF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81"><span class="toc-number">6.2.</span> <span class="toc-text">独热编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%8D%E5%B5%8C%E5%85%A5"><span class="toc-number">6.3.</span> <span class="toc-text">词嵌入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">表示方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%8D%E8%A2%8B"><span class="toc-number">7.1.</span> <span class="toc-text">词袋</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5"><span class="toc-number">7.2.</span> <span class="toc-text">嵌入矩阵</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88RNN%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">循环神经网络（RNN）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RNN%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">9.</span> <span class="toc-text">RNN的局限性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E6%8E%A7%E5%BE%AA%E7%8E%AF%E5%8D%95%E5%85%83%EF%BC%88GRU%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">内控循环单元（GRU）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LSTM"><span class="toc-number">11.</span> <span class="toc-text">LSTM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%90%91RNN"><span class="toc-number">12.</span> <span class="toc-text">双向RNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">13.</span> <span class="toc-text">参考</span></a></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">自然语言处理：从基础到RNN和LSTM</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-07-06T09:27:33.000Z" title="发表于 2019-07-06 17:27:33">2019-07-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.190Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><table align="center">
+  <tr style="text-align:left">
+    <th>发起：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://ai.yanxishe.com/page/center/myPage/5144503">唐里</a></th>
+    <th>校对：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://ai.yanxishe.com/page/center/myPage/5145728">敬爱的勇哥</a></th>
+    <th>审核：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://ai.yanxishe.com/page/center/myPage/5023541">付腾</a></th>
+  </tr>
+  <tr>
+    <td colspan="3">参与翻译（2）人：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://ai.yanxishe.com/page/center/myPage/5133126">路双宁、</a><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ai.yanxishe.com/page/center/myPage/5097949">黄闯</a></td>
+  </tr>
+  <tr>
+    <td colspan="3">原文：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://towardsdatascience.com/natural-language-processing-from-basics-to-using-rnn-and-lstm-ef6779e4ae66">Natural Language Processing: From Basics to using RNN and LSTM</a></td>
+  </tr>
+</table>
+<hr>
+<p>机器机器学习领域最令人着迷的进展之一，是培养机器理解人类交流的能力的进步。机器学习的这一分支被称为自然语言处理。</p>
+<p>本文尝试解释自然语言处理的基础知识，以及随着深度学习和神经网络的发展，自然语言处理所取得的快速进展。</p>
+<p>在我们深入研究之前，有必要了解一些基础知识。</p>
+<h3 id="语言是什么？">语言是什么？</h3>
+<p>一种语言，基本上是一个由人类社会共享的固定的词汇表，用来表达和交流他们的思想。</p>
+<p>这个词汇表作为他们成长过程的一部分被世代相传，并且大部分保持不变，每年会增加很少的部分作为补充。</p>
+<p>诸如词典之类的精细资源得到了维护，以便一个人遇到一个新词时，他或她可以通过参考词典来了解其含义。一旦人们接触到这个词，它就会被添加到他或她自己的词汇表中，可以用于进一步的交流。</p>
+<span id="more"></span>
+<h3 id="计算机如何理解语言？">计算机如何理解语言？</h3>
+<p>计算机是在数学规则下工作的机器。它对人类可以轻松做到的事缺乏复杂的解释和理解，但它能在几秒内执行完复杂的计算。</p>
+<blockquote>
+<p>计算机要处理任何概念，都必须有一种方法以数学模型的形式表达这些概念。</p>
+</blockquote>
+<p>这种约束极大地限制了计算机可以使用的自然语言的范围和领域。目前，机器在执行分类和翻译的任务方面非常成功。</p>
+<p>分类基本上是将一段文本分类为一个类别，而翻译则是将这段文本转换成任何其他语言。</p>
+<h3 id="什么是自然语言处理？">什么是自然语言处理？</h3>
+<blockquote>
+<p>自然语言处理，简称为NLP，被广泛地定义为通过软件对自然语言(如语音和文本)的自动操作。</p>
+</blockquote>
+<p>自然语言处理的研究已经有50多年的历史了，并且随着计算机的兴起而从语言学领域发展起来。</p>
+<h3 id="基本转换">基本转换</h3>
+<p>正如前文所述，让一台机器理解自然语言（人类使用的语言），需要将语言转换成某种可以建模的数学框架。下面提到的是帮助我们实现这一目标的一些最常用的技术。</p>
+<p>分词是将文本分解成单词的过程。分词可以在任何字符上发生，但最常见的分词方法是在空格上进行切分。</p>
+<p>词干提取是一种截断词尾以获得基本单词的粗糙方法，通常包括去掉派生词缀。派生词是指一个词由另一个词形成(派生)的词。派生词通常与原始词属于不同的词类。最常见算法是Porter算法。</p>
+<p>词形还原对词进行词汇和形态分析，通常只是为了消除词尾变化。词尾变化是一组字母加在单词的末尾以改变其含义。一些词尾变化是单词复数加s，如bat，bats。</p>
+<blockquote>
+<p>由于词干提取是基于一组规则产生的，词干提取返回的词根可能并不总是英语中的一个单词。另一方面，词形还原适当地减少了词尾变化，保证了词根属于英语。</p>
+</blockquote>
+<h3 id="N-grams（N元模型）">N-grams（N元模型）</h3>
+<p>N-gram是指将相邻的单词组合在一起来表示目的的过程，其中N表示要组合在一起的单词数量。</p>
+<p>例如，考虑一个句子，“自然语言处理对计算机科学至关重要。”</p>
+<p>1-gram或unigram模型将句子切分为一个单词组合，因此输出将是“自然、语言、处理、对、计算机、科学、至关重要”。</p>
+<p>bigram模型将其切分为两个单词的组合，输出将是“自然语言、语言处理、处理对、对计算机、计算机科学、科学至关重要”</p>
+<p>类似地，trigram模型将其分解为“自然语言处理、语言处理对、处理对计算机、对计算机科学、计算机科学至关重要”，而n-gram模型将一个句子切分为n个单词的组合。</p>
+<blockquote>
+<p>将一门自然语言分解成n-gram是保持句子中出现的单词数量的关键，而句子是自然语言处理中使用的传统数学过程的主干。</p>
+</blockquote>
+<p>（参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/songbinxu/article/details/80209197">自然语言处理NLP中的N-gram模型</a>以详细了解N-gram模型及其原理，译者注）</p>
+<h3 id="转换方法">转换方法</h3>
+<p>在词袋模型表示中实现这一点的最常见方法之一是tf-idf。</p>
+<h4 id="TF-IDF">TF-IDF</h4>
+<blockquote>
+<p>TF-IDF(term frequency–inverse document frequency，词频-逆向文件频率，译者注)是一种对词汇进行评分的方式，按照它对句子含义的影响的比例为单词提供足够的权重。得分是两个独立评分，词频(tf)和逆文件频率(idf)的乘积。</p>
+</blockquote>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907171.png" alt=""></p>
+<p>词频(TF)：词频表示词语出现在一篇文章中的频率。</p>
+<p>逆文件频率(IDF)：衡量词语提供的信息量，即它在所有文档中是常见的还是罕见的。它由<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><mfrac><mi>N</mi><mi>d</mi></mfrac><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(\frac{N}{d})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2173em;vertical-align:-0.345em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8723em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span></span></span>计算得出。N是文档总数，d是包含某个词语的文档数。</p>
+<h4 id="独热编码">独热编码</h4>
+<blockquote>
+<p>独热编码是另一种以数字形式表示词语的方法。词语向量的长度等于词汇表的长度，每一个句子用一个矩阵来表示，行数等于词汇表的长度，列数等于句子中词语的数量。词汇表中的词语出现在句子中时，词语向量对应位置的值为1，否则为0。</p>
+</blockquote>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907172.png?imageMogr2/thumbnail/!75p/" alt=""></p>
+<h4 id="词嵌入">词嵌入</h4>
+<blockquote>
+<p>词嵌入是一组语言模型和特征学习技术共有的统称，词汇表中的词语或短语被映射到由实数构成的向量里。这种技术主要用于神经网络中。</p>
+</blockquote>
+<p>（参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/qq_41664845/article/details/84313419">什么是文本的词嵌入？</a>以了解更多，译者注）</p>
+<p>从概念上讲，它包含将一个词语从一个与词汇表长度相等的维度投射到较低的维度空间，其思想是相似的词语将被投射得更近。</p>
+<p>为了便于理解，我们可以将嵌入看作是将每个单词投射到一个特征空间，如下图所示。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907291.png?imageMogr2/thumbnail/!85p/" alt=""></p>
+<center> 每个词被映射到一个特征空间里（性别，王室成员，年龄，食物等）</center>
+<blockquote>
+<p>然而，事实上这些维度并不那么清楚或便于理解。但由于算法是在维度的数学关系上训练的，因此这不会产生问题。从训练和预测的角度来看，维度所代表的内容对于神经网络来说是没有意义的。</p>
+</blockquote>
+<p>如果你有兴趣对线性代数有一个直观的理解，投影和变换是一些机器学习算法背后的核心数学原理，我将强烈鼓励他们访问3Blue1Brown的“线性代数的本质”。（b站搬运了相关视频，详情请看<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bilibili.com/video/av6731067">《线性代数的本质》</a>，译者注）</p>
+<h3 id="表示方法">表示方法</h3>
+<h4 id="词袋">词袋</h4>
+<p>要使算法获取文本数据之间的关系，需要用清晰的结构化表示。</p>
+<blockquote>
+<p>词袋是一种以表格格式表示数据的方法，其中列表示语料库的总词汇表，每一行表示一篇文本的统计结果。单元格（行和列的交集）表示该特定文本中的列所代表的单词数。<br>
+它有助于机器用易于理解的矩阵范式理解句子，从而使各种线性代数运算和其他算法能够应用到数据上，构建预测模型。</p>
+</blockquote>
+<p>下面是医学期刊文章样本的词袋模型示例</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907301.png" alt=""></p>
+<p>这种表示非常有效，并且负责为一些最常用的机器学习任务（如垃圾邮件检测，情感分类器等）生成模型。</p>
+<p>但是，这种表示方法有两个主要的缺点：</p>
+<ol>
+<li>
+<p>它忽视了文本的顺序/语法，从而失去了单词的上下文。</p>
+</li>
+<li>
+<p>这种表示方法生成的矩阵非常稀疏，并且更偏向于最常见的单词。试想，算法主要依赖于单词的数量，而在语言中，单词的重要性实际上与出现频率成反比。频率较高的词是更通用的词，如the，is，an，它们不会显着改变句子的含义。 因此，重要的是适当地衡量这些词，以反映它们对句子含义的影响。</p>
+</li>
+</ol>
+<h4 id="嵌入矩阵">嵌入矩阵</h4>
+<p>嵌入矩阵是表示词汇表中每个单词嵌入的一种方法。行表示单词嵌入空间的维数，列表示词汇表中出现的单词。</p>
+<blockquote>
+<p>为了将样本转换为其嵌入形式，将独热编码形式中的每个单词乘以嵌入矩阵，从而得到样本的词嵌入形式。</p>
+</blockquote>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907292.png?imageMogr2/thumbnail/!85p/" alt=""></p>
+<center> 嵌入矩阵</center>
+<p>需要记住的一件事是，独热编码仅指在词汇表中单词位置处具有值是1的n维向量，n是词汇表的长度。这些独热编码来自词汇表，而不是对一篇文本的统计。</p>
+<h3 id="循环神经网络（RNN）">循环神经网络（RNN）</h3>
+<p>就像它的名字一样，循环神经网络是神经网络非常重要的一种变体，被大量运用于自然语言处理。</p>
+<blockquote>
+<p>循环神经网络的的标准输入是一个词而不是一个完整的样本，这是概念上与标准神经网络的不同之处。这使得网络能够灵活地处理不同长度的句子，而标准神经网络由于其固定的结构无法做到这一点。它还提供了一个额外的优势，可以在文本的不同位置上共享学习到的特征，而这些特征在标准的神经网络中是无法获得的。</p>
+</blockquote>
+<p>RNN将句子中的每个单词都看作在t时刻发生的单独的输入，并使用t-1处的激活值作为t时刻输入之外的输入。下图显示了RNN架构的详细结构。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907311.jpeg?imageMogr2/thumbnail/!85p/" alt=""></p>
+<p>上述结构也被叫做多对多架构，其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>x</mi></msub><mo>=</mo><msub><mi>T</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">T_x = T_ y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>，也就是输入的数量等于输出的数量。这种结构是非常有用的在序列模型中。</p>
+<p>除了上面提到的架构外，还有三种常用的RNN架构。</p>
+<ol>
+<li>
+<p>多对一的RNN：多对一的架构指的是使用多个输入(Tx)来产生一个输出(Ty)的RNN架构。适用这种架构的例子是分类任务。<br>
+<img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907312.jpeg?imageMogr2/thumbnail/!85p/" alt=""><br>
+上图中，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi></mrow><annotation encoding="application/x-tex">H</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span></span></span></span>表示激活函数的输出。</p>
+</li>
+<li>
+<p>一对多的RNN：一对多架构指的是RNN基于单个输入值生成一系列输出值的情况。使用这种架构的一个主要示例是音乐生成任务，其中输入是jounre或第一个音符。<br>
+<img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907313.png?imageMogr2/thumbnail/!85p/" alt=""></p>
+</li>
+<li>
+<p>多对多（<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>x</mi></msub><mo mathvariant="normal">≠</mo><msub><mi>T</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">T_x \neq T_y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>）架构：该架构指的是读取许多输入以产生许多输出的地方，其中，输入的长度不等于输出的长度。使用这种架构的一个主要例子是机器翻译任务。<br>
+<img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907314.png?imageMogr2/thumbnail/!85p/" alt=""><br>
+Encoder（编码器）指的是读取要翻译的句子的网络一部分，Decoder（解码器）是将句子翻译成所需语言的网络的一部分。成所需语言的网络的一部分。</p>
+</li>
+</ol>
+<h3 id="RNN的局限性">RNN的局限性</h3>
+<p>RNN是有效的，但也有一定的局限性，主要在于：</p>
+<ol>
+<li>
+<p>上述RNN架构的示例仅能捕获语言的一个方向上的依赖关系。基本上，在自然语言处理的情况下，它假定后面的单词对之前单词的含义没有影响。根据我们的语言经验，我们知道这肯定是不对的。</p>
+</li>
+<li>
+<p>RNN也不能很好地捕捉长期的依赖关系，梯度消失的问题在RNN中再次出现。</p>
+</li>
+</ol>
+<p>这两种局限性导致了新型的RNN架构的产生，下面将对此进行讨论。</p>
+<h3 id="内控循环单元（GRU）">内控循环单元（GRU）</h3>
+<p>它是对基本循环单元的一种修改，有助于捕获长期的依赖关系，也有助于解决消失梯度问题。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907315.png?imageMogr2/thumbnail/!85p/" alt=""></p>
+<blockquote>
+<p>GRU增加了一个额外的存储单元，通常称为更新门或重置门。除了通常的具有sigmoid函数和softmax输出的神经单元外，它还包含一个额外的单元，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>tan</mi><mo>⁡</mo><mi>h</mi></mrow><annotation encoding="application/x-tex">\tan h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mop">tan</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">h</span></span></span></span>作为激活函数。使用<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>tan</mi><mo>⁡</mo><mi>h</mi></mrow><annotation encoding="application/x-tex">\tan h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mop">tan</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">h</span></span></span></span>是因为它的输出可以是正的也可以是负的，因此可以用于向上和向下伸缩。然后，该单元的输出与激活输入相结合，以更新内存单元的值。</p>
+</blockquote>
+<p>因此，在每个步骤中，隐藏单元和存储单元的值都会被更新。存储单元中的值在决定传递给下一个单元的激活值时起作用。</p>
+<p>详细的解释请参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://towardsdatascience.com/understanding-gru-networks-2ef37df6c9be">https://towardsdatascience.com/understanding-gru-networks-2ef37df6c9be</a></p>
+<h3 id="LSTM">LSTM</h3>
+<p>在LSTM架构中，有一个更新门和一个忘记门，而不是像在GRU中那样只有一个更新门。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907316.png?imageMogr2/thumbnail/!85p/" alt=""></p>
+<p>这种架构为存储单元提供了一个选项，可以保留t-1时刻的旧值，并将t时刻向其添加值。</p>
+<p>关于LSTM的更详细的解释，请访问<a target="_blank" rel="noopener external nofollow noreferrer" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">http://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></p>
+<h3 id="双向RNN">双向RNN</h3>
+<p>在上述RNN架构中，仅考虑以前时间戳出现的影响。在NLP中，这意味着它只考虑了当前单词出现之前的单词的影响。但在语言结构中，情况并非如此，因此靠双向RNN来拯救。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/201907317.png?imageMogr2/thumbnail/!85p/" alt=""></p>
+<blockquote>
+<p>双向RNN由前向和后向循环神经网络组成，并结合两个网络在任意给定时间t的结果进行最终预测，如图所示。</p>
+</blockquote>
+<p>在这篇文章中，我试图涵盖自然语言处理领域中流行的的所有相关实践和神经网络架构。对于那些对深入了解神经网络感兴趣的人，我强烈建议你们去Coursera上Andrew Ng的课程。</p>
+<h3 id="参考">参考</h3>
+<ol>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://machinelearningmastery.com/natural-language-processing/">https://machinelearningmastery.com/natural-language-processing/</a></p>
+</li>
+<li>
+<p>Deep Learning Coursera, Andrew Ng</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/</a></p>
+</li>
+<li>
+<p>3Blue1Brown series You Tube</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://towardsdatascience.com/understanding-gru-networks-2ef37df6c9be">https://towardsdatascience.com/understanding-gru-networks-2ef37df6c9be</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">http://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></p>
+</li>
+</ol>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/63a6c376/">https://lushuangning.github.io/posts/63a6c376/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lushuangning.github.io" target="_blank">路双宁的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a><a class="post-meta__tags" href="/tags/NLP/">NLP</a><a class="post-meta__tags" href="/tags/%E5%8D%9A%E5%AE%A2/">博客</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/31eefdff/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Ubuntu下Anaconda使用手册</div></div></a></div><div class="next-post pull-right"><a href="/posts/2c158e96/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">用Python可视化钢琴演奏录音</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>$(function () {
+  $('span.katex-display').wrap('<div class="katex-wrap"></div>')
+})</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

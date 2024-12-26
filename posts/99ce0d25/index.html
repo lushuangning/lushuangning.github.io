@@ -1,0 +1,502 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>我的Arch Linux配置 | 路双宁的博客</title><meta name="keywords" content="Linux,Arch"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="享受极简主义的世界">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的Arch Linux配置">
+<meta property="og:url" content="https://lushuangning.github.io/posts/99ce0d25/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="享受极简主义的世界">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2023-10-06T05:47:38.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.179Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Arch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/99ce0d25/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">写给root用户</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">系统安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="toc-number">2.0.1.</span> <span class="toc-text">查看系统信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E4%BD%93%E5%AE%89%E8%A3%85"><span class="toc-number">2.1.</span> <span class="toc-text">字体安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7"><span class="toc-number">2.2.</span> <span class="toc-text">系统工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%AA%E5%9B%BE%E5%B7%A5%E5%85%B7"><span class="toc-number">2.2.1.</span> <span class="toc-text">截图工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="toc-number">2.2.2.</span> <span class="toc-text">网络工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AD%94%E6%B3%95%E4%B8%8A%E7%BD%91"><span class="toc-number">2.3.</span> <span class="toc-text">魔法上网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%93%9D%E7%89%99"><span class="toc-number">2.4.</span> <span class="toc-text">蓝牙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dwm"><span class="toc-number">2.5.</span> <span class="toc-text">dwm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dwm-%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">2.5.1.</span> <span class="toc-text">dwm 快捷键</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tty-%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95"><span class="toc-number">2.6.</span> <span class="toc-text">tty 自动登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%B3%95"><span class="toc-number">2.7.</span> <span class="toc-text">输入法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E5%B1%8F%E5%B9%95"><span class="toc-number">2.8.</span> <span class="toc-text">旋转屏幕</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rofi"><span class="toc-number">2.9.</span> <span class="toc-text">rofi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#emacs"><span class="toc-number">2.10.</span> <span class="toc-text">emacs</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">系统迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E6%97%A7%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%96%B0%E7%A1%AC%E7%9B%98"><span class="toc-number">3.1.</span> <span class="toc-text">在旧系统中格式化新硬盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%B9%B6%E8%BD%AC%E7%A7%BB%E5%BF%AB%E7%85%A7"><span class="toc-number">3.2.</span> <span class="toc-text">创建并转移快照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%AD%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE"><span class="toc-number">3.3.</span> <span class="toc-text">新电脑中的系统配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8"><span class="toc-number">3.4.</span> <span class="toc-text">关于显卡驱动</span></a></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">我的Arch Linux配置</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-06T05:47:38.000Z" title="发表于 2023-10-06 13:47:38">2023-10-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.179Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><h1>写给root用户</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">We trust you have received the usual lecture from the local System</span><br><span class="line">Administrator. It usually boils down to these three things:</span><br><span class="line"></span><br><span class="line">    #1) Respect the privacy of others.</span><br><span class="line">    #2) Think before you type.</span><br><span class="line">    #3) With great power comes great responsibility.</span><br><span class="line"></span><br><span class="line">For security reasons, the password you type will not be visible.</span><br></pre></td></tr></table></figure>
+<h1>系统安装</h1>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://juejin.cn/post/6917588337372987399">从零开始使用 archlinux</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bilibili.com/video/BV1Gr4y1M7oY/">从零开始使用 archlinux bilibili</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://arch.icekylin.online/">Archlinux 简明指南</a></p>
+<p>按照以上步骤安装系统一般不会出问题， 但是需要注意两点：</p>
+<ol>
+<li>双系统的时间不同步问题</li>
+</ol>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/492885761">ubuntu与windows双系统时间同步问题——简明指南</a>里详细介绍了该问题产生的原因，即 <code>Windows</code> 与 <code>Linux</code> 对 <code>RTC</code> 差异处理。解决思路有两种，一是让 <code>Linux</code> 将硬件时钟当成系统时间，二是让 <code>Windows</code> 修改硬件时钟为 <code>UTC</code> 时间。第一种方法可能会导致 <code>Linux</code> 出问题，采用第二种方式较稳妥。参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://sspai.com/post/55983">Linux Windows 双系统时间不一致</a> 里面的修改方式，在 <code>Windows</code> 上以管理员打开 <code>PowerShell</code>, 输入 <code>Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1</code>，重启 <code>Windows</code>，联网更新时间（这一步一定要做，因为联网更新时间后，<code>Windows</code>会重写硬件时钟）。这样再进入 <code>Linux</code> 时时间即可恢复正常。</p>
+<ol start="2">
+<li>双系统的 grub 引导</li>
+</ol>
+<p>多系统boot的时候比较麻烦，按照简明指南中的方式，生成 <code>grub</code> 所需配置文件时，使用 <code>grub-mkconfig -o /boot/grub/grub.cfg</code> 并没有显示出 <code>Windows Boot Manager</code> 的项，此时不用担心，完成安装后，拔掉u盘，重启进入安装好的系统，再次执行一遍 <code>grub-mkconfig -o /boot/grub/grub.cfg</code> 即可。</p>
+<h3 id="查看系统信息">查看系统信息</h3>
+<ol>
+<li>
+<p>查看版本当前操作系统内核信息 <code>uname -a</code></p>
+</li>
+<li>
+<p>查看当前操作系统版本信息 <code>cat /proc/version</code></p>
+</li>
+<li>
+<p>RedHat查看版本当前操作系统发行版信息 <code>cat /etc/redhat-release</code></p>
+</li>
+<li>
+<p>查看CPU 信息 <code>cat /proc/cpuinfo</code></p>
+</li>
+</ol>
+<p>还有其他一些，可参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/qq_31278903/article/details/83146031">Linux查看系统基本信息，版本信息（最全版）</a></p>
+<h2 id="字体安装">字体安装</h2>
+<p>安装一些支持中文的字体</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yay -Syu nerd-fonts-complete</span><br><span class="line">sudo pacman -Syu noto-fonts noto-fonts-cjk noto-fonts-extra noto-fonts-emoji tty-lxgw-wenkai tty-lxgw-wenkai-mono tty-nerd-fonts-symbols</span><br></pre></td></tr></table></figure>
+<h2 id="系统工具">系统工具</h2>
+<h3 id="截图工具">截图工具</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Syu flameshot</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用方式</span></span><br><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
+<h3 id="网络工具">网络工具</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Syu net-tools</span><br></pre></td></tr></table></figure>
+<p>修改无线网卡名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取网卡的mac 地址</span></span><br><span class="line">cat /sys/class/net/当前的网卡名/address</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过 udev 来修改网卡名</span></span><br><span class="line">sudo vim /etc/udev/rules.d/10-network.rules</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加下面的指令，记得换成自己的mac地址</span></span><br><span class="line">SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, ATTR&#123;address&#125;==&quot;00:0c:29:e9:39:53&quot;, NAME=&quot;wlan0&quot;</span><br></pre></td></tr></table></figure>
+<p>nmcli 的使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">连接wifi</span></span><br><span class="line">nmcli dev wifi con wifi_name password wifi_pass</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示所有连接</span></span><br><span class="line">nmcli con show</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">根据uuid来删除连接记录</span></span><br><span class="line">nmcli con del fc691e11-3dff-4ab0-85d6-772aa36943d3</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">根据 name 来删除连接记录</span></span><br><span class="line">nmcli con del &quot;wifi_name&quot;</span><br></pre></td></tr></table></figure>
+<p>如果想删除所有的 wifi 连接记录，可以使用下面的脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取所有wifi记录的uuid</span></span><br><span class="line">wifi_record=$(nmcli -t -f UUID c)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">按换行符分割</span></span><br><span class="line">uuid=$(echo &quot;$wifi_record&quot; | tr &quot;\n&quot; &quot; &quot;)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将string转为array</span></span><br><span class="line">read -r -a uuid_arr &lt;&lt;&lt; &quot;$uuid&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取数组长度</span></span><br><span class="line">len=$&#123;#uuid_arr[*]&#125;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">循环删除</span></span><br><span class="line">for((i=0; i&lt;len; i++))</span><br><span class="line">do</span><br><span class="line">    del_wifi=$(nmcli c del &quot;$&#123;uuid_arr[$i]&#125;&quot;)</span><br><span class="line">    echo &quot;$del_wifi&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>无线网卡同时连接 wifi和开启热点（目前仅在 ubuntu下测试过）。</p>
+<p>这里需要借助一个工具 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/oblique/create_ap/">create_ap</a>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install procps hostapd iproute2 iw iwconfig haveged</span><br><span class="line"></span><br><span class="line">git clone https://github.com/oblique/create_ap.git</span><br><span class="line"></span><br><span class="line">cd create_ap</span><br><span class="line"></span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>查看一下当前的网卡：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 33048  bytes 6629397 (6.6 MB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 33048  bytes 6629397 (6.6 MB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">wlp0s20f3: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 172.16.50.101  netmask 255.255.255.0  broadcast 172.16.50.255</span><br><span class="line">        inet6 fe80::717b:a6f2:a78b:5d51  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        ether 8c:f8:c5:29:14:31  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 21457  bytes 5514093 (5.5 MB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 13457  bytes 2818709 (2.8 MB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+<p>我这台笔记本电脑没有有线网卡，只有一个无线网卡 <code>wlp0s20f3</code>，如果想更改网卡名，可以参考上面的内容。</p>
+<p>测试 <code>create_ap</code> 是否工作正常：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_ap wlp0s20f3 wlp0s20f3 test 123456789</span><br></pre></td></tr></table></figure>
+<p>这将会创建一个名称为 <code>test</code>，密码是 <code>123456789</code> 的热点。</p>
+<p>常见错误排查：</p>
+<ul>
+<li><code>ERROR: Failed to initialize lock</code>。删除 <code>/tmp/create_ap.all.lock</code></li>
+<li><code>Your adapter can not transmit to channel xxx, frequency band 5GHz</code>。参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/oblique/create_ap/issues/107">issues 107</a>，将 <code>create_ap</code> 中的函数 <code>is_wifi_connected</code> 改为：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">is_wifi_connected() &#123;</span><br><span class="line">    return 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重新编译安装。该方法在我这里是 work 的。</p>
+<p>通过配置文件对 <code>wifi</code> 信息进行配置。编辑 <code>/etc/create_ap.conf</code>。</p>
+<p>该文件的解析如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">CHANNEL=default         #无线热点的频道设置为默认信道。</span><br><span class="line">GATEWAY=10.0.0.1        #设置无线热点的网关地址为10.0.0.1。</span><br><span class="line">WPA_VERSION=2           #设置无线热点使用的WPA版本为2。</span><br><span class="line">ETC_HOSTS=0             #禁用/etc/hosts文件的解析。</span><br><span class="line">DHCP_DNS=gateway        #设置无线热点的DHCP DNS服务器为网关地址。</span><br><span class="line">NO_DNS=0                #启用无线热点的DNS服务器。</span><br><span class="line">NO_DNSMASQ=0            #启用DNSMASQ服务。</span><br><span class="line">HIDDEN=0                #无线热点的SSID不隐藏。</span><br><span class="line">MAC_FILTER=0            #禁用MAC地址过滤。</span><br><span class="line">MAC_FILTER_ACCEPT=/etc/hostapd/hostapd.accept   #指定MAC地址过滤的白名单文件路径。</span><br><span class="line">ISOLATE_CLIENTS=0       #不隔离连接到无线热点的客户端之间的通信。</span><br><span class="line">SHARE_METHOD=nat        #使用NAT方式进行无线热点的Internet共享。</span><br><span class="line">IEEE80211N=0            #禁用802.11n标准。（2.4G）</span><br><span class="line">IEEE80211AC=0           #禁用802.11ac标准。（5G）</span><br><span class="line">HT_CAPAB=[HT40+]        #启用HT40+高级设置。</span><br><span class="line">VHT_CAPAB=              #未指定VHT_CAPAB。</span><br><span class="line">DRIVER=nl80211          #使用nl80211驱动程序。</span><br><span class="line">NO_VIRT=0               #启用虚拟无线接口。</span><br><span class="line">COUNTRY=                #未指定国家代码。</span><br><span class="line">FREQ_BAND=2.4           #设置频段为2.4GHz。</span><br><span class="line">NEW_MACADDR=            #未指定新的MAC地址。</span><br><span class="line">DAEMONIZE=0             #不将create_ap进程置于后台运行。</span><br><span class="line">NO_HAVEGED=0            #启用haveged服务。</span><br><span class="line">WIFI_IFACE=wlp3s0       #指定用于创建无线热点的无线网卡接口。</span><br><span class="line">INTERNET_IFACE=enp1s0   #指定用于连接到Internet的有线网卡接口。</span><br><span class="line">SSID=0125               #设置无线热点的SSID为0125。</span><br><span class="line">PASSPHRASE=12345678     #设置无线热点的密码为12345678。</span><br><span class="line">USE_PSK=0               #禁用预共享密钥(PSK)。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果只是开一个2.4GHZ的热点，只需要修改下面的内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">WIFI_IFACE=wlp0s20f3</span><br><span class="line">INTERNET_IFACE=wlp0s20f3</span><br><span class="line">SSID=zbh                #要建立的热点名称</span><br><span class="line">PASSPHRASE=123456789    #密码</span><br></pre></td></tr></table></figure>
+<p>开启和关闭 <code>wifi</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start create_ap</span><br><span class="line"></span><br><span class="line">sudo systemctl stop create_ap</span><br></pre></td></tr></table></figure>
+<p>查看创建的热点：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_ap --list-running</span><br></pre></td></tr></table></figure>
+<p>该指令会显示一个热点的 id。</p>
+<p>查看连接的设备：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_ap --list-clients 6138  # 该 id 可由上一步的命令查看得到</span><br></pre></td></tr></table></figure>
+<p>疑难问题请参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/qq_45445740/article/details/134066114">Xubuntu16.04系统中create_ap开启5G网络的踩坑记录</a>，这里面列出了11个大坑及解决方法，尤其是我想开一个5GHZ频段的热点开不出来的时候，是这篇文章救了我。</p>
+<h2 id="魔法上网">魔法上网</h2>
+<p>采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://archlinuxstudio.github.io/ArchLinuxTutorial/#/rookie/fxckGFW">v2ray</a>，客户端使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://v2raya.org/">v2rayA</a>，设置透明代理的方式翻墙</p>
+<h2 id="蓝牙">蓝牙</h2>
+<p>蓝牙问题，使用 <code>bluetoothctl</code> 来控制连接，但是如果是头戴耳机，还需要安装 <code>pulseaudio</code>，记得开启服务，<code>systemctl --user enable pulseaudio.service</code></p>
+<p>使用简明指南：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">bluetoothctl</span><br><span class="line"></span><br><span class="line">power on</span><br><span class="line"></span><br><span class="line">agent on</span><br><span class="line"></span><br><span class="line">default-agent</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">扫描设备</span></span><br><span class="line">scan on</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配对</span></span><br><span class="line">pair on XX:XX:XX:XX:XX:XX</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">连接设备</span></span><br><span class="line">connect on XX:XX:XX:XX:XX:XX</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">信任设备</span></span><br><span class="line">trust XX:XX:XX:XX:XX:XX</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">退出 bluetoothctl</span></span><br><span class="line">quit</span><br></pre></td></tr></table></figure>
+<h2 id="dwm">dwm</h2>
+<p>安装 dwm，借助插件 auto-start 来运行一些开机命令，如开机自启动fcitx5，需要新建 <code>~/.dwm</code> 文件夹，在下面新建 <code>autostart.sh</code> ，填入 <code>fcitx5 -d</code></p>
+<p>我这里遇到个很奇怪的问题，我之前把 <code>autostart.sh</code> 等这些脚本文件备份到 Github中了，重装系统的时候想直接git下来把相关的脚本放到对应位置，但是 dwm 始终不去执行这些脚本，我检查过脚本的位置、权限、所属用户，都没有问题。自己把这些脚本重新新建一遍，dwm就可以执行了，甚是奇怪。</p>
+<p>开机自动启动startx，我试过在 <code>.xinitrc</code> 中添加 <code>startx</code> 的方式，但是无效。我的做法是在~/.zshrc中加入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -z &quot;$&#123;DISPLAY&#125;&quot; ] &amp;&amp; [ &quot;$&#123;XDG_VNTR&#125;&quot; -eq 1 ];then</span><br><span class="line">  exec startx</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>自定义状态栏，内存占用量、网速、音量 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lushuangning/arch-backup/tree/main/dwm-6.4/scripts">参考脚本</a></p>
+<p>使用前安装一个 <code>sudo pacman -Sy bc</code> 工具用于计算网速</p>
+<h3 id="dwm-快捷键">dwm 快捷键</h3>
+<p>具体的快捷键要看 <code>config.def.h</code> 中自定义的，我这边只记录自己使用的。</p>
+<p><code>Win+数字</code>，切换标签页</p>
+<p><code>Win+l</code>，两个窗口左右分屏的情况下，向左缩屏幕</p>
+<p><code>Win+h</code>，两个窗口左右分屏的情况下，向右缩屏幕</p>
+<p><code>Win+Shift+c</code>，关闭当前窗口</p>
+<p><code>Win+d</code>，窗口横向排列（上下排列）</p>
+<p><code>Win+i</code>，窗口纵向排列（左右排列）</p>
+<p><code>Win+Enter</code>，窗口位置互换</p>
+<p><code>Win+j</code>，在多个窗口之间切换（顺时针）</p>
+<p><code>Win+k</code>，在多个窗口之间切换（逆时针）</p>
+<p><code>Win+t</code>，平铺模式</p>
+<p><code>Win+m</code>，单窗口模式</p>
+<p><code>Win+f</code>，浮动模式</p>
+<h2 id="tty-自动登录">tty 自动登录</h2>
+<p>实现方式是使用 <code>systemed</code> 服务。</p>
+<p>参考：<br>
+<a target="_blank" rel="noopener external nofollow noreferrer" href="https://wiki.archlinux.org/title/Getty#Virtual_console">Arch Wiki: getty</a></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://wiki.archlinux.org/title/Systemd#Replacement_unit_files">Arch Wiki: systemed </a>)</p>
+<p>执行 <code>systemctl edit getty@tty1</code> 命令，这会生成一个 <code>/etc/systemd/system/getty.target.wants/getty@tty1.service</code> 文件， 输入以下内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ExecStart=</span><br><span class="line">ExecStart=-/usr/bin/agetty --autologin username --noclear %I $TERM</span><br></pre></td></tr></table></figure>
+<p>注意，第二行的 <code>ExecStart=</code> 不能省，一定要有。</p>
+<p>重启系统，如果还是需要手动登录的话，去检查一下生成的文件中是否有以上内容。</p>
+<h2 id="输入法">输入法</h2>
+<p>安装fcitx5输入法时，要记得在 <code>/etc/environment</code> 中添加</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GTK_IM_MODULE=fcitx5</span><br><span class="line">QT_IM_MODULE=fcitx5</span><br><span class="line">XMODIFIERS=@im=fcitx5</span><br><span class="line">INPUT_METHOD=fcitx5</span><br><span class="line">SDL_IM_MODULE=fcitx5</span><br><span class="line">GLFW_IM_MODULE=ibus</span><br></pre></td></tr></table></figure>
+<p>否则在终端、emacs等环境中无法调出输入法来。</p>
+<p>在我安装好 emacs 后，发现一些快捷键无法使用，例如emacs 跳转到文件末尾的快捷键 <code>M-&gt;</code> 无效。我开始还以为是 fcitx5 拦截了一些快捷键，在fcitx5 的各种快捷键里找了半天也没找到，直到把 fcitx5 开机自启关闭后问题仍在，我才意识到是 dwm 将 <code>Alt</code> 键拦截了。dwm 默认切换窗口的快捷键是 <code>Alt+数字</code>，导致 <code>Alt</code> 这个键在其他程序中失效。在 suckless 官网中找到 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://dwm.suckless.org/customisation/windows_key/">Change Mod1 key to the Windows key in config.h</a>，里面提到目前已知的 GNU 程序中并没有使用 <code>Win</code> 键作快捷键的，因此将 <code>Alt</code> 键改为 <code>Win</code> 键盘是个较好的做法，在 <code>config.h</code> 中将 <code>#define MODKEY Mod1Mask</code> 改为 <code>#define MODKEY Mod4Mask</code> 即可。</p>
+<p>这样以来，所有的 dwm 中默认使用 <code>Alt</code> 键的行为都改为使用 <code>Win</code> 键，例如切换窗口现在是 <code>Win+数字</code>。但是我切换输入法的键是 <code>Win+Spec</code>，这样一改输入法无法切换了，而 <code>Ctrl+Spec</code> 又与 emacs 中的块选择快捷键一致，权衡之下，只能把输入法切换的快捷键改为其他（或者去dwm的配置文件 <code>config.h</code> 中把含有 <code>MODKEY+Spec</code> 的代码行改为其他按键）。</p>
+<h2 id="旋转屏幕">旋转屏幕</h2>
+<p>通过 <code>xrandr</code> 查看当前连接屏幕的分辨率</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> &gt; xrandr                                                              09:01:26</span><br><span class="line">Screen 0: minimum 320 x 200, current 2560 x 1440, maximum 16384 x 16384</span><br><span class="line">DVI-D-1 disconnected primary (normal left inverted right x axis y axis)</span><br><span class="line">DP-1 disconnected (normal left inverted right x axis y axis)</span><br><span class="line">DP-2 connected 2560x1440+0+0 (normal left inverted right x axis y axis) 527mm x 296mm</span><br><span class="line">   2560x1440     59.95*+</span><br><span class="line">   1920x1440     60.00</span><br><span class="line">   1856x1392     60.01</span><br><span class="line">   1792x1344     75.00    60.01</span><br><span class="line">   2048x1152     59.90    59.91</span><br><span class="line">   ...</span><br><span class="line">   360x202       59.51    59.13</span><br><span class="line">   320x180       59.84    59.32</span><br><span class="line">HDMI-1 disconnected (normal left inverted right x axis y axis)</span><br><span class="line">DP-3 disconnected (normal left inverted right x axis y axis)</span><br></pre></td></tr></table></figure>
+<p>DP-2是我当前的屏幕，通过下面这条命令设置屏幕旋转：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xrandr --output DP-2 --rotate left</span><br></pre></td></tr></table></figure>
+<p><code>--output</code> 指定的是屏幕，<code>--rotate</code> 指定的是旋转方向，这个参数可以设置成：<code>normal</code>， <code>left</code>， <code>right</code>，<code>inverted</code>。</p>
+<p>如果是多个屏幕，可通过下面的命令设置屏幕位置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xrandr --output DP-2 --right-of DP-1</span><br></pre></td></tr></table></figure>
+<p><code>--right-of</code> 还可以换成 <code>--left-of</code>，<code>--above</code>，<code>--below</code>，<code>--same-as</code></p>
+<p>指定主屏幕：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xrandr --output DP-2 primary</span><br></pre></td></tr></table></figure>
+<h2 id="rofi">rofi</h2>
+<p><code>sudo pacman -Sy rofi</code></p>
+<p>更改主题：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/newmanls/rofi-themes-collection">rofi-themes-collection</a></p>
+<h2 id="emacs">emacs</h2>
+<p>参考我的另一篇博客。</p>
+<h1>系统迁移</h1>
+<p>这里所说的系统迁移，不是将一块硬盘里的系统换到另一块新的较大的硬盘中，插到电脑中继续使用，而是将该系统想办法复制到一块新的硬盘中，在完全新的硬件环境中成功启动。</p>
+<p>假设你旧电脑中的系统已经是 <code>Win</code> 和 <code>Arch</code> 的双系统了（这样我就省去了描述配置 <code>GRUB</code> 的步骤）。</p>
+<p>我的 Arch Linux 使用的是 btrfs 文件系统，旧电脑的配置如下：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202310081.png" alt=""></p>
+<p>硬盘的分配情况如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span><br><span class="line">sda           8:0    0   2.7T  0 disk</span><br><span class="line">├─sda1        8:1    0 350.6G  0 part</span><br><span class="line">├─sda2        8:2    0   1.5T  0 part</span><br><span class="line">└─sda3        8:3    0 919.9G  0 part</span><br><span class="line">sdb           8:16   0   1.8T  0 disk</span><br><span class="line">└─sdb1        8:17   0   1.8T  0 part /home/lsn/CodeHub</span><br><span class="line">sdc           8:32   0 953.9G  0 disk</span><br><span class="line">├─sdc1        8:33   0   500M  0 part /boot</span><br><span class="line">├─sdc2        8:34   0     4G  0 part [SWAP]</span><br><span class="line">└─sdc3        8:35   0 949.4G  0 part /home</span><br><span class="line">                                      /</span><br><span class="line">nvme0n1     259:0    0 953.9G  0 disk</span><br><span class="line">├─nvme0n1p1 259:1    0    16M  0 part</span><br><span class="line">└─nvme0n1p2 259:2    0 953.8G  0 part</span><br></pre></td></tr></table></figure>
+<p>其中，<code>sda</code> 是一个 3T 的机械存储盘，<code>sdb</code> 是一个2T的机械存储盘，<code>sdc1</code> 是双系统的引导分区，<code>sdc2</code> 是<code>Arch</code> 的交换分区，<code>sdc3</code> 是 <code>Arch</code> 所在的系统盘，<code>nvme0n1</code> 是 <code>Win11</code> 所在的系统盘。</p>
+<p>新电脑的配置如下：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202310082.png" alt=""></p>
+<p>硬盘的分配如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span><br><span class="line">nvme0n1     259:0    0 476.9G  0 disk</span><br><span class="line">nvme1n1     259:3    0 476.9G  0 disk</span><br><span class="line">├─nvme1n1p1 259:4    0   260M  0 part /boot</span><br><span class="line">├─nvme1n1p2 259:5    0    16M  0 part</span><br><span class="line">├─nvme1n1p3 259:6    0   200G  0 part</span><br><span class="line">├─nvme1n1p4 259:7    0 274.7G  0 part</span><br><span class="line">└─nvme1n1p5 259:8    0     2G  0 part</span><br></pre></td></tr></table></figure>
+<p>其中，<code>nvme1n1</code> 是新电脑中自带的硬盘，<code>nvme1n1p1</code> 是启动分区， <code>nvme1n1p3</code> 是 <code>Win 11</code> 的系统盘，<code>nvme1n1p4</code> 是存储盘。 <code>nvme0n1</code> 是在新电脑中加的新硬盘，准备将新的电脑也变成 <code>Arch</code> 和 <code>Win11</code> 双系统。</p>
+<p>将原来设备双系统中的 <code>Arch</code> 迁移到新设备上来，主要参考这几个网站：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/259534619">使用 Btrfs 快照进行增量备份</a>，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://coda.world/btrfs-snapshot">使用 Btrfs 快照备份</a>，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://arch.icekylin.online/guide/rookie/basic-install.html">archlinux 基础安装</a>。</p>
+<p>基本思路是，将新硬盘先插入到旧电脑中，进入旧电脑的 <code>Arch</code> 系统中，使用 <code>cfdisk</code> 格式化新硬盘为 btrfs 文件系统。然后，在旧电脑的 <code>Arch</code> 系统中创建快照，发送到新硬盘中。之后，创建新硬盘中快照的快照（原因后面再讲）。将新硬盘插入新电脑上，进入u盘的 <code>Arch</code> 系统，将新硬盘中快照的快照作为子卷挂载。</p>
+<h2 id="在旧系统中格式化新硬盘">在旧系统中格式化新硬盘</h2>
+<p>先将新硬盘插到旧电脑的主板上，开机进入 <code>Arch</code>。使用 <code>lsblk</code> 查看当前硬盘，假设新硬盘显示为 <code>/dev/nvme0n1</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cfdisk /dev/nvme0n1</span><br></pre></td></tr></table></figure>
+<p>建立两个分区，一个作为 <code>swap</code> 分区，一个为 <code>btrfs</code> 格式的系统分区.</p>
+<p>分别格式化。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkswap /dev/nvme0n1p1</span><br><span class="line"></span><br><span class="line">sudo mkfs.btrfs -L ARCH /dev/nvme0n1p2</span><br></pre></td></tr></table></figure>
+<p>格式化好的分区如下所示。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nvme0n1     259:0    0 476.9G  0 disk</span><br><span class="line">├─nvme0n1p1 259:1    0     4G  0 part [SWAP]</span><br><span class="line">└─nvme0n1p2 259:2    0 472.9G  0 part</span><br></pre></td></tr></table></figure>
+<p>将 <code>btrfs</code> 分区挂载到 <code>/mnt</code> 下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -t btrfs -o compress=zstd /dev/nvme0n1p2 /mnt</span><br></pre></td></tr></table></figure>
+<h2 id="创建并转移快照">创建并转移快照</h2>
+<p>由于我们要将快照转移到新硬盘中，使用的命令是 <code>btrfs send</code> 和 <code>btrfs receive</code>，<strong><code>btrfs send</code> 要求待转移的快照只能是只读的，因此我们要先创建系统的只读快照</strong>。</p>
+<p>在根目录下新建 <code>/snapshot</code> 目录，用于存放快照</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /snapshot</span><br></pre></td></tr></table></figure>
+<p>新建根目录 <code>/</code> 和 <code>/home</code> 的只读快照：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo btrfs subvolume snapshot -r / /snapshots/root_snap</span><br><span class="line">sudo btrfs subvolume snapshot -r /home /snapshots/home_snap</span><br></pre></td></tr></table></figure>
+<p>其中，<code>-r</code> 是只读的意思。</p>
+<p>将这两个快照转移到新硬盘中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo btrfs send /snapshots/root_snap | sudo btrfs receive /mnt/</span><br><span class="line">sudo btrfs send /snapshots/home_snap | sudo btrfs receive /mnt/</span><br></pre></td></tr></table></figure>
+<p>新的快照是不占空间的，但迁移时候的速度取决于 <code>/</code> 和 <code>/home</code> 的大小。</p>
+<p>由于这两个快照是只读的，你不能直接将新硬盘中的两个只读快照挂载为子卷，否则无法写入。因此我们要对快照再创建一个快照。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo btrfs subvolume snapshot /mnt/root_snap /mnt/@root</span><br><span class="line">sudo btrfs subvolume snapshot /mnt/home_snap /mnt/@home</span><br></pre></td></tr></table></figure>
+<p>通过命令查看快照的情况：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo btrfs subvol list -p /mnt</span><br></pre></td></tr></table></figure>
+<p>你应该能看到4个条目，分别是 <code>root_snap</code>，<code>home_snap</code>，<code>@root</code>，<code>@home</code>。</p>
+<p>卸载新硬盘，将其从旧电脑的主板上拆下，安装到新电脑中。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo umount /mnt</span><br></pre></td></tr></table></figure>
+<h2 id="新电脑中的系统配置">新电脑中的系统配置</h2>
+<p>进入 u盘的 <code>Arch</code> ，使用 <code>lsblk</code> 查看硬盘，假设新硬盘显示为 <code>/dev/nvme0n1</code>。</p>
+<p>开始挂载子卷：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mount -t btrfs -o subvol=/@root,compress=zstd /dev/nvme0n1p2 /mnt    # 挂载根目录</span><br><span class="line">mount -t btrfs -o subvol=/@home,compress=zstd /dev/nvme0n1p2 /mnt    # 挂载 home目录</span><br><span class="line">mount /dev/nvme1n1p1 /mnt/boot  # 挂载启动分区</span><br><span class="line">swapon /dev/nvme0n1p1   # 挂载交换分区</span><br></pre></td></tr></table></figure>
+<p>使用 <code>genfstab</code> 自动根据当前挂载情况生成并写入 <code>fstab</code> 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -U /mnt &gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
+<p>然后，切换到新硬盘的系统中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot /mnt</span><br></pre></td></tr></table></figure>
+<p>按照新电脑的CPU来选择微码并安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S intel-ucode # Intel</span><br><span class="line">sudo pacman -S amd-ucode # AMD</span><br></pre></td></tr></table></figure>
+<p>为grub引导双系统作准备：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S grub efibootmgr os-prober</span><br><span class="line">sudo grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ARCH</span><br></pre></td></tr></table></figure>
+<p>最后生成 <code>GRUB</code> 所需的配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+<p>注意，此时并不会找到 <code>Windows Boot Manager</code> 项，即无法将 <code>Win</code> 的启动项添加到 <code>GRUB</code> 中，原因本篇博客开始的时候有说，需要拔掉 U 盘重启系统，进入 <code>Arch</code> 后再执行一遍 <code>grub-mkconfig</code>。</p>
+<h2 id="关于显卡驱动">关于显卡驱动</h2>
+<p>2023-10-23 更新</p>
+<p>经评论区老哥提醒，笔记本的显卡驱动有两种情况：只有独显的笔记本电脑显卡驱动的安装方式与台式机一样，独显直通屏幕；对于既有核显又有独显的笔记本电脑，绝大多数的独显将渲染后的画面送到集显，由集显输出到屏幕，因此要让独显与核显协同工作。</p>
+<p>经摸索，使用 <code>optimus-manager</code> 成功切换到独显。</p>
+<p>安装过程参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhui.dev/2021-05/archlinux-gpu-optimus-manager">Arch Linux 的双显卡配置</a>，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Askannz/optimus-manager">optimus-manager</a>，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://arch.icekylin.online/guide/rookie/graphic-driver.html">archlinux 显卡驱动</a>。</p>
+<p>首先，intel cpu安装如下的驱动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S mesa lib32-mesa vulkan-intel lib32-vulkan-intel</span><br></pre></td></tr></table></figure>
+<p>对于 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://nouveau.freedesktop.org/CodeNames.html#NV160"> Turing (NV160/TUXXX) </a>系列或更新的显卡，需要安装 <code>nvidia-open</code> 驱动。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S nvidia-open-dkms nvidia-settings lib32-nvidia-utils # 必须安装</span><br></pre></td></tr></table></figure>
+<p>然后安装 <code>optimus-manager</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S optimus-manager</span><br></pre></td></tr></table></figure>
+<p>注意，一定要认真阅读 <code>optimus-manager</code> 的 <code>github</code> 上的说明。</p>
+<p>博客 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhui.dev/2021-05/archlinux-gpu-optimus-manager">Arch Linux 的双显卡配置</a> 中提到，电源管理工具 <code>bbswitch</code> 已经很久没有更新了，对于新的电脑来说，使用它可能会出问题；<code>acpi_call</code> 也是一个用于电源管理的工具，但是我没研究明白怎么用的；另外，<code>optimus-manager wiki</code> <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Askannz/optimus-manager/wiki/A-guide--to-power-management-options">A guide to power management options</a> 提到：</p>
+<blockquote>
+<p>It’s better than nothing, though not as good for power consumption as completely turning the card off.</p>
+</blockquote>
+<p>反正我大多数时候都是插着电源使用笔记本电脑，电源管理什么的，不要也罢😆。</p>
+<p>安装 <code>nvidia-prime</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S nvidia-prime</span><br></pre></td></tr></table></figure>
+<p>安装好 <code>optimus-manager</code> 后，默认的显示模式还是集显， 可以通过 <code>optimus-manager --status</code> 查看。</p>
+<p>如果直接在终端里切换的话，<code>sudo optimus-manager --switch nvidia</code>，下次重启系统还是默认集显，我们需要设置一下，让系统每次开机都自动使用独显。</p>
+<p>PS：我这里执行这条命令还报了错，参考 <code>issue</code> <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Askannz/optimus-manager/issues/356">GPU setup was initiated but Xorg post-start hook did not run</a>，粗略的查到在执行 <code>sudo optimus-manager --switch nvidia</code> 之前要先执行 <code>prime-offload</code>。下面是我的做法：</p>
+<p>将 <code>/usr/share/optimus-manager.conf</code> 复制到 <code>/etc/optimus-manager</code> 下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /usr/share/optimus-manager.conf /etc/optimus-manager/</span><br></pre></td></tr></table></figure>
+<p>编辑这个文件，<code>sudo vim /etc/optimus-manager/optimus-manager.conf</code>，将 <code>[AMD]</code> 有关的内容注释掉，并且修改 <code>startup_mode=integrated</code> 这句为 <code>startup_mode=nvidia</code>。</p>
+<p>该文件的注释非常详细，每条指令的含义以及可选参数都写得很清楚，按需修改。</p>
+<p>最后，修改 <code>~/.xinitrc</code> 文件，添加这句：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/prime-offload &amp;</span><br></pre></td></tr></table></figure>
+<p>重启系统，通过 <code>optimus-manager --status</code> 查看到如下信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Optimus Manager (Client) version 1.5</span><br><span class="line"></span><br><span class="line">Current GPU mode : nvidia</span><br><span class="line">GPU mode requested for next login : no change</span><br><span class="line">GPU at startup : nvidia</span><br><span class="line">Temporary config path: no</span><br></pre></td></tr></table></figure>
+<p>另外，通过 <code>nvidia-smi</code> 查询到如下信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Mon Oct 23 15:34:31 2023</span><br><span class="line">+---------------------------------------------------------------------------------------+</span><br><span class="line">| NVIDIA-SMI 535.113.01             Driver Version: 535.113.01   CUDA Version: 12.2     |</span><br><span class="line">|-----------------------------------------+----------------------+----------------------+</span><br><span class="line">| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |</span><br><span class="line">| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |</span><br><span class="line">|                                         |                      |               MIG M. |</span><br><span class="line">|=========================================+======================+======================|</span><br><span class="line">|   0  NVIDIA GeForce RTX 3060 ...    Off | 00000000:01:00.0  On |                  N/A |</span><br><span class="line">| N/A   41C    P8              13W /  80W |   1489MiB /  6144MiB |     33%      Default |</span><br><span class="line">|                                         |                      |                  N/A |</span><br><span class="line">+-----------------------------------------+----------------------+----------------------+</span><br><span class="line"></span><br><span class="line">+---------------------------------------------------------------------------------------+</span><br><span class="line">| Processes:                                                                            |</span><br><span class="line">|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |</span><br><span class="line">|        ID   ID                                                             Usage      |</span><br><span class="line">|=======================================================================================|</span><br><span class="line">|    0   N/A  N/A       878      G   /usr/lib/Xorg                               820MiB |</span><br><span class="line">|    0   N/A  N/A      4585      G   alacritty                                     9MiB |</span><br><span class="line">|    0   N/A  N/A      8681      G   /usr/lib/firefox/firefox                      0MiB |</span><br><span class="line">|    0   N/A  N/A     36159    C+G   ...1577633,13106986359740496871,262144      344MiB |</span><br><span class="line">+---------------------------------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<p>独显驱动安装及切换成功！</p>
+<del>
+独立显卡的驱动是安装 `Arch` 时较为头疼的，我的旧电脑中的显卡是 `Nvidia GTX 1060`，新电脑的显卡是 `Nvidia RTX 3060`，直接迁移过来的系统无法启动桌面，截至本篇博客撰写的时候我仍未在新电脑中成功的装起独显的驱动。我当前的做法是在新电脑中删除一切和 `Nvidia` 相关的驱动，改用核显。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">一个一个地手动确保下面的包都被卸载</span></span><br><span class="line">sudo pacman -R nvidia nvidia-utils nvidia-open nvidia-dkms nvidia-settings lib32-nvidia-utils</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">我的CPU是Intel，安装核显相关的包，AMD的请自己查找</span></span><br><span class="line">sudo pacman -S mesa lib32-mesa vulkan-intel lib32-vulkan-intel</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在 /etc/mkinitcpio.conf 的 HOOKS 一行添加kms。</span></span><br><span class="line">sudo vim /etc/mkinitcpio.conf</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重新生成一次镜像</span></span><br><span class="line">sudo mkinitcpio -P</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除 /etc/X11/ 下 xorg.conf 文件</span></span><br><span class="line">sudo rm -f /etc/X11/xorg.conf</span><br></pre></td></tr></table></figure>
+<p>重启系统</p>
+</del>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/99ce0d25">https://lushuangning.github.io/posts/99ce0d25</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/Arch/">Arch</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/3552f53/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux 图形界面的显示原理</div></div></a></div><div class="next-post pull-right"><a href="/posts/6b694a6f/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CMake简洁使用说明</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

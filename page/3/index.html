@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>路双宁的博客</title><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta property="og:type" content="website">
+<meta property="og:title" content="路双宁的博客">
+<meta property="og:url" content="https://lushuangning.github.io/page/3/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lushuangning.github.io/img/avatar.jpg">
+<meta property="article:author" content="路双宁">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lushuangning.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/page/3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2024-12-26 13:19:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://lushuangning.oss-cn-beijing.aliyuncs.com/image/199604112.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">路双宁的博客</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/lushuangning" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sdyglsn@126.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/19352681" rel="external nofollow noreferrer" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/89acda70/" title="TCP/IP网络编程（一）">TCP/IP网络编程（一）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-29T13:03:54.000Z" title="发表于 2021-07-29 21:03:54">2021-07-29</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.169Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">网络编程</a></span></div><div class="content">基于Linux的套接字相关函数
+在 linux 下，socket 也被认为是文件的一种。
+文件的读写：
+12345#include &lt;sys/types.h&gt;#include &lt;sys/stat.h&gt;#include &lt;fcnt1.h&gt;int open(const char* path, int flag);
+12345#include &lt;unistd.h&gt;ssize_t write(int fd, const void* buf, size_t nbytes);int close(int fd);
+12#include &lt;unistd.h&gt;ssize_t read(int fd, void* buf, size_t nbytes);
+open 函数的返回值即文件描述符，也即 close 函数的参数。
+ps: size_t 是通过 typedef 声明的 unsigned int 类型；ssize_t 是通过 typedef 声明的 signed int 类型。
+
+服务端套接字创建过程
+
+1234567891011121314 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/5fee7871/" title="C++ sizeof分析">C++ sizeof分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-28T05:05:45.000Z" title="发表于 2021-07-28 13:05:45">2021-07-28</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.159Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">首先明确，sizeof不是一个函数，它是一个运算符！
+1234567891011char str[] = &quot;Hello&quot;;char* pstr = str;const char* str_list[] = &#123; &quot;Hello&quot;,&quot;world&quot;&#125;;void* pbuf = malloc(100);int n = 10;sizeof(str)sizeof(pstr)sizeof(str_list)sizeof(pbuf)sizeof(n)
+64 位机上，分析一下输出结果。
+
+
+字符数组的大小包括 ‘\0’，“Hello” 有 5 个字符，加上 ‘\0’，sizeof(str) 大小为6。
+
+
+64 位机，因为寻址的原因，需要8个字节来存储指针的大小，因此 sizeof(pstr) 的大小为8。
+
+
+最困惑的要属 sizeof(str_list) 了。一开始认为，字符数组指针也是指针，所以输出应该是 8，但程序输出的结果却是 16。经查证，[] 的优先级比 * 要高，因此 str_list 先和 [] 结合，它还是 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/6179b834/" title="值传递和引用传递">值传递和引用传递</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-28T05:03:20.000Z" title="发表于 2021-07-28 13:03:20">2021-07-28</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.176Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">参考C++那些事——const那些事
+关于引用传参：
+对于非内部数据类型的参数而言，像 void func(A a) 这样声明的函数注定效率比较低。因为函数体内将产生 A 类型的临时对象用于复制参数 a，而临时对象的构造、复制、析构过程都将消耗时间。
+为了提高效率，可以将函数声明改为 void func(A &amp;a)，因为“引用传递”仅借用一下参数的别名而已，不需要产生临时对象。但是函数 void func(A &amp;a) 存在一个缺点：
+“引用传递”有可能改变参数 a，这是我们不期望的。解决这个问题很容易，加const 修饰即可，因此函数最终成为 void func(const A &amp;a)。
+以此类推，是否应将 void func(int x) 改写为 void func(const int &amp;x)，以便提高效率？完全没有必要，因为内部数据类型的参数不存在构造、析构的过程，而复制也非常快，“值传递”和“引用传递”的效率几乎相当。
+小结：对于非内部数据类型的输入参数，应该将“值传递”的方式改为“const 引用传递”，目的是提高效率。例如将 void func ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/6939522b/" title="Let’s Build A Simple Interpreter. Part 5.">Let’s Build A Simple Interpreter. Part 5.</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-27T02:31:39.000Z" title="发表于 2021-07-27 10:31:39">2021-07-27</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.167Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="content">出处：https://ruslanspivak.com/lsbasi-part5/</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/7022636a/" title="Let’s Build A Simple Interpreter. Part 4.">Let’s Build A Simple Interpreter. Part 4.</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-27T02:31:17.000Z" title="发表于 2021-07-27 10:31:17">2021-07-27</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.167Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="content">出处：https://ruslanspivak.com/lsbasi-part4/</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/3f63f5ad/" title="Let’s Build A Simple Interpreter. Part 3.">Let’s Build A Simple Interpreter. Part 3.</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-27T02:31:00.000Z" title="发表于 2021-07-27 10:31:00">2021-07-27</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.166Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="content">出处：https://ruslanspivak.com/lsbasi-part3/</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/2678c4ec/" title="Let’s Build A Simple Interpreter. Part 2.">Let’s Build A Simple Interpreter. Part 2.</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-27T02:29:40.000Z" title="发表于 2021-07-27 10:29:40">2021-07-27</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.166Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="content">出处：https://ruslanspivak.com/lsbasi-part2/</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/d55972f/" title="Let’s Build A Simple Interpreter. Part 1.">Let’s Build A Simple Interpreter. Part 1.</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-27T02:18:59.000Z" title="发表于 2021-07-27 10:18:59">2021-07-27</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.166Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="content">出处：https://ruslanspivak.com/lsbasi-part1/</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/a09b3912/" title="C++常见问题总结">C++常见问题总结</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-24T08:58:03.000Z" title="发表于 2021-07-24 16:58:03">2021-07-24</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.159Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">虚函数工作原理
+c++引用与解引用
+继承和动态内存分配
+java/c++/rust对象复制之间的区别
+new和malloc到底哪里不一样
+为什么需要字节对齐以及如何对齐
+仔细讨论 C/C++ 字节对齐问题
+string 和 string.h 的区别
+值传递和引用传递
+sizeof分析
+分配器
+C++中的::
+ptrdiff_t, size_t, difference_type
+vector初始化方式
+typename的由来和用法
+typename 关键字
+智能指针
+C++11 std::funcion和std::bind
+类模板中的编写方式及友元函数在类模板中的使用
+命名空间里的友元函数
+c++11模板类型推导规则
+C语言正确使用extern关键字
+extern “C“的作用及理解
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/c868c0ba/" title="继承和动态内存分配">继承和动态内存分配</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-24T08:57:37.000Z" title="发表于 2021-07-24 16:57:37">2021-07-24</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.189Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">以下的内容全部出自《C++ Primer Plus（第六版）中文版》13.7章节，继承和动态内存分配。
+
+当基类和派生类都采用动态内存分配时，派生类的析构函数、复制构造函数、赋值运算符都必须使用相应的基类方法来处理基类元素。
+例如：
+12345678910111213class baseMDA&#123;private:  char * label;   // 在构造函数中使用new  int rating;public:  baseDMA(const char * l = &quot;null&quot;, int r = 0);  baseDMA(const baseDMA &amp; rs);  virtual ~baseDMA();  baseDMA &amp; operator=(const baseDMA &amp; rs);...&#125;;
+12345678class hasDMA : public baseDMA&#123;private:  char * style;   // 在构造函数中使用newpublic:...&#125;;
+
+对于析构函数，这是自动完成 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/5850bb67/" title="C++ new和malloc到底哪里不一样（转载）">C++ new和malloc到底哪里不一样（转载）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-23T07:16:49.000Z" title="发表于 2021-07-23 15:16:49">2021-07-23</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.159Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">出处：https://www.cnblogs.com/lcgbk/p/14118782.html</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/56850fa0/" title="虚函数工作原理">虚函数工作原理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-22T13:28:54.000Z" title="发表于 2021-07-22 21:28:54">2021-07-22</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.190Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a></span></div><div class="content">联编
+将源代码中的函数调用解释为执行特定的函数代码块被称为函数名联编。在编译过程中进行联编被称为“静态联编”，在程序运行时进行联编称为“动态联编”。
+c++ 对非虚方法使用静态联编，对虚方法使用动态联编。
+虚函数的工作原理
+
+调用虚函数时，程序将查看存储在对象中的 vtbl 地址，然后转向相应的函数地址表。
+虚函数对内存和运行速度的影响
+使用虚函数，在内存和执行速度方面有一定的成本，包括：
+
+每个对象都将增大，增大量为存储地址的空间；
+对于每个类，编译器都将创建一个虚函数地址表（数组）；
+对于每个函数调用，都需要执行一项额外的操作，即到表中查找地址。
+
+注意
+
+
+构造函数不能是虚函数，派生类不继承基类的构造函数，所以将构造函数声明为虚的没什么意义。
+
+
+析构函数应当是虚函数，除非类不用做基类。
+
+
+
+
+友元不能是虚函数，因为友元不是类成员！只有成员才能是虚函数。
+
+纯虚函数
+纯虚函数提供未实现的函数，声明的结尾处为=0，如
+1virtual double Area() const = 0;
+或
+1double Move(int nx, ny) = 0;
+类中包含纯虚函数时，不能创建该类 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/f0c07695/" title="汇编语言学习记录（一）">汇编语言学习记录（一）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-20T14:28:20.000Z" title="发表于 2021-07-20 22:28:20">2021-07-20</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.183Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></span></div><div class="content">因写操作系统的需要 https://lushuangning.github.io/posts/556622b0/，在此单独开一篇记录汇编语言学习的历程。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/540ddb0e/" title="红帽RHCE培训记录（一）">红帽RHCE培训记录（一）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-11T01:56:59.000Z" title="发表于 2021-07-11 09:56:59">2021-07-11</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.187Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/RHCE/">RHCE</a></span></div><div class="content">最近在准备RHCE认证考试，这是培训时候的记录</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/659cae39/" title="GraspNet-1Billion: A Large-Scale Benchmark for General Object Grasping">GraspNet-1Billion: A Large-Scale Benchmark for General Object Grasping</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-04T13:35:08.000Z" title="发表于 2021-07-04 21:35:08">2021-07-04</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.165Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E8%AE%BA%E6%96%87/">论文</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></span></div><div class="content">摘要
+物体抓取对于许多应用来说都是至关重要的，这也是一个具有挑战性的计算机视觉问题。然而，对于杂乱的场景，目前的研究存在着训练数据不足、缺乏评价基准的问题。本文中我们提供了一个具有统一评价系统的大规模抓取姿态检测数据集。我们的数据集包含97280张RGB-D图像，包含超过10亿个抓取姿势。同时，我们的评价系统通过解析计算直接反映抓取是否成功，可以对任何一种抓取姿态进行评价，而不需要完全标注ground-truth。此外，我们提出了一个端到端的给定点云输入的抓取位姿预测网络，其中我们以解耦的方式学习接近方向和操作参数。设计了一种新的抓取，提高了抓取的鲁棒性。我们进行了大量的实验，表明我们的数据集和评估系统可以很好地与现实世界的实验匹配，我们提出的网络达到了最先进的性能。我们的数据集、源代码和模型已在www.graspnet.net开源。
+简介
+对象抓取是一个基本问题，在工业、农业和服务贸易中有着广泛的应用。抓取的关键是在给定的视觉输入(图像或点云)下检测抓取姿态，这已经引起了计算机视觉界的广泛关注。
+虽然对象抓取很重要，但目前有两大障碍阻碍了这一领域的发展。首先，抓取姿态有不同的表示形式 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/470305e7/" title="将emacs打造成编程神器">将emacs打造成编程神器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-06-13T13:03:15.000Z" title="发表于 2021-06-13 21:03:15">2021-06-13</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.177Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/Emacs/">Emacs</a></span></div><div class="content">已放弃自己配置，现已全面拥抱doom emacs。
+emacs 操作
+光标移动
+下面的C指键盘的Ctrl键，M指键盘的Alt键， &lt;RET&gt;指回车键，DEL指退格键
+下一行：C-n
+上一行：C-p
+下一个字符：C-f
+前一个字符：C-b
+下一个词：M-f
+上一个词：M-b
+将光标所在行至于屏幕中间：C-l
+向下滚动一屏：C-v
+向上滚动一屏：M-v
+光标置于行首：C-a
+光标置于行尾：C-e
+光标置于行首的第一个字符： M-m
+光标置于段首：M-a
+光标置于段㞑：M-e
+M-&lt;移动光标到最前端
+M-&gt;移动光标到最末端
+移动光标到指定行：M-g M-g 行号
+
+复制、移除、召回、删除、撤销
+emacs里面的剪切称为“移除”，粘贴称为“召回（yanking）”
+移除：C-w
+复制：M-w
+召回：C-y
+C-d删除光标后的一个字符
+M-d删除光标后的一个单词
+C-k移除从光标到行尾的字符
+M-k移除从光标到句尾的字符
+使用curx包，C-c k删除当前行
+使用hungry-delete包，C-c DEL向前删除多行空白，C-c d向后删除多行空白
+选中一个区域删除：
+ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/b741cc93/" title="java/c++/rust对象复制之间的区别">java/c++/rust对象复制之间的区别</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-06-07T10:06:22.000Z" title="发表于 2021-06-07 18:06:22">2021-06-07</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.172Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/C/">C++</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/rust/">rust</a></span></div><div class="content">对比了下Java, C++, rust三种编程语言在对象复制过程中的区别。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/82177246/" title="CV学习系列：SIFT">CV学习系列：SIFT</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-27T03:04:44.000Z" title="发表于 2021-04-27 11:04:44">2021-04-27</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.164Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/CV/">CV</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/OpenCV/">OpenCV</a></span></div><div class="content">没有数据集，深度学习说，这事我干不了。试试SIFT等手工特征吧。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/27146b79/" title="CNN学习系列：数据集和性能指标">CNN学习系列：数据集和性能指标</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-25T07:13:52.000Z" title="发表于 2021-04-25 15:13:52">2021-04-25</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.162Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Deep-Learning/">Deep Learning</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/CNN/">CNN</a></span></div><div class="content">数据集划分：
+含义：
+数据划分：训练 / 验证 / 测试集
+训练集：用训练集对算法或模型进行训练；
+验证集：利用验证集进行交叉验证，即评估几种算法或模型中哪一个最好，从而选择出最好的模型；
+测试集：最后利用测试集对模型进行测试，获取模型运行的无偏估计。
+在VOC数据集中，包含4种数据文件，train、test、val、trainval
+train.txt：用于训练的图片数据名称；
+test.txt：用于测试的图片数据名称；
+val.txt：用于验证的图片数据名称；
+trainval.txt：train+val数据集和。
+划分：
+在小数据量的时代，如 100、1000、10000 的数据量大小，可以将数据集按照以下比例进行划分：
+
+无验证集的情况：70% / 30%；
+有验证集的情况：60% / 20% / 20%；
+
+数据集格式
+训练时常用的数据集格式有
+
+VOC
+COCO
+
+标准的VOC数据格式如下：
+
+VOC2007/
+
+Annotations/
+
+000000.xml
+000001.xml
+…
+
+
+ImageSets/
+
+Main/
+
+train.txt
+test.txt
+val ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/61858c07/" title="CNN学习系列：RCNN理论基础">CNN学习系列：RCNN理论基础</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-21T05:40:05.000Z" title="发表于 2021-04-21 13:40:05">2021-04-21</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.162Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/Deep-Learning/">Deep Learning</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/RCNN/">RCNN</a></span></div><div class="content">经历了骨干网络的初步学习之后，逐渐进入目标检测领域。
+
+ 目标检测算法发展史（陆峰，基于深度学习的目标检测技术综述[doi: 10.15888/j.cnki.csa.007839]） 
+
+基于深度 学习的目标检测算法大致可分为基于候选区域和基于回归两大类. 基于候选区域的目标检测算法精度高, 但是结构 复杂, 检测速度较慢. 而基于回归的目标检测算法结构简单、检测速度快, 在实时目标检测领域有较高的应用价值, 然而检测精度相对略低。
+
+RCNN作为two-stage检测算法的代表，开始RCNN的学习。
+论文：rich feature hierarchies for accurate object detection and semantic segmentation
+*RCNN(Regions with CNN features)*过程
+
+预训练一个CNN
+将selective search预选出的2000个候选框resize，作为model输入CNN
+model前向运算至pool5，抽取这一层的特征值
+训练SVM，进行二分类问题
+Bounding box regression，根据监 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">路双宁</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lushuangning"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lushuangning" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sdyglsn@126.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/19352681" rel="external nofollow noreferrer" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a></div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/72db60bd/" title="Linux手动安装MySQL8.4.3LTS版本的注意事项">Linux手动安装MySQL8.4.3LTS版本的注意事项</a><time datetime="2024-12-26T05:17:00.000Z" title="发表于 2024-12-26 13:17:00">2024-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/34f0feb8/" title="ubuntu x86_64 配置 aarch64 交叉编译环境">ubuntu x86_64 配置 aarch64 交叉编译环境</a><time datetime="2024-07-08T07:44:26.000Z" title="发表于 2024-07-08 15:44:26">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/8852ee2b/" title="Qt中的反射机制">Qt中的反射机制</a><time datetime="2024-01-16T08:11:05.000Z" title="发表于 2024-01-16 16:11:05">2024-01-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/533f028c/" title="Nginx实现授权访问">Nginx实现授权访问</a><time datetime="2023-12-03T09:27:59.000Z" title="发表于 2023-12-03 17:27:59">2023-12-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/3552f53/" title="Linux 图形界面的显示原理">Linux 图形界面的显示原理</a><time datetime="2023-11-27T15:08:35.000Z" title="发表于 2023-11-27 23:08:35">2023-11-27</time></div></div></div></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Arch/" style="font-size: 1.1em; color: #999">Arch</a> <a href="/tags/C/" style="font-size: 1.34em; color: #99a3b0">C</a> <a href="/tags/C/" style="font-size: 1.5em; color: #99a9bf">C++</a> <a href="/tags/CMake/" style="font-size: 1.26em; color: #999fa8">CMake</a> <a href="/tags/CNN/" style="font-size: 1.3em; color: #99a1ac">CNN</a> <a href="/tags/CV/" style="font-size: 1.3em; color: #99a1ac">CV</a> <a href="/tags/Deep-Learning/" style="font-size: 1.46em; color: #99a7bb">Deep Learning</a> <a href="/tags/Emacs/" style="font-size: 1.1em; color: #999">Emacs</a> <a href="/tags/GDB/" style="font-size: 1.1em; color: #999">GDB</a> <a href="/tags/Hadoop/" style="font-size: 1.1em; color: #999">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 1.14em; color: #999b9d">Hexo</a> <a href="/tags/KaTex/" style="font-size: 1.1em; color: #999">KaTex</a> <a href="/tags/Latex/" style="font-size: 1.1em; color: #999">Latex</a> <a href="/tags/Linux/" style="font-size: 1.42em; color: #99a6b7">Linux</a> <a href="/tags/MathJax/" style="font-size: 1.1em; color: #999">MathJax</a> <a href="/tags/MySQL/" style="font-size: 1.1em; color: #999">MySQL</a> <a href="/tags/NLP/" style="font-size: 1.18em; color: #999ca1">NLP</a> <a href="/tags/Nginx/" style="font-size: 1.1em; color: #999">Nginx</a> <a href="/tags/OpenCV/" style="font-size: 1.14em; color: #999b9d">OpenCV</a> <a href="/tags/PyTorch/" style="font-size: 1.38em; color: #99a4b4">PyTorch</a> <a href="/tags/Python/" style="font-size: 1.18em; color: #999ca1">Python</a> <a href="/tags/Qt/" style="font-size: 1.14em; color: #999b9d">Qt</a> <a href="/tags/RCNN/" style="font-size: 1.1em; color: #999">RCNN</a> <a href="/tags/RHCE/" style="font-size: 1.22em; color: #999ea4">RHCE</a> <a href="/tags/Socket/" style="font-size: 1.1em; color: #999">Socket</a> <a href="/tags/Spark/" style="font-size: 1.1em; color: #999">Spark</a> <a href="/tags/Ubuntu/" style="font-size: 1.14em; color: #999b9d">Ubuntu</a> <a href="/tags/X11/" style="font-size: 1.1em; color: #999">X11</a> <a href="/tags/YOLOv5/" style="font-size: 1.1em; color: #999">YOLOv5</a> <a href="/tags/anaconda/" style="font-size: 1.1em; color: #999">anaconda</a> <a href="/tags/docker/" style="font-size: 1.1em; color: #999">docker</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/pkg-config/" style="font-size: 1.1em; color: #999">pkg-config</a> <a href="/tags/rust/" style="font-size: 1.1em; color: #999">rust</a> <a href="/tags/tensorflow/" style="font-size: 1.1em; color: #999">tensorflow</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 1.26em; color: #999fa8">博客</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 1.3em; color: #99a1ac">总结</a> <a href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">推荐系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.18em; color: #999ca1">操作系统</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.3em; color: #99a1ac">数据结构</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/12/"><span class="card-archive-list-date">十二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/04/"><span class="card-archive-list-date">四月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/12/"><span class="card-archive-list-date">十二月 2022</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item more is-center"><a class="card-archive-list-link-more" href="/archives/">
+              <span>查看更多</span><i class="fas fa-angle-right"  ></i></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">105</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2019-01-31T16:00:00.000Z"></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-12-26T05:19:04.816Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    var typed = new Typed("#subtitle", {
+      strings: "也许他们会明白莫泊桑的一句话：生活可能不像你想象的那么好，但是也不会像你想象的那么糟。人的脆弱和坚强都超乎了自己的想象，有时候可能脆弱的一句话就泪流满面，有时候你发现自己咬着牙已经走过了很长的路。".split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: false,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '也许他们会明白莫泊桑的一句话：生活可能不像你想象的那么好，但是也不会像你想象的那么糟。人的脆弱和坚强都超乎了自己的想象，有时候可能脆弱的一句话就泪流满面，有时候你发现自己咬着牙已经走过了很长的路。'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') subtitleType()
+  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
+} else {
+  subtitleType()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

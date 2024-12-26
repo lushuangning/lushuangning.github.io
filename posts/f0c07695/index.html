@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>汇编语言学习记录（一） | 路双宁的博客</title><meta name="keywords" content="汇编"><meta name="author" content="路双宁"><meta name="copyright" content="路双宁"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="因写操作系统的需要 https:&#x2F;&#x2F;lushuangning.github.io&#x2F;posts&#x2F;556622b0&#x2F;，在此单独开一篇记录汇编语言学习的历程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="汇编语言学习记录（一）">
+<meta property="og:url" content="https://lushuangning.github.io/posts/f0c07695/index.html">
+<meta property="og:site_name" content="路双宁的博客">
+<meta property="og:description" content="因写操作系统的需要 https:&#x2F;&#x2F;lushuangning.github.io&#x2F;posts&#x2F;556622b0&#x2F;，在此单独开一篇记录汇编语言学习的历程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-07-20T14:28:20.000Z">
+<meta property="article:modified_time" content="2024-12-26T05:09:44.183Z">
+<meta property="article:author" content="路双宁">
+<meta property="article:tag" content="汇编">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lushuangning.github.io/posts/f0c07695/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.5/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.4.2',
+  algolia: {"appId":"NT7VBMEHNU","apiKey":"db90b9537944fac58a60e68f42c776cf","indexName":"hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: 路双宁","link":"链接: ","source":"来源: 路双宁的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: {"text":"图灵,麦卡锡,明斯基,冯·诺依曼,伯纳斯·李,香农,肯·汤普森,林纳斯·托瓦兹","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2024-12-26 13:09:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'true'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><link rel="stylesheet" href="//at.alicdn.com/t/font_2149337_g9rq691k4pp.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/gh/lushuangning/live2d-widget@latest/"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">105</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">58</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%8C%E9%80%9A%E5%B8%B8%E7%94%A8%E6%9D%A5%E5%AD%98%E6%94%BE%E4%B8%80%E8%88%AC%E6%80%A7%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">通用寄存器，通常用来存放一般性的数据：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E4%B8%8D%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="toc-number">1.2.</span> <span class="toc-text">汇编指令不区分大小写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-number">1.3.</span> <span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%B5%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.4.</span> <span class="toc-text">段的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">段寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CS-%E5%92%8C-IP"><span class="toc-number">1.5.1.</span> <span class="toc-text">CS 和 IP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug"><span class="toc-number">1.6.</span> <span class="toc-text">debug</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">寄存器（内存访问）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DS-%E5%92%8C-address"><span class="toc-number">2.1.</span> <span class="toc-text">DS 和 [address]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mov%E3%80%81add%E3%80%81sub-%E6%8C%87%E4%BB%A4"><span class="toc-number">2.2.</span> <span class="toc-text">mov、add、sub 指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CPU-%E6%8F%90%E4%BE%9B%E7%9A%84%E6%A0%88%E6%9C%BA%E5%88%B6"><span class="toc-number">2.3.</span> <span class="toc-text">CPU 提供的栈机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E8%B6%8A%E7%95%8C%E9%97%AE%E9%A2%98"><span class="toc-number">2.4.</span> <span class="toc-text">栈越界问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#push%E3%80%81pop-%E6%8C%87%E4%BB%A4"><span class="toc-number">2.5.</span> <span class="toc-text">push、pop 指令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">第一个程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-number">3.1.</span> <span class="toc-text">伪指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E8%BF%9E%E6%8E%A5"><span class="toc-number">3.2.</span> <span class="toc-text">程序编译连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%9F%E8%B8%AA%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="toc-number">3.3.</span> <span class="toc-text">跟踪程序的运行过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">[bx] 和 loop 指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#bx"><span class="toc-number">4.1.</span> <span class="toc-text">[bx]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#loop-%E6%8C%87%E4%BB%A4"><span class="toc-number">4.2.</span> <span class="toc-text">loop 指令</span></a></li></ol></li></ol></div></div></div><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">路双宁的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 画廊</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout_post" id="content-inner"><article id="post"><div id="post-info"><div id="post-title"><div class="posttitle">汇编语言学习记录（一）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-20T14:28:20.000Z" title="发表于 2021-07-20 22:28:20">2021-07-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-26T05:09:44.183Z" title="更新于 2024-12-26 13:09:44">2024-12-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><div class="post-content" id="article-container"><p>在学习之前，有必要了解一下x86 和 x64 在计算机中到底表示什么。参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://mp.weixin.qq.com/s/SL2R-BtKgkQxeREWITx_iQ">32、64、x86、x64 有什么区别?</a></p>
+<h1>寄存器</h1>
+<p>8086CPU有14个寄存器，分别是<br>
+AX, BX, CX, DX, SI, DI, SP, BP, IP, CS, SS, DS, ES, PSW<br>
+所有寄存器都是16位</p>
+<h2 id="通用寄存器，通常用来存放一般性的数据：">通用寄存器，通常用来存放一般性的数据：</h2>
+<p>AX, BX, CX, DX</p>
+<p>为了和之前的寄存器兼容，16位寄存器低8位（0-7）位构成AL寄存器，高8位（8-15）位构成AH寄存器。AH和AL是可以<strong>独立</strong>使用的8位寄存器。</p>
+<p>用十六进制来表示数据可以直观地看出这个数据是由哪些8位数据构成的。比如2000写成4E20就可以直观地看出，这个数据是由4E和20两个8位数据构成的。</p>
+<h2 id="汇编指令不区分大小写">汇编指令不区分大小写</h2>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202107201.png" alt=""></p>
+<p>在进行数据传送或运算时，要注意指令的两个操作对象的位数应当是一致的，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov ax,bx</span><br><span class="line">mov al,18H</span><br><span class="line">add ax,bx</span><br></pre></td></tr></table></figure>
+<p>都是正确指令，而</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov ax,bl</span><br><span class="line">mov bh,ax</span><br><span class="line">mov al,20000 (8位寄存在最大可存放值为255的数据)</span><br></pre></td></tr></table></figure>
+<p>都是错误指令</p>
+<p>另外急需要注意的是，将数据送入寄存器的时候，高8位和低8位是如何存储的。<strong>例如，将数据 <code>mov ax,BE00H</code>，执行完成后，al 中存储的是 BE，ah 中存储的是 00。</strong></p>
+<h2 id="物理地址">物理地址</h2>
+<p>8086CPU是16位机，有20位地址总线，可以传送20位地址，达到1MB的寻址能力。但它又是16位结构，表现出的寻址能力只有64KB。因此，8086CPU采用一种在内部用两个16位地址合成的方法来形成一个20位的物理地址。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202107211.png?x-oss-process=image/resize,w_600" alt=""></p>
+<p>地址加法器采用 <strong>物理地址=段地址<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">\times 16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">16</span></span></span></span> + 偏移地址</strong> 的方法合成物理地址。例如，8086CPU要访问地址为123C8H的物理单元，过程为：</p>
+<ol>
+<li>提供段地址1230和偏移地址00C8</li>
+<li>送入加法器</li>
+<li>段地址<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">\times 16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">16</span></span></span></span>（左移4位），变为12300</li>
+<li>段地址<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">\times 16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">16</span></span></span></span> + 偏移地址，得到123C8</li>
+<li>输出123C8到地址总线</li>
+</ol>
+<p>物理地址=段地址<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">\times 16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">16</span></span></span></span> + 偏移地址 的本质含义：CPU 在访问内存时，用一个基础地址和一个相对于基础地址的便宜地址相加，给出内存单元的物理地址。</p>
+<h2 id="段的概念">段的概念</h2>
+<p>段：若干地址连续的内存单元。偏移地址为16位，16位的寻址能力为64KB，所以一个段的长度最大为64KB。段的起始地址一定是16的倍数。</p>
+<p>段地址称SA，偏移地址称EA</p>
+<p><strong>结论：CPU 可以用不同的段地址和偏移地址形成同一个物理地址。</strong></p>
+<h2 id="段寄存器">段寄存器</h2>
+<p>8086CPU的4个段寄存器：CS, DS, SS, ES</p>
+<h3 id="CS-和-IP">CS 和 IP</h3>
+<p>CS和IP指示了CPU当前要读取指令的地址。CS为代码段寄存器，IP为指令指针寄存器。</p>
+<p>设CS中的内容为M，IP中的内容为N，则8086CPU将从内存M<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">\times 16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">16</span></span></span></span> + N单元开始，读取一条指令并执行。</p>
+<p>读取指令的过程如下：</p>
+<ol>
+<li>从CS:IP所指向的内存单元读取指令，读取的指令进入指令缓冲器；</li>
+<li>IP=IP+所读取指令的长度，从而指向吓一跳指令；</li>
+<li>执行指令。转到步骤1，重复这个过程。</li>
+</ol>
+<p>在 8086CPU 加电启动或复位后，CS和IP被设置为CS = FFFFH，IP = 0000H。因此，8086PC机刚启动是，CPU将从FFFF0H单元读取指令执行。FFFF0H单元中的指令是开机后执行的第一条指令。</p>
+<p><code>mov</code>指令被称为传送指令，不能用于设置CS、IP的值。能改变CS、IP的内容的指令被称为转移指令，例如：jmp。</p>
+<p>若想同时修改CS、IP的内容，可用<code>jmp 段地址:偏移地址</code>指令完成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmp 2AE3:3</span><br></pre></td></tr></table></figure>
+<p>执行后：CS=2AE3H, IP=00003H, CPU将从2AE33H处读取指令。</p>
+<p>若修改IP的内容，可以用<code>jmp 某一合法寄存器</code>指令完成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmp ax</span><br></pre></td></tr></table></figure>
+<h2 id="debug">debug</h2>
+<p>在windows xp的命令行中，输入<code>debug</code>即可进入debug模式</p>
+<p>r用来查看、改变CPU寄存器的内容</p>
+<p><code>r ax</code>修改ax寄存器内容<br>
+<code>r cs</code>修改cs寄存器内容</p>
+<p>d用来查看内存中的内容，格式为：<code>d 段地址:偏移地址</code>。如果想知道内存 10000H 处内容，用<code>d 1000:0</code>。</p>
+<p>e 用来改写内存中的内容，比如要将内存 1000:0~1000:9 单元中的内容分别写为0、1、2、3、4、5、6、7、8、9，可以用<code>e 1000:0 0 1 2 3 4 5 6 7 8 9</code>，也可以<code>e 1000:0</code>按回车，逐个修改。</p>
+<p>练习：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202107212.png" alt=""></p>
+<p>a 在一个预设的地址，用汇编的形式写入指令，再用 t 执行，可以看到执行的结果。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202107271.png" alt=""></p>
+<h1>寄存器（内存访问）</h1>
+<p>字单元，存放一个字型数据（16位）的内存单元，由两个地址连续的内存单元组成。将起始地址为 N 的字单元简称为 <strong>N 地址字单元</strong>。</p>
+<h2 id="DS-和-address">DS 和 [address]</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov bx,1000H</span><br><span class="line">mov ds,bx</span><br><span class="line">mov al,[0]</span><br></pre></td></tr></table></figure>
+<p>三条指令将 10000H(1000:0)中的数据读到 al 中。</p>
+<p>其中，[…] 表示一个内存单元，<strong>[0] 中的0表示内存单元的偏移地址。</strong> 内存单元的段地址默认放在 ds 中，指令执行时，8086CPU会自动从 ds 中取出。ds 是一个段寄存器，<strong>8086CPU 不支持将数据直接送入段寄存器的操作</strong>，所以要先用一个寄存器进行中转。</p>
+<h2 id="mov、add、sub-指令">mov、add、sub 指令</h2>
+<p>mov 指令可以有以下几种形式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mov 寄存器，数据</span><br><span class="line"></span><br><span class="line">mov 寄存器，寄存器</span><br><span class="line"></span><br><span class="line">mov 寄存器，内存单元</span><br><span class="line">mov 内存单元，寄存器</span><br><span class="line"></span><br><span class="line">mov 段寄存器，寄存器</span><br><span class="line">mov 寄存器，段寄存器</span><br><span class="line"></span><br><span class="line">mov 内存单元，段寄存器</span><br><span class="line">mov 段寄存器，内存单元</span><br></pre></td></tr></table></figure>
+<p>add 和 sub 同mov一样，但是不能操作段寄存器</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/j448749903/article/details/106505561">数据和程序有区别吗？如何确定内存中的信息哪些是数据，哪些是程序？</a></p>
+<h2 id="CPU-提供的栈机制">CPU 提供的栈机制</h2>
+<p>入栈和出站指令：push 和 pop</p>
+<p><code>push ax</code> 表示将寄存器 ax 中的数据送入栈中，<code>pop ax</code> 表示将栈顶取出的数据送入 ax。入栈和出栈操作都是以<strong>字</strong>为单位进行的。</p>
+<p>栈顶的段地址存放在 SS 中，偏移地址存放在 SP 中。<strong>任意时刻，SS:SP 指向栈顶元素。</strong></p>
+<p>push ax 的执行，由以下两步完成：</p>
+<ol>
+<li>SP=SP-2，SS:SP 指向当前栈顶前面的单元，以当前栈顶前面的单元为新的栈顶。</li>
+<li>将 ax 中的内容送入 SS:SP 指向的内存单元出， SS:SP 此时指向新栈顶。</li>
+</ol>
+<p>8086CPU中，入栈时，栈顶从高地址向低地址方向增长。</p>
+<p><strong>栈为空的时候，SS:SP 指向栈空间最高地址单元的下一个单元。</strong></p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202107272.png" alt=""></p>
+<p>pop ax 的执行，由以下两步完成：</p>
+<ol>
+<li>将 SS:SP 指向的内存单元处的数 据送入 ax 中；</li>
+<li>SP=SP+2 ，SS:SP 指向当前栈顶下面的单元，以下面的单元为新的栈顶。</li>
+</ol>
+<h2 id="栈越界问题">栈越界问题</h2>
+<p>8086CPU 不保证我们对栈的操作不会越界。我们在编程的时候要自己操心栈顶越界的问题，要根据可能用到的最大栈空间，来安排栈的大小，防止入栈的数据太多而导致的越界；执行出栈操作的时候也要注意，以防栈空的时候继续出栈而导致的越界。</p>
+<h2 id="push、pop-指令">push、pop 指令</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push 寄存器 ;将寄存器中的数据入栈</span><br><span class="line">pop 寄存器  ;用寄存器接收出栈的数据</span><br></pre></td></tr></table></figure>
+<p>也可以</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">push 段寄存器</span><br><span class="line">pop 断寄存器</span><br><span class="line"></span><br><span class="line">push 内存单元</span><br><span class="line">pop 内存单元</span><br></pre></td></tr></table></figure>
+<p><strong>一个字在栈中的存储，字的高8位比低8位在栈中的地址要高。</strong></p>
+<h1>第一个程序</h1>
+<h2 id="伪指令">伪指令</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg</span><br><span class="line"></span><br><span class="line">codesg segment</span><br><span class="line">  mov ax,0123H</span><br><span class="line">  mov bx,0456H</span><br><span class="line">  add ax,bx</span><br><span class="line">  add ax,ax</span><br><span class="line"></span><br><span class="line">  mov ax,4c00H</span><br><span class="line">  int 21H</span><br><span class="line">codesg ends</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<ol>
+<li>segment 和 ends 是一对成对使用的伪指令。其功能是定义一个段，使用格式为：</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">段名 segment</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">段名 ends</span><br></pre></td></tr></table></figure>
+<p>上述程序中定义了一个名为 codesg 的段。一个有意义的汇编程序至少要有一个段。</p>
+<ol start="2">
+<li>
+<p>end 是一个汇编程序的结束标记</p>
+</li>
+<li>
+<p>assume ，它假设某一段寄存器和程序中的某一个用 <code>segment...ends</code> 定义的段相关联。上述程序中，用 assume cs:codesg 将段 codesg 和段寄存器 cs 联系起来。</p>
+</li>
+</ol>
+<p>说明，程序中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov ax,4c00H</span><br><span class="line">int 21H</span><br></pre></td></tr></table></figure>
+<p>所实现的功能就是程序返回（现在不需要理解为什么）。</p>
+<h2 id="程序编译连接">程序编译连接</h2>
+<p>编译环境按照<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/qq_40663357/article/details/82959941">MASM5.0汇编环境安装</a>所述的搭建，编译连接的过程按照书中所述进行。</p>
+<p>可执行文件中的程序 P1 若要运行，必须有一个正在运行的程序 P2，将 P1 从可执行文件中加载入内存，将 CPU 的控制权交给它；P1 运行完毕后，应该将 CPU 的控制权交还给 P2。</p>
+<p>问题：有一个正在运行的程序将 1.exe 中的程序加载入内存，这个正在运行的程序时什么？它将程序家载入内存后，如何使程序得以运行？程序运行结束后，返回到哪里？</p>
+<p>答：DOC 系统的 shell <a target="_blank" rel="noopener external nofollow noreferrer" href="http://xn--command-fq3l.com">叫command.com</a><br>
+(1) 在 DOC 系统中直接执行 1.exe 时，是正在运行的 command，将 1.exe 加载入内存；<br>
+(2) command 设置 CPU 的 CS:IP 指向程序的第一条指令，从而使从徐得以运行。<br>
+(3) 程序运行结束后，返回到 command 中，CPU 继续运行 command。</p>
+<h2 id="跟踪程序的运行过程">跟踪程序的运行过程</h2>
+<p>可以使用 <code>debug 1.exe</code> 观察程序的单步执行。</p>
+<p>程序的加载过程：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108051.png" alt=""></p>
+<p>(1) 程序加载后，ds 中存放着程序所在内存区的段地址，这个内存区的偏移地址为0，则程序所在的内存区的地址为 ds:0</p>
+<p>(2) 这个内存区的前 256 个字节中存放的是 PSP，DOS用来和程序进行通信。从 256 字节处向后的空间存放的是程序。</p>
+<p>所以，ds 中可以得到 PSP 的段地址 SA，PSP 的偏移地址为 0，则物理地址为 SA X 16 + 0</p>
+<p>因为 PSP 占 256(100H) 字节，所以程序的物理地址是：</p>
+<p>SA X 16 + 0 + 256 = SA X 16 + 16 X 16 + 0 = (SA + 16) X 16 + 0</p>
+<p>即 (SA + 10H) : 0</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108052.png" alt=""></p>
+<p>可以看到，DS = 075C，则 PSP 的地址为：075C:0，程序的地址为：(075C+10H):0，即 076C:0。图中，CS=076C，IP=0000，CS:IP指向程序的第一条指令。</p>
+<h1>[bx] 和 loop 指令</h1>
+<p>定义描述性符号：“()”，用来表示一个寄存器或一个内存单元的内容。比如 (ax) 表示 ax 中的内容，(2000H) 表示内存 2000H 单元的内容。</p>
+<p>要完整地描述一个内存单元，需要两种信息：</p>
+<ol>
+<li>内存单元的地址；</li>
+<li>内存单元的长度</li>
+</ol>
+<p>用 [0] 表示一个内存单元时，0 表示单元的偏移地址，段地址默认在 ds 中，单元的长度（类型）可以由具体指令中的其他操作对象（比如说寄存器）指出。</p>
+<p>[bx] 同样也表示一个内存单元，它的偏移地址在 bx 寄存器中。</p>
+<h2 id="bx">[bx]</h2>
+<p><code>mov ax,[bx]</code> 表示 (ax) = ((ds) x 16 + (bx))</p>
+<p><code>mov [bx],ax</code> 表示 ((ds) x 16 + (bx)) = (ax)</p>
+<p>问题：写出程序执行后，21000H ~ 21007H 单元中的内容。</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108061.png" alt=""></p>
+<p>自行思考，答案：</p>
+<p><img src="https://lushuangning.oss-cn-beijing.aliyuncs.com/image/202108062.png" alt=""></p>
+<p>ps: <strong>inc 是自增指令，dec 是自减指令</strong></p>
+<h2 id="loop-指令">loop 指令</h2>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mn>2</mn><mo>=</mo><mi>N</mi><mo>+</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">N \times 2 = N + N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></p>
+<p>例如，计算 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">2^{12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    mov ax,2</span><br><span class="line">    add ax,ax</span><br><span class="line">    add ax,ax</span><br><span class="line">    ;一共做11次 add ax,ax</span><br><span class="line"></span><br><span class="line">    mov ax,4c00h</span><br><span class="line">    int 21h</span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>loop 指令的格式是：<code>loop 标号</code>，CPU 执行 loop 指令的时候，要进行两步操作</p>
+<ol>
+<li>(cx)=(cx)-1;</li>
+<li>判断 cx 中的值，不为 0 则转至标号处执行程序，为 0 则向下执行。</li>
+</ol>
+<p>使用 loop，可以简化为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    mov ax,2</span><br><span class="line">    add cx,11</span><br><span class="line">s:  add ax,ax</span><br><span class="line">    loop s</span><br><span class="line"></span><br><span class="line">    mov ax,4c00h</span><br><span class="line">    int 21h</span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>问题：用加法计算 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>123</mn><mo>×</mo><mn>236</mn></mrow><annotation encoding="application/x-tex">123 \times 236</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">123</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">236</span></span></span></span>，结果存在 ax 中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    mov ax,0</span><br><span class="line">    mov cx,236</span><br><span class="line">s:  add ax,123</span><br><span class="line">    loop s</span><br><span class="line"></span><br><span class="line">    mov ax,4c00h</span><br><span class="line">    int 21h</span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>改进上题的计算速度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    mov ax,0</span><br><span class="line">    mov cx,123</span><br><span class="line">s:  add ax,236</span><br><span class="line">    loop s</span><br><span class="line"></span><br><span class="line">    mov ax,4c00h</span><br><span class="line">    int 21h</span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>有一点需要注意，<strong>汇编源程序中，数据不能以字母开头</strong>，这意味着，大于 9FFFh 的十六进制数据，例如 A000h、C001h、FFFEh，都要在前面加 0，写成 0A000h、0C001h、0FFFEh。</p>
+<p>（未完待续）</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io">路双宁</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lushuangning.github.io/posts/f0c07695/">https://lushuangning.github.io/posts/f0c07695/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">此文章版权归路双宁所有，转载请注明来源作者</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/56850fa0/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">虚函数工作原理</div></div></a></div><div class="next-post pull-right"><a href="/posts/540ddb0e/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">红帽RHCE培训记录（一）</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2024 By 路双宁</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/algolia.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'VMqnI9pLmxxHTgJswVD4NG7b-gzGzoHsz',
+      appKey: 'IIEWxiiBotI5HSnW0J416lsU',
+      placeholder: '快来评论吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div class="aplayer no-destroy" data-id="003B4aet4U1Flz" data-server="tencent" data-type="song" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>
